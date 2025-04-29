@@ -70,5 +70,9 @@ public class PlayManager : MonoBehaviour
         GameManager.LoadScene(nextSceneName);
     }
 
+    public float GetPlaytime()
+    {
+        return _playtimeCurrent;
+    }
     // TODO: Add UI related functions
 }
