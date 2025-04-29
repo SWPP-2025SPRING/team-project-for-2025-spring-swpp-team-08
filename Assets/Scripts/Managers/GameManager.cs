@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     /// If not specified, reload current scene.
     /// </summary>
     /// <param name="sceneName">Scene name string</param>
-    public void LoadScene(string sceneName = null)
+    public static void LoadScene(string sceneName = null)
     {
         sceneName ??= SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(sceneName);

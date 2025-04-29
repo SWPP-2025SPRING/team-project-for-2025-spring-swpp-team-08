@@ -10,14 +10,22 @@ public enum PlayStates
 public class PlayManager : MonoBehaviour
 {
     /// <summary>
-    /// Stage number of current scene. Must be assigned in Unity Inspector
+    /// Stage number of current scene.
+    /// Must be assigned in Unity Inspector.
     /// </summary>
     public int stageNo;
+
+    /// <summary>
+    /// Scene name of next stage.
+    /// Must be assigned in Unity Inspector.
+    /// </summary>
+    public string nextSceneName;
 
     // TODO: Add UIManager reference
 
     private PlayStates _state;
-    private float _playtimeSeconds;
+    private float _playtimeCurrent;
+    private float _playtimeTotal;
 
     private void Awake()
     {
@@ -27,7 +35,7 @@ public class PlayManager : MonoBehaviour
     private void Start()
     {
         _state = PlayStates.Ready;
-        _playtimeSeconds = 0f;
+        _playtimeCurrent = 0f;
 
         // TODO: Set initial UI values
     }
@@ -36,7 +44,7 @@ public class PlayManager : MonoBehaviour
     {
         if (_state == PlayStates.Playing)
         {
-            _playtimeSeconds += Time.deltaTime;
+            _playtimeCurrent += Time.deltaTime;
             // TODO: Display playtime
         }
     }
@@ -55,6 +63,11 @@ public class PlayManager : MonoBehaviour
 
         _state = PlayStates.Finished;
         // TODO: Implement finish logic
+    }
+
+    public void LoadNextStage()
+    {
+        GameManager.LoadScene(nextSceneName);
     }
 
     // TODO: Add UI related functions
