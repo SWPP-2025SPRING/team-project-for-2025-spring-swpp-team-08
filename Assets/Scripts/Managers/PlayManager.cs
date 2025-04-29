@@ -9,6 +9,9 @@ public enum PlayStates
 
 public class PlayManager : MonoBehaviour
 {
+    /// <summary>
+    /// Stage number of current scene. Must be assigned in Unity Inspector
+    /// </summary>
     public int stageNo;
 
     // TODO: Add UIManager reference
