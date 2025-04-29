@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,5 +17,16 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    /// <summary>
+    /// Loads a specified scene.
+    /// If not specified, reload current scene.
+    /// </summary>
+    /// <param name="sceneName">Scene name string</param>
+    public void LoadScene(string sceneName = null)
+    {
+        sceneName ??= SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(sceneName);
     }
 }
