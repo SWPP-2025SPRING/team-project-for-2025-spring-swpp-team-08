@@ -75,3 +75,6 @@ crashlytics-build.properties
 
 .vscode/
 .idea/
+
+# MacOS
+.DS_Store
