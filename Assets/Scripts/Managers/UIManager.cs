@@ -15,9 +15,8 @@ public class UIManager : MonoBehaviour
 
     //playtime UI 관리하는 함수
     //분:초:밀리초
-    public void UpdatePlayTime()
+    public void UpdatePlayTime(float playtime)
     {
-        float playtime = GameManager.Instance.playManager.GetPlaytime();
         int minutes = Mathf.FloorToInt(playtime / 60); 
         int seconds = Mathf.FloorToInt(playtime % 60); 
         int milliseconds = Mathf.FloorToInt((playtime * 100) % 100); 
