@@ -10,7 +10,6 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI playtimeText;
     public TextMeshProUGUI currentStageText;
 
-
     //UImanager for each scene, UImanager as prefab
 
     //playtime UI 관리하는 함수
@@ -22,6 +21,11 @@ public class UIManager : MonoBehaviour
         int milliseconds = Mathf.FloorToInt((playtime * 100) % 100); 
 
         playtimeText.text = string.Format("{0:D2}:{1:D2}:{2:D2}", minutes, seconds, milliseconds);
+    }
+
+    public void UpdateStage(string stageName)
+    {
+        currentStageText.text = stageName;
     }
 
     //set stage text at each scene UI

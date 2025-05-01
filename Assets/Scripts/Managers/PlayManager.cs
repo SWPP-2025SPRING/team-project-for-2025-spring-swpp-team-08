@@ -22,10 +22,12 @@ public class PlayManager : MonoBehaviour
     public string nextSceneName;
 
     // TODO: Add UIManager reference
+    public UIManager uimanager;
 
     private PlayStates _state;
     private float _playtimeCurrent;
     private float _playtimeTotal;
+    private string _stageName;
 
     private void Awake()
     {
@@ -38,6 +40,8 @@ public class PlayManager : MonoBehaviour
         _playtimeCurrent = 0f;
 
         // TODO: Set initial UI values
+        uimanager.UpdatePlayTime(_playtimeCurrent);
+        uimanager.UpdateStage(_stageName);
     }
 
     private void Update()
@@ -47,6 +51,7 @@ public class PlayManager : MonoBehaviour
             _playtimeCurrent += Time.deltaTime;
             // TODO: Display playtime
         }
+        uimanager.UpdatePlayTime(_playtimeCurrent);
     }
 
     public void StartGame()
