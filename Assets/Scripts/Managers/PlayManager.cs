@@ -1,0 +1,74 @@
+using UnityEngine;
+
+public enum PlayStates
+{
+    Ready,
+    Playing,
+    Finished
+}
+
+public class PlayManager : MonoBehaviour
+{
+    /// <summary>
+    /// Stage number of current scene.
+    /// Must be assigned in Unity Inspector.
+    /// </summary>
+    public int stageNo;
+
+    /// <summary>
+    /// Scene name of next stage.
+    /// Must be assigned in Unity Inspector.
+    /// </summary>
+    public string nextSceneName;
+
+    // TODO: Add UIManager reference
+
+    private PlayStates _state;
+    private float _playtimeCurrent;
+    private float _playtimeTotal;
+
+    private void Awake()
+    {
+        GameManager.Instance.playManager = this;
+    }
+
+    private void Start()
+    {
+        _state = PlayStates.Ready;
+        _playtimeCurrent = 0f;
+
+        // TODO: Set initial UI values
+    }
+
+    private void Update()
+    {
+        if (_state == PlayStates.Playing)
+        {
+            _playtimeCurrent += Time.deltaTime;
+            // TODO: Display playtime
+        }
+    }
+
+    public void StartGame()
+    {
+        if (_state != PlayStates.Ready) return;
+
+        _state = PlayStates.Playing;
+        // TODO: Implement start logic
+    }
+
+    public void FinishGame()
+    {
+        if (_state != PlayStates.Playing) return;
+
+        _state = PlayStates.Finished;
+        // TODO: Implement finish logic
+    }
+
+    public void LoadNextStage()
+    {
+        GameManager.LoadScene(nextSceneName);
+    }
+
+    // TODO: Add UI related functions
+}
