@@ -53,6 +53,7 @@ public class PlayManager : MonoBehaviour
             // TODO: Display playtime
         }
         uimanager.UpdatePlayTime(_playtimeTotal);
+        uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
     }
 
     public void StartGame()
