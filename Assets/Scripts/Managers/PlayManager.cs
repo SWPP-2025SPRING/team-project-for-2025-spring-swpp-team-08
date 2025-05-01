@@ -38,6 +38,7 @@ public class PlayManager : MonoBehaviour
     {
         _state = PlayStates.Ready;
         _playtimeCurrent = 0f;
+        _playtimeTotal = GameManager.Instance.totalPlayTime;
 
         // TODO: Set initial UI values
         uimanager.UpdatePlayTime(_playtimeTotal);
@@ -50,10 +51,11 @@ public class PlayManager : MonoBehaviour
         if (_state == PlayStates.Playing)
         {
             _playtimeCurrent += Time.deltaTime;
+            _playtimeTotal += Time.deltaTime;
             // TODO: Display playtime
+            uimanager.UpdatePlayTime(_playtimeTotal);
+            uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
         }
-        uimanager.UpdatePlayTime(_playtimeTotal);
-        uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
     }
 
     public void StartGame()
