@@ -76,8 +76,8 @@ public class PlayManager : MonoBehaviour
 
     public void LoadNextStage()
     {
-        GameManager.LoadScene(nextSceneName);
         GameManager.Instance.totalPlayTime += _playtimeCurrent;
+        GameManager.LoadScene(nextSceneName);
 
     }
     // TODO: Add UI related functions
