@@ -65,6 +65,12 @@ public class PlayManager : MonoBehaviour
             }
         }
     }
+    //update checkpoint
+    public void UpdateCheckpoint(Vector3 newCheckpoint)
+    {
+        _checkpoint = newCheckpoint;
+    }
+
     //set player to chosen location
     public void moveToLastCheckpoint()
     {
