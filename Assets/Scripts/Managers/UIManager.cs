@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,23 +17,20 @@ public class UIManager : MonoBehaviour
     //playtime UI
     //sec:min:millisec
     //overall play time
-    public void UpdatePlayTime(float playtime)
-    {
-        int minutes = Mathf.FloorToInt(playtime / 60); 
-        int seconds = Mathf.FloorToInt(playtime % 60); 
-        int milliseconds = Mathf.FloorToInt((playtime * 100) % 100); 
 
-        playtimeText.text = string.Format("Playtime...{0:D2}:{1:D2}:{2:D2}", minutes, seconds, milliseconds);
+    private string FormatPlayTime(float playtime)
+    {
+        return TimeSpan.FromSeconds(playtime).ToString(@"mm\:ss\.ff");
     }
 
-    //current stage play time
-    public void UpdateCurrentPlayTime(float currentplaytime)
+    public void UpdatePlayTime(float playtime)
     {
-        int minutes = Mathf.FloorToInt(currentplaytime / 60);
-        int seconds = Mathf.FloorToInt(currentplaytime % 60);
-        int milliseconds = Mathf.FloorToInt((currentplaytime * 100) % 100);
+        playtimeText.text = $"Playtime...{FormatPlayTime(playtime)}";
+    }
 
-        currentPlayTimeText.text = string.Format("On current stage...{0:D2}:{1:D2}:{2:D2}", minutes, seconds, milliseconds);
+    public void UpdateCurrentPlayTime(float playtime)
+    {
+        currentPlayTimeText.text = $"On current stage...{FormatPlayTime(playtime)}";
     }
 
     public void UpdateStage(string stageName)
