@@ -11,6 +11,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI playtimeText;
     public TextMeshProUGUI currentPlayTimeText;
     public TextMeshProUGUI currentStageText;
+    public TextMeshProUGUI subtitle;
+
+    private void Start()
+    {
+        subtitle.gameObject.SetActive(false);
+    }
 
     //UImanager for each scene, UImanager as prefab
 
@@ -36,6 +42,11 @@ public class UIManager : MonoBehaviour
     public void UpdateStage(string stageName)
     {
         currentStageText.text = stageName;
+    }
+
+    public void UpdateSubtitle(string subtitle)
+    {
+
     }
 
     //set stage text at each scene UI
