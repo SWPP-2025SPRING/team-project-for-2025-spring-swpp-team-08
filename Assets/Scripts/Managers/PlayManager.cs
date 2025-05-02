@@ -15,6 +15,9 @@ public class PlayManager : MonoBehaviour
     /// </summary>
     public int stageNo;
 
+    // rigidbody of player
+    public Rigidbody playerRigidbody;  
+
     /// <summary>
     /// Scene name of next stage.
     /// Must be assigned in Unity Inspector.
@@ -56,6 +59,13 @@ public class PlayManager : MonoBehaviour
             uimanager.UpdatePlayTime(_playtimeTotal);
             uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
         }
+    }
+
+    //check if player has fallen down 
+    //can be changed later
+    private bool IsPlayerFallen()
+    {
+        return playerRigidbody.position.y <= -10f;
     }
 
     public void StartGame()
