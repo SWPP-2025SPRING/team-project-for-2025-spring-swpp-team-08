@@ -30,7 +30,8 @@ public class PlayManager : MonoBehaviour
     private PlayStates _state;
     private float _playtimeCurrent;
     private float _playtimeTotal;
-    public string _stageName; //set in each playmanager
+    public string _stageName;
+    public string _deathSubtitle;
 
     private void Awake()
     {
@@ -55,12 +56,11 @@ public class PlayManager : MonoBehaviour
         {
             _playtimeCurrent += Time.deltaTime;
             _playtimeTotal += Time.deltaTime;
-            // TODO: Display playtime
             uimanager.UpdatePlayTime(_playtimeTotal);
             uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
-            /*if IsPlayerFallen(){
-                
-            }*/
+            if (IsPlayerFallen()){
+                uimanager.UpdateSubtitle(_deathSubtitle, 5);
+            }
         }
     }
 
