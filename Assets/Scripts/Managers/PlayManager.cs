@@ -68,6 +68,7 @@ public class PlayManager : MonoBehaviour
     //update checkpoint
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
+        uimanager.UpdateSubtitle("Checkpoint set...", 3);
         _checkpoint = newCheckpoint;
     }
 
