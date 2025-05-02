@@ -32,6 +32,7 @@ public class PlayManager : MonoBehaviour
     private float _playtimeTotal;
     public string _stageName;
     public string _deathSubtitle;
+    private Vector3 _checkpoint = new Vector3(0, 0, 0);
 
     private void Awake()
     {
@@ -63,10 +64,15 @@ public class PlayManager : MonoBehaviour
             }
         }
     }
+    //set player to chosen location
+    public void moveToLastCheckpoint()
+    {
+        playerRigidbody.transform.position = _checkpoint;
+    }
 
     //check if player has fallen down 
     //can be changed later
-    private bool IsPlayerFallen()
+    public bool IsPlayerFallen()
     {
         return playerRigidbody.position.y <= -10f;
     }
