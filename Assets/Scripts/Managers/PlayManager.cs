@@ -61,6 +61,7 @@ public class PlayManager : MonoBehaviour
             uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
             if (IsPlayerFallen()){
                 uimanager.UpdateSubtitle(_deathSubtitle, 5);
+                moveToLastCheckpoint();
             }
         }
     }
