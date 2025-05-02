@@ -11,11 +11,11 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI playtimeText;
     public TextMeshProUGUI currentPlayTimeText;
     public TextMeshProUGUI currentStageText;
-    public TextMeshProUGUI subtitle;
+    public TextMeshProUGUI subtitleText;
 
     private void Start()
     {
-        subtitle.gameObject.SetActive(false);
+        subtitleText.gameObject.SetActive(false);
     }
 
     //UImanager for each scene, UImanager as prefab
@@ -44,10 +44,19 @@ public class UIManager : MonoBehaviour
         currentStageText.text = stageName;
     }
 
-    public void UpdateSubtitle(string subtitle)
+    public void UpdateSubtitle(string subtitle, float duration)
     {
-
+        subtitleText.text = subtitle;
+        subtitleText.gameObject.SetActive(true);
+        StartCoroutine(HideSubtitleAfterDelay(duration));
     }
+
+    private IEnumerator HideSubtitleAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        subtitleText.gameObject.SetActive(false);
+    }
+
 
     //set stage text at each scene UI
     //stage text:  "DM", "DS", "EEC", "SWPP"
