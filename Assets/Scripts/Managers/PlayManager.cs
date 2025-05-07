@@ -59,10 +59,11 @@ public class PlayManager : MonoBehaviour
             _playtimeTotal += Time.deltaTime;
             uimanager.UpdatePlayTime(_playtimeTotal);
             uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
-            if (IsPlayerFallen()){
+            /*if player is fallen, call the following at player:
                 uimanager.UpdateSubtitle(_deathSubtitle, 5);
                 moveToLastCheckpoint();
             }
+            */
         }
     }
     //update checkpoint
