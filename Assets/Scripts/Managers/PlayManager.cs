@@ -75,7 +75,7 @@ public class PlayManager : MonoBehaviour
     //set player to chosen location
     public void moveToLastCheckpoint()
     {
-        playerRigidbody.transform.position = _checkpoint;
+        //TBD
     }
 
     //check if player has fallen down 
