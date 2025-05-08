@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI currentStageText;
     public TextMeshProUGUI subtitleText;
     public TextMeshProUGUI percentText;
+    public Slider progressBar;
 
     private Coroutine _coroutine;
 
@@ -57,10 +58,15 @@ public class UIManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true);
         _coroutine = StartCoroutine(HideSubtitleAfterDelay(duration));
     }
-    public void ShowProgress(float progress)
+    public void SetProgress(float progress)
     {
         float percent = progress * 100;
         percentText.text = percent.ToString("F1");
+    }
+
+    public void SetProgressBar(float progress)
+    {
+        progressBar.value = progress;
     }
 
     private IEnumerator HideSubtitleAfterDelay(float duration)
