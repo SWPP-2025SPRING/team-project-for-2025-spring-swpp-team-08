@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    public TextMeshProUGUI playtimeText;
+    public TextMeshProUGUI playTimeText;
     public TextMeshProUGUI currentPlayTimeText;
     public TextMeshProUGUI currentStageText;
     public TextMeshProUGUI subtitleText;
@@ -33,14 +33,14 @@ public class UIManager : MonoBehaviour
         return TimeSpan.FromSeconds(playtime).ToString(@"mm\:ss\.ff");
     }
 
-    public void UpdatePlayTime(float playtime)
+    public void UpdatePlayTime(float playTime)
     {
-        playtimeText.text = $"Playtime...{FormatPlayTime(playtime)}";
+        playTimeText.text = $"Playtime...{FormatPlayTime(playTime)}";
     }
 
-    public void UpdateCurrentPlayTime(float playtime)
+    public void UpdateCurrentPlayTime(float playTime)
     {
-        currentPlayTimeText.text = $"On current stage...{FormatPlayTime(playtime)}";
+        currentPlayTimeText.text = $"On current stage...{FormatPlayTime(playTime)}";
     }
 
     public void UpdateStage(string stageName)
@@ -74,7 +74,6 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         subtitleText.gameObject.SetActive(false);
     }
-
 
     //set stage text at each scene UI
     //stage text:  "DM", "DS", "EEC", "SWPP"

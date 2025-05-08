@@ -26,8 +26,8 @@ public class PlayManager : MonoBehaviour
     public string stageName;
 
     private PlayStates _state;
-    private float _playtimeCurrent;
-    private float _playtimeTotal;
+    private float _playTimeCurrent;
+    private float _playTimeTotal;
     
     private Vector3 _checkpoint = new Vector3(0, 0, 0);
 
@@ -39,11 +39,11 @@ public class PlayManager : MonoBehaviour
     private void Start()
     {
         _state = PlayStates.Ready;
-        _playtimeCurrent = 0f;
-        _playtimeTotal = GameManager.Instance.totalPlayTime;
+        _playTimeCurrent = 0f;
+        _playTimeTotal = GameManager.Instance.totalPlayTime;
 
-        uiManager.UpdatePlayTime(_playtimeTotal);
-        uiManager.UpdateCurrentPlayTime(_playtimeCurrent);
+        uiManager.UpdatePlayTime(_playTimeTotal);
+        uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
         uiManager.UpdateStage(stageName);
     }
 
@@ -51,10 +51,10 @@ public class PlayManager : MonoBehaviour
     {
         if (_state == PlayStates.Playing)
         {
-            _playtimeCurrent += Time.deltaTime;
-            _playtimeTotal += Time.deltaTime;
-            uiManager.UpdatePlayTime(_playtimeTotal);
-            uiManager.UpdateCurrentPlayTime(_playtimeCurrent);
+            _playTimeCurrent += Time.deltaTime;
+            _playTimeTotal += Time.deltaTime;
+            uiManager.UpdatePlayTime(_playTimeTotal);
+            uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
             /*if player is fallen, call the following at player:
              *uimanager.UpdateSubtitle(_deathSubtitle, 5);
              *moveToLastCheckpoint();
@@ -62,7 +62,7 @@ public class PlayManager : MonoBehaviour
              */
         }
     }
-    //update checkpoint
+
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
         uiManager.UpdateSubtitle("Checkpoint set...", 3);
@@ -93,7 +93,7 @@ public class PlayManager : MonoBehaviour
 
     public void LoadNextStage()
     {
-        GameManager.Instance.totalPlayTime += _playtimeCurrent;
+        GameManager.Instance.totalPlayTime += _playTimeCurrent;
         GameManager.LoadScene(nextSceneName);
 
     }
