@@ -20,6 +20,16 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        totalPlayTime = 0;
+    }
+
     /// <summary>
     /// Loads a specified scene.
     /// If not specified, reload current scene.
