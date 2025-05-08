@@ -57,9 +57,10 @@ public class UIManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true);
         _coroutine = StartCoroutine(HideSubtitleAfterDelay(duration));
     }
-    public void ShowProgress(string percent)
+    public void ShowProgress(float progress)
     {
-        percentText.text = percent;
+        float percent = progress * 100;
+        percentText.text = percent.ToString("F1");
     }
 
     private IEnumerator HideSubtitleAfterDelay(float duration)
