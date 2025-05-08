@@ -31,7 +31,6 @@ public class PlayManager : MonoBehaviour
     private float _playtimeCurrent;
     private float _playtimeTotal;
     public string _stageName;
-    public string _deathSubtitle;
     private Vector3 _checkpoint = new Vector3(0, 0, 0);
 
     private void Awake()
