@@ -26,11 +26,12 @@ public class PlayManager : MonoBehaviour
 
     // TODO: Add UIManager reference
     public UIManager uimanager;
+    public string stageName;
 
     private PlayStates _state;
     private float _playtimeCurrent;
     private float _playtimeTotal;
-    public string _stageName;
+    
     private Vector3 _checkpoint = new Vector3(0, 0, 0);
 
     private void Awake()
@@ -47,7 +48,7 @@ public class PlayManager : MonoBehaviour
         // TODO: Set initial UI values
         uimanager.UpdatePlayTime(_playtimeTotal);
         uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
-        uimanager.UpdateStage(_stageName);
+        uimanager.UpdateStage(stageName);
     }
 
     private void Update()
