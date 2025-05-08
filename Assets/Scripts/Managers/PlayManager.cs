@@ -22,7 +22,7 @@ public class PlayManager : MonoBehaviour
     public string nextSceneName;
 
     // TODO: Add UIManager reference
-    public UIManager uimanager;
+    public UIManager uiManager;
     public string stageName;
 
     private PlayStates _state;
@@ -43,9 +43,9 @@ public class PlayManager : MonoBehaviour
         _playtimeTotal = GameManager.Instance.totalPlayTime;
 
         // TODO: Set initial UI values
-        uimanager.UpdatePlayTime(_playtimeTotal);
-        uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
-        uimanager.UpdateStage(stageName);
+        uiManager.UpdatePlayTime(_playtimeTotal);
+        uiManager.UpdateCurrentPlayTime(_playtimeCurrent);
+        uiManager.UpdateStage(stageName);
     }
 
     private void Update()
@@ -54,8 +54,8 @@ public class PlayManager : MonoBehaviour
         {
             _playtimeCurrent += Time.deltaTime;
             _playtimeTotal += Time.deltaTime;
-            uimanager.UpdatePlayTime(_playtimeTotal);
-            uimanager.UpdateCurrentPlayTime(_playtimeCurrent);
+            uiManager.UpdatePlayTime(_playtimeTotal);
+            uiManager.UpdateCurrentPlayTime(_playtimeCurrent);
             /*if player is fallen, call the following at player:
                 uimanager.UpdateSubtitle(_deathSubtitle, 5);
                 moveToLastCheckpoint();
@@ -66,7 +66,7 @@ public class PlayManager : MonoBehaviour
     //update checkpoint
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
-        uimanager.UpdateSubtitle("Checkpoint set...", 3);
+        uiManager.UpdateSubtitle("Checkpoint set...", 3);
         _checkpoint = newCheckpoint;
     }
 
