@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
         currentStageText.text = stageName;
     }
 
-    public void UpdateSubtitle(string subtitle, float duration)
+    public void UpdateSubtitle(string subtitle, float totalDurationSeconds)
     {
         if (_coroutine != null)
         {
@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
         }
         subtitleText.text = subtitle;
         subtitleText.gameObject.SetActive(true);
-        _coroutine = StartCoroutine(HideSubtitleAfterDelay(duration));
+        _coroutine = StartCoroutine(HideSubtitleAfterDelay(totalDurationSeconds));
     }
     public void SetProgress(float progress)
     {
@@ -69,9 +69,9 @@ public class UIManager : MonoBehaviour
         progressBar.value = progress;
     }
 
-    private IEnumerator HideSubtitleAfterDelay(float duration)
+    private IEnumerator HideSubtitleAfterDelay(float totalDurationSeconds)
     {
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(totalDurationSeconds);
         subtitleText.gameObject.SetActive(false);
     }
 
