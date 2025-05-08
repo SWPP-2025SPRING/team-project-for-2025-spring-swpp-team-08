@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI currentPlayTimeText;
     public TextMeshProUGUI currentStageText;
     public TextMeshProUGUI subtitleText;
+    public TextMeshProUGUI percentText;
 
     private void Start()
     {
@@ -49,6 +50,10 @@ public class UIManager : MonoBehaviour
         subtitleText.text = subtitle;
         subtitleText.gameObject.SetActive(true);
         StartCoroutine(HideSubtitleAfterDelay(duration));
+    }
+    public void ShowProgress(string percent)
+    {
+        percentText.text = percent;
     }
 
     private IEnumerator HideSubtitleAfterDelay(float duration)
