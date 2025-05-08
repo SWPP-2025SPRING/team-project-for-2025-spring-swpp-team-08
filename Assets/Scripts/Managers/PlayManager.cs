@@ -42,7 +42,6 @@ public class PlayManager : MonoBehaviour
         _playtimeCurrent = 0f;
         _playtimeTotal = GameManager.Instance.totalPlayTime;
 
-        // TODO: Set initial UI values
         uiManager.UpdatePlayTime(_playtimeTotal);
         uiManager.UpdateCurrentPlayTime(_playtimeCurrent);
         uiManager.UpdateStage(stageName);
@@ -57,10 +56,10 @@ public class PlayManager : MonoBehaviour
             uiManager.UpdatePlayTime(_playtimeTotal);
             uiManager.UpdateCurrentPlayTime(_playtimeCurrent);
             /*if player is fallen, call the following at player:
-                uimanager.UpdateSubtitle(_deathSubtitle, 5);
-                moveToLastCheckpoint();
-            }
-            */
+             *uimanager.UpdateSubtitle(_deathSubtitle, 5);
+             *moveToLastCheckpoint();
+             * }
+             */
         }
     }
     //update checkpoint
