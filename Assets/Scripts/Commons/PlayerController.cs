@@ -243,4 +243,8 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
     }
 
+    public void Jump(float magnitude = 1.0f)
+    {
+        _rb.AddForce(Vector3.up * magnitude, ForceMode.Impulse);
+    }
 }
