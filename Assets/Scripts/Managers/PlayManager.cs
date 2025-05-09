@@ -22,10 +22,14 @@ public class PlayManager : MonoBehaviour
     public string nextSceneName;
 
     // TODO: Add UIManager reference
+    public UIManager uiManager;
+    public string stageName;
 
     private PlayStates _state;
-    private float _playtimeCurrent;
-    private float _playtimeTotal;
+    private float _playTimeCurrent;
+    private float _playTimeTotal;
+    
+    private Vector3 _checkpoint = new Vector3(0, 0, 0);
 
     private void Awake()
     {
@@ -35,18 +39,40 @@ public class PlayManager : MonoBehaviour
     private void Start()
     {
         _state = PlayStates.Ready;
-        _playtimeCurrent = 0f;
+        _playTimeCurrent = 0f;
+        _playTimeTotal = GameManager.Instance.totalPlayTime;
 
-        // TODO: Set initial UI values
+        uiManager.UpdatePlayTime(_playTimeTotal);
+        uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
+        uiManager.UpdateStage(stageName);
     }
 
     private void Update()
     {
         if (_state == PlayStates.Playing)
         {
-            _playtimeCurrent += Time.deltaTime;
-            // TODO: Display playtime
+            _playTimeCurrent += Time.deltaTime;
+            _playTimeTotal += Time.deltaTime;
+            uiManager.UpdatePlayTime(_playTimeTotal);
+            uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
+            /*if player is fallen, call the following at player:
+             *uimanager.UpdateSubtitle(_deathSubtitle, 5);
+             *moveToLastCheckpoint();
+             * }
+             */
         }
+    }
+
+    public void UpdateCheckpoint(Vector3 newCheckpoint)
+    {
+        uiManager.UpdateSubtitle("Checkpoint set...", 3);
+        _checkpoint = newCheckpoint;
+    }
+
+    //set player to chosen location
+    public void moveToLastCheckpoint()
+    {
+        //TBD
     }
 
     public void StartGame()
@@ -67,8 +93,9 @@ public class PlayManager : MonoBehaviour
 
     public void LoadNextStage()
     {
+        GameManager.Instance.totalPlayTime += _playTimeCurrent;
         GameManager.LoadScene(nextSceneName);
-    }
 
+    }
     // TODO: Add UI related functions
 }

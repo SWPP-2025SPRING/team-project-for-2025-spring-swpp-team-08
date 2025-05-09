@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public PlayManager playManager;
+    public float totalPlayTime = 0;
 
     private void Awake()
     {
@@ -17,6 +18,16 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        totalPlayTime = 0;
     }
 
     /// <summary>
