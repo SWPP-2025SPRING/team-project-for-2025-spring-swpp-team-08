@@ -40,4 +40,9 @@ public class GameManager : MonoBehaviour
         sceneName ??= SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(sceneName);
     }
+
+    void Start()
+    {
+        Physics.gravity = new Vector3(0, -30f, 0);
+    }
 }
