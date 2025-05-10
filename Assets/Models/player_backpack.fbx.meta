@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material_0.001
-    second: {fileID: 2100000, guid: a0d4b6858ce366242b4069d3ef9380ec, type: 2}
+    second: {fileID: 2100000, guid: 1f0bf98d6096d11408e27d526fd5e16c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -19,6 +19,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: backpack blue_lighter
     second: {fileID: 2100000, guid: 00f93da96fe61be4788b4ac1e5d355a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: backpack bottom
+    second: {fileID: 2100000, guid: a9ac4fb5c3924224a93e18c08bba1855, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
