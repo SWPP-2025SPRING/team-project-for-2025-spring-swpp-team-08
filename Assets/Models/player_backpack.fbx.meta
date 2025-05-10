@@ -3,7 +3,32 @@ guid: cb16d6b9d5cf65d458edfe902850c04f
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_0.001
+    second: {fileID: 2100000, guid: a0d4b6858ce366242b4069d3ef9380ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: backpack blue
+    second: {fileID: 2100000, guid: a489eb323673a324c8113fe472f094c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: backpack blue_lighter
+    second: {fileID: 2100000, guid: 00f93da96fe61be4788b4ac1e5d355a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: black
+    second: {fileID: 2100000, guid: 5d52d546f9bb5cb48b0fb9d1a3395857, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body
+    second: {fileID: 2100000, guid: 3763f69b7c1ebb249a6dc0153fdd987e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
