@@ -4,16 +4,16 @@ public class CameraPivotController : MonoBehaviour
 {
     public Transform player;
     public float mouseSensitivity = 3f;
-
-    private float yaw = 0f;
-    private float pitch = 20f; // 기본 각도
     public float minPitch = -30f;
     public float maxPitch = 60f;
 
+    private float _yaw = 0f;
+    private float _pitch = 20f; // 기본 각도
+
     void Start()
     {
-        yaw = transform.eulerAngles.y;
-        pitch = transform.eulerAngles.x;
+        _yaw = transform.eulerAngles.y;
+        _pitch = transform.eulerAngles.x;
     }
 
     void LateUpdate()
@@ -21,11 +21,11 @@ public class CameraPivotController : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-        yaw += mouseX;
-        pitch -= mouseY;
-        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+        _yaw += mouseX;
+        _pitch -= mouseY;
+        _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
 
         transform.position = player.position;
-        transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
+        transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
     }
 }
