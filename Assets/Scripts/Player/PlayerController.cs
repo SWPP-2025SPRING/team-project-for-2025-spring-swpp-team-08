@@ -145,4 +145,9 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
+
+    public void Jump(float magnitude = 1.0f)
+    {
+        _rb.AddForce(Vector3.up * magnitude, ForceMode.Impulse);
+    }
 }
