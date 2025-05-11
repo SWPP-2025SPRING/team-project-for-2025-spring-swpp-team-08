@@ -566,7 +566,7 @@ def generate_ramp_curve(name, output_dir, curve_dir="right",
 
 
 def main():
-    output_dir = f"{os.path.dirname(os.path.abspath(__file__))}/../../Assets/Models/Ground/export"
+    output_dir = f"{os.path.dirname(os.path.abspath(__file__))}/export"
 
     generate_cant("CantMediumLeft", output_dir, curve_amount=-0.5, resolution=10, bump_strength=0)
     generate_cant("CantMediumRight", output_dir, curve_amount=0.5, resolution=10, bump_strength=0)

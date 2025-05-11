@@ -21,7 +21,7 @@ pip install -r requirements.txt
 python ground_generator.py
 ```
 
-스크립트를 실행하면 `Assets/Models/Ground/export` 폴더에 여러 개의 `.obj` 3D 타일 파일이 생성됩니다. 이 파일들은 Unity와 같은 게임 엔진에서 사용 가능합니다.
+스크립트를 실행하면 `Assets/Tools/Ground/export` 폴더에 여러 개의 `.obj` 3D 타일 파일이 생성됩니다. 이 파일들은 Unity와 같은 게임 엔진에서 사용 가능합니다.
 
 ---
 
@@ -75,10 +75,10 @@ python ground_generator.py
 
 ## ✅ 결과 파일
 
-스크립트를 실행하면 `.obj` 형식의 파일이 `Assets/Models/Ground/export` 폴더에 저장됩니다. 예:
+스크립트를 실행하면 `.obj` 형식의 파일이 `Assets/Tools/Ground/export` 폴더에 저장됩니다. 예:
 
 ```
-Assets/Models/Ground/export
+Assets/Tools/Ground/export
 ├── Straight.obj
 ├── CantMediumLeft.obj
 ├── SCurveRight.obj
@@ -99,7 +99,7 @@ Assets/Models/Ground/export
 ## ✅ 오류가 났을 때?
 
 - **파일이 이미 있다는데요?**
-  → `Assets/Models/Ground/export` 폴더의 기존 파일을 삭제하거나 이름을 바꿔서 실행하세요.
+  → `Assets/Tools/Ground/export` 폴더의 기존 파일을 삭제하거나 이름을 바꿔서 실행하세요.
 
 - **모델이 비어있어요.**
   → `resolution`이 너무 작거나, `thickness`가 0일 수 있습니다.
