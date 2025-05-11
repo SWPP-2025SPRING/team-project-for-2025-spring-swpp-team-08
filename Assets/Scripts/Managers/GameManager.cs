@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public PlayManager playManager;
+    public float totalPlayTime = 0;
 
     private void Awake()
     {
@@ -19,6 +20,17 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        Initialize();
+        Physics.gravity = new Vector3(0, -30f, 0);
+    }
+
+    public void Initialize()
+    {
+        totalPlayTime = 0;
+    }
+
     /// <summary>
     /// Loads a specified scene.
     /// If not specified, reload current scene.
@@ -28,10 +40,5 @@ public class GameManager : MonoBehaviour
     {
         sceneName ??= SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(sceneName);
-    }
-
-    private void Start()
-    {
-        Physics.gravity = new Vector3(0, -30f, 0);
     }
 }
