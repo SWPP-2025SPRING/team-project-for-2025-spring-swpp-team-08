@@ -10,13 +10,13 @@ public class CameraPivotController : MonoBehaviour
     private float _yaw = 0f;
     private float _pitch = 20f; // 기본 각도
 
-    void Start()
+    private void Start()
     {
         _yaw = transform.eulerAngles.y;
         _pitch = transform.eulerAngles.x;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;

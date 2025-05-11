@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    void Start()
+    private void Start()
     {
         Physics.gravity = new Vector3(0, -30f, 0);
     }

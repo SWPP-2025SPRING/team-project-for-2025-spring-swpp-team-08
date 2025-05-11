@@ -10,20 +10,20 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _inputDirection;
 
-    void Start()
+    private void Start()
     {
         _rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    private void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         _inputDirection = new Vector3(h, 0, v).normalized;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Vector3 camForward = cameraPivot.forward;
         Vector3 camRight = cameraPivot.right;
@@ -126,12 +126,12 @@ public class PlayerController : MonoBehaviour
         // Debug.Log($"|v|: {_rb.velocity.magnitude:F2}, horizontal: {horizontalSpeed:F2}, onSlope: {onSlope}, grounded: {grounded}");
     }
 
-    bool IsGrounded()
+    private bool IsGrounded()
     {
         return Physics.Raycast(transform.position, Vector3.down, out _, 1.2f);
     }
 
-    bool ApplySlopeSlide()
+    private bool ApplySlopeSlide()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1.1f))
         {

@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour
     public Vector3 offset = new Vector3(0f, 2f, -6f);
     public float followSpeed = 10f;
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector3 targetPos = cameraPivot.position + cameraPivot.rotation * offset;
         transform.position = Vector3.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
