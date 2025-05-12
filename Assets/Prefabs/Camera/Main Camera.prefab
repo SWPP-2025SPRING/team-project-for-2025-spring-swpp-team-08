@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5792159634458106060}
   - component: {fileID: 5792159634458106061}
   - component: {fileID: 5792159634458106051}
+  - component: {fileID: -1723334414005357527}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -91,3 +92,11 @@ MonoBehaviour:
   cameraPivot: {fileID: 0}
   offset: {x: 0, y: 5, z: -8}
   followSpeed: 10
+--- !u!81 &-1723334414005357527
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5792159634458106063}
+  m_Enabled: 1
