@@ -5,10 +5,13 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 30f;
     public float acceleration = 100f;
     public float deceleration = 100f;
+    public float fallThreshold = 5f;
     public Transform cameraPivot;
 
     private Rigidbody _rb;
     private Vector3 _inputDirection;
+    private float _fallTimer = 0f;
+    private bool _onContact = false;
 
     private void Start()
     {
@@ -21,6 +24,24 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         _inputDirection = new Vector3(h, 0, v).normalized;
+        if (!_onContact && _rb.velocity.y < 0f)
+        {
+            _fallTimer += Time.deltaTime;
+        }
+        else
+        {
+            _fallTimer = 0f;
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        _onContact = true;
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        _onContact = false;
     }
 
     private void FixedUpdate()
@@ -144,5 +165,15 @@ public class PlayerController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public bool IsFallen()
+    {
+        return _rb.transform.position.y <= 0f || isFallingTooLong();
+    }
+
+    private bool isFallingTooLong()
+    {
+        return _fallTimer >= fallThreshold;
     }
 }
