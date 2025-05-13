@@ -72,7 +72,7 @@ public class PlayManager : MonoBehaviour
     //set player to chosen location
     public void moveToLastCheckpoint()
     {
-        //TBD
+        uiManager.UpdateSubtitle("Moved to last checkpoint", 3);
     }
 
     public void StartGame()
