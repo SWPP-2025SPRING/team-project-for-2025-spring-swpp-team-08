@@ -23,6 +23,7 @@ public class PlayManager : MonoBehaviour
 
     // TODO: Add UIManager reference
     public UIManager uiManager;
+    public PlayerController playerController;
     public string stageName;
 
     private PlayStates _state;
@@ -55,11 +56,10 @@ public class PlayManager : MonoBehaviour
             _playTimeTotal += Time.deltaTime;
             uiManager.UpdatePlayTime(_playTimeTotal);
             uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
-            /*if player is fallen, call the following at player:
-             *uimanager.UpdateSubtitle(_deathSubtitle, 5);
-             *moveToLastCheckpoint();
-             * }
-             */
+            if (playerController != null && playerController.IsFallen())
+            {
+                MoveToLastCheckpoint();
+            }
         }
     }
 
@@ -70,9 +70,10 @@ public class PlayManager : MonoBehaviour
     }
 
     //set player to chosen location
-    public void moveToLastCheckpoint()
+    public void MoveToLastCheckpoint()
     {
         uiManager.UpdateSubtitle("Moved to last checkpoint", 3);
+        playerController.MoveTo(_checkpoint);
     }
 
     public void StartGame()

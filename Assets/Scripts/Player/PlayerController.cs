@@ -176,4 +176,12 @@ public class PlayerController : MonoBehaviour
     {
         return _fallTimer >= fallThreshold;
     }
+
+    public void MoveTo(Vector3 position)
+    {
+        _rb.velocity = Vector3.zero;        
+        _rb.angularVelocity = Vector3.zero; 
+        transform.position = position;
+    }
+
 }
