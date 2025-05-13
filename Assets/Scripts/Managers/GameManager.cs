@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     public PlayManager playManager;
     public float totalPlayTime = 0;
 
+    private AudioSource _bgmSource;
+    private AudioSource _sfxSource;
+
     private void Awake()
     {
         if (Instance != null)
@@ -18,6 +21,11 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        /* Set AudioSource */
+        var audioSources = GetComponents<AudioSource>();
+        _bgmSource = audioSources[0];
+        _sfxSource = audioSources[1];
     }
 
     private void Start()
@@ -40,5 +48,31 @@ public class GameManager : MonoBehaviour
     {
         sceneName ??= SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(sceneName);
+    }
+
+    /// <summary>
+    /// Plays a background music.
+    /// </summary>
+    public void PlayBgm(AudioClip clip)
+    {
+        _bgmSource.Stop();
+        _bgmSource.clip = clip;
+        _bgmSource.Play();
+    }
+
+    /// <summary>
+    /// Stops playing the background music.
+    /// </summary>
+    public void StopBgm()
+    {
+        _bgmSource.Stop();
+    }
+
+    /// <summary>
+    /// Plays a sound effect.
+    /// </summary>
+    public void PlaySfx(AudioClip clip)
+    {
+        _sfxSource.PlayOneShot(clip);
     }
 }
