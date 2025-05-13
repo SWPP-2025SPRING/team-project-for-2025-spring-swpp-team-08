@@ -25,6 +25,8 @@ public class PlayManager : MonoBehaviour
     public UIManager uiManager;
     public PlayerController playerController;
     public string stageName;
+    public AudioClip setCheckpoint;
+    public AudioClip fallDown;
 
     private PlayStates _state;
     private float _playTimeCurrent;
@@ -67,6 +69,7 @@ public class PlayManager : MonoBehaviour
     {
         uiManager.UpdateSubtitle("Checkpoint set...", 3);
         _checkpoint = newCheckpoint;
+        GameManager.Instance.PlaySfx(setCheckpoint);
     }
 
     //set player to chosen location
@@ -74,6 +77,7 @@ public class PlayManager : MonoBehaviour
     {
         uiManager.UpdateSubtitle("Moved to last checkpoint", 3);
         playerController.MoveTo(_checkpoint);
+        GameManager.Instance.PlaySfx(fallDown);
     }
 
     public void StartGame()
