@@ -5,7 +5,6 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 30f;
     public float acceleration = 100f;
     public float deceleration = 100f;
-    public float fallThresholdSeconds = 5f;
     public Transform cameraPivot;
 
     private Rigidbody _rb;
@@ -169,7 +168,8 @@ public class PlayerController : MonoBehaviour
 
     private bool IsFallingTooLong()
     {
-        return _fallTimer >= fallThresholdSeconds;
+        float fallSecond = GameManager.Instance.playManager.fallThresholdSecond;
+        return _fallTimer >= fallSecond;
     }
 
     public void MoveTo(Vector3 position)
