@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _inputDirection;
     private float _fallTimer = 0f;
-    private bool _onContact = false;
 
     private void Start()
     {
@@ -24,7 +23,7 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         _inputDirection = new Vector3(h, 0, v).normalized;
-        if (!_onContact && _rb.velocity.y < 0f)
+        if (!IsGrounded() && _rb.velocity.y < 0f)
         {
             _fallTimer += Time.deltaTime;
         }
@@ -36,16 +35,6 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.playManager.MoveToLastCheckpoint();
         }
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        _onContact = true;
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        _onContact = false;
     }
 
     private void FixedUpdate()
