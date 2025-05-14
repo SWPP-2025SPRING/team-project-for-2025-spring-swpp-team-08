@@ -31,5 +31,4 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
 
           VALIDATE_CSHARP: true
-          REPORT_OUTPUT: true
-          OUTPUT_DETAILS: detailed
+          FIX_CSHARP: true
