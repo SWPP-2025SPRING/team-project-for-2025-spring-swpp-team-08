@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour
         {
             _fallTimer = 0f;
         }
+        if (IsFallen())
+        {
+            GameManager.Instance.playManager.MoveToLastCheckpoint();
+        }
     }
 
     void OnCollisionEnter(Collision collision)

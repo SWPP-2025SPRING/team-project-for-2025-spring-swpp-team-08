@@ -58,10 +58,6 @@ public class PlayManager : MonoBehaviour
             _playTimeTotal += Time.deltaTime;
             uiManager.UpdatePlayTime(_playTimeTotal);
             uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
-            if (playerController.IsFallen())
-            {
-                MoveToLastCheckpoint();
-            }
         }
     }
 
