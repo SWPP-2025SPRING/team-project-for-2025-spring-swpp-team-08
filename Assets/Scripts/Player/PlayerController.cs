@@ -163,7 +163,8 @@ public class PlayerController : MonoBehaviour
 
     public bool IsFallen()
     {
-        return _rb.transform.position.y <= 0f || IsFallingTooLong();
+        float fallUnder = GameManager.Instance.playManager.fallThresholdHeight;
+        return _rb.transform.position.y <= fallUnder || IsFallingTooLong();
     }
 
     private bool IsFallingTooLong()

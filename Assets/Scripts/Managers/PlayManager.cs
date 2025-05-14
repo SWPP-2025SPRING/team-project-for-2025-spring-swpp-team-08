@@ -27,6 +27,7 @@ public class PlayManager : MonoBehaviour
     public AudioClip setCheckpoint;
     public AudioClip fallDown;
     public Vector3 checkpoint;
+    public float fallThresholdHeight;
 
     private PlayStates _state;
     private float _playTimeCurrent;
