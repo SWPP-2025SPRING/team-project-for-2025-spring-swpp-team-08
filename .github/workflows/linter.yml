@@ -30,15 +30,6 @@ jobs:
           DEFAULT_BRANCH: main
           VALIDATE_ALL_CODEBASE: true
 
-          # Unity 관련 주요 언어만 사용
           VALIDATE_CSHARP: true
           VALIDATE_YAML: true
           VALIDATE_JSON: true
-
-          VALIDATE_BASH: false
-          VALIDATE_CPP: false
-          VALIDATE_JAVASCRIPT_ES: false
-          VALIDATE_PYTHON: false
-          VALIDATE_TYPESCRIPT_ES: false
-          VALIDATE_GO: false
-          VALIDATE_JAVA: false
