@@ -26,13 +26,14 @@ public class PlayManager : MonoBehaviour
     public string stageName;
     public AudioClip setCheckpoint;
     public AudioClip fallDown;
-    public Vector3 checkpoint;
+    public Vector3 spawnPoint;
     public float fallThresholdHeight = 0f;
     public float fallThresholdSecond = 5f;
 
     private PlayStates _state;
     private float _playTimeCurrent;
     private float _playTimeTotal;
+    private Vector3 _checkpoint;
 
     private void Awake()
     {
@@ -44,6 +45,7 @@ public class PlayManager : MonoBehaviour
         _state = PlayStates.Ready;
         _playTimeCurrent = 0f;
         _playTimeTotal = GameManager.Instance.totalPlayTime;
+        _checkpoint = spawnPoint;
 
         uiManager.UpdatePlayTime(_playTimeTotal);
         uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
@@ -64,7 +66,7 @@ public class PlayManager : MonoBehaviour
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
         uiManager.UpdateSubtitle("Checkpoint set...", 3);
-        checkpoint = newCheckpoint;
+        _checkpoint = newCheckpoint;
         GameManager.Instance.PlaySfx(setCheckpoint);
     }
 
@@ -77,7 +79,7 @@ public class PlayManager : MonoBehaviour
 
     public Vector3 GetCurrentCheckpoint()
     {
-        return checkpoint;
+        return _checkpoint;
     }
 
     public void StartGame()
