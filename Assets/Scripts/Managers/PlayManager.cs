@@ -71,7 +71,7 @@ public class PlayManager : MonoBehaviour
     }
 
     //set player to chosen location
-    public void MoveToLastCheckpoint()
+    public void DisplayCheckpointReturn()
     {
         uiManager.UpdateSubtitle("Moved to last checkpoint", 3);
         GameManager.Instance.PlaySfx(fallDown);
