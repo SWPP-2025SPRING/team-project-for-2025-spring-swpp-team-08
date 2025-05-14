@@ -23,7 +23,6 @@ public class PlayManager : MonoBehaviour
 
     // TODO: Add UIManager reference
     public UIManager uiManager;
-    public PlayerController playerController;
     public string stageName;
     public AudioClip setCheckpoint;
     public AudioClip fallDown;
@@ -71,8 +70,12 @@ public class PlayManager : MonoBehaviour
     public void MoveToLastCheckpoint()
     {
         uiManager.UpdateSubtitle("Moved to last checkpoint", 3);
-        playerController.MoveTo(checkpoint);
         GameManager.Instance.PlaySfx(fallDown);
+    }
+
+    public Vector3 GetCurrentCheckpoint()
+    {
+        return checkpoint;
     }
 
     public void StartGame()
