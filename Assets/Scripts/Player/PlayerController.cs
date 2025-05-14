@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
         return _rb.transform.position.y <= 0f || isFallingTooLong();
     }
 
-    private bool isFallingTooLong()
+    private bool IsFallingTooLong()
     {
         return _fallTimer >= fallThreshold;
     }
