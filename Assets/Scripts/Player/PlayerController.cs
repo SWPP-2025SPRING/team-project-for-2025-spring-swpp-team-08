@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsFallen()
     {
-        return _rb.transform.position.y <= 0f || isFallingTooLong();
+        return _rb.transform.position.y <= 0f || IsFallingTooLong();
     }
 
     private bool IsFallingTooLong()
