@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
 
     private bool IsFallingTooLong()
     {
-        return _fallTimer >= fallThreshold;
+        return _fallTimer >= fallThresholdSeconds;
     }
 
     public void MoveTo(Vector3 position)
