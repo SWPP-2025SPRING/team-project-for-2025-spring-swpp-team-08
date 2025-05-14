@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _rb;
     private Vector3 _inputDirection;
+    private float _fallTimer = 0f;
 
     private void Start()
     {
@@ -21,6 +22,19 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         _inputDirection = new Vector3(h, 0, v).normalized;
+        if (!IsGrounded() && _rb.velocity.y < 0f)
+        {
+            _fallTimer += Time.deltaTime;
+        }
+        else
+        {
+            _fallTimer = 0f;
+        }
+        if (IsFallen())
+        {
+            Vector3 currentCheckPoint = GameManager.Instance.playManager.GetCurrentCheckpoint();
+            MoveTo(currentCheckPoint);
+        }
     }
 
     private void FixedUpdate()
@@ -145,4 +159,24 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
+
+    public bool IsFallen()
+    {
+        float fallUnder = GameManager.Instance.playManager.fallThresholdHeight;
+        return _rb.transform.position.y <= fallUnder || IsFallingTooLong();
+    }
+
+    private bool IsFallingTooLong()
+    {
+        float fallSecond = GameManager.Instance.playManager.fallThresholdSecond;
+        return _fallTimer >= fallSecond;
+    }
+
+    public void MoveTo(Vector3 position)
+    {
+        _rb.velocity = Vector3.zero;        
+        _rb.angularVelocity = Vector3.zero; 
+        transform.position = position;
+    }
+
 }

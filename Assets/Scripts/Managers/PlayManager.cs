@@ -24,12 +24,16 @@ public class PlayManager : MonoBehaviour
     // TODO: Add UIManager reference
     public UIManager uiManager;
     public string stageName;
+    public AudioClip setCheckpoint;
+    public AudioClip fallDown;
+    public Vector3 spawnPoint;
+    public float fallThresholdHeight = 0f;
+    public float fallThresholdSecond = 5f;
 
     private PlayStates _state;
     private float _playTimeCurrent;
     private float _playTimeTotal;
-    
-    private Vector3 _checkpoint = new Vector3(0, 0, 0);
+    private Vector3 _checkpoint;
 
     private void Awake()
     {
@@ -41,6 +45,7 @@ public class PlayManager : MonoBehaviour
         _state = PlayStates.Ready;
         _playTimeCurrent = 0f;
         _playTimeTotal = GameManager.Instance.totalPlayTime;
+        _checkpoint = spawnPoint;
 
         uiManager.UpdatePlayTime(_playTimeTotal);
         uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
@@ -55,11 +60,6 @@ public class PlayManager : MonoBehaviour
             _playTimeTotal += Time.deltaTime;
             uiManager.UpdatePlayTime(_playTimeTotal);
             uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
-            /*if player is fallen, call the following at player:
-             *uimanager.UpdateSubtitle(_deathSubtitle, 5);
-             *moveToLastCheckpoint();
-             * }
-             */
         }
     }
 
@@ -67,12 +67,19 @@ public class PlayManager : MonoBehaviour
     {
         uiManager.UpdateSubtitle("Checkpoint set...", 3);
         _checkpoint = newCheckpoint;
+        GameManager.Instance.PlaySfx(setCheckpoint);
     }
 
     //set player to chosen location
-    public void moveToLastCheckpoint()
+    public void DisplayCheckpointReturn()
     {
-        //TBD
+        uiManager.UpdateSubtitle("Moved to last checkpoint", 3);
+        GameManager.Instance.PlaySfx(fallDown);
+    }
+
+    public Vector3 GetCurrentCheckpoint()
+    {
+        return _checkpoint;
     }
 
     public void StartGame()
