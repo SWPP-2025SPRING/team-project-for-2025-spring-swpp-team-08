@@ -33,7 +33,8 @@ public class PlayerController : MonoBehaviour
         }
         if (IsFallen())
         {
-            GameManager.Instance.playManager.MoveToLastCheckpoint();
+            Vector3 currentCheckPoint = GameManager.Instance.playManager.GetCurrentCheckpoint();
+            MoveTo(currentCheckPoint);
         }
     }
 
