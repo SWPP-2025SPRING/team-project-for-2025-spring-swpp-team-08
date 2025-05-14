@@ -1,30 +1,44 @@
----
 name: Lint
 
-on: # yamllint disable-line rule:truthy 
-  push: null 
-  pull_request: null
+on: [push, pull_request]
 
-permissions: {}
+permissions:
+  contents: read
+  packages: read
+  statuses: write
 
-jobs: 
-  build:
-    name: Lint    
+jobs:
+  lint:
+    name: Run Linter
     runs-on: ubuntu-latest
 
-    permissions:      
-      contents: read      
+    permissions:
+      contents: read
       packages: read
       statuses: write
 
-    steps:      
+    steps:
       - name: Checkout code
-        uses: actions/checkout@v4 
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Super-linter        
+      - name: Run Super-Linter
         uses: super-linter/super-linter@v7.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
+          VALIDATE_ALL_CODEBASE: true
 
+          # Unity 관련 주요 언어만 사용
+          VALIDATE_CSHARP: true
+          VALIDATE_YAML: true
+          VALIDATE_JSON: true
+
+          VALIDATE_BASH: false
+          VALIDATE_CPP: false
+          VALIDATE_JAVASCRIPT_ES: false
+          VALIDATE_PYTHON: false
+          VALIDATE_TYPESCRIPT_ES: false
+          VALIDATE_GO: false
+          VALIDATE_JAVA: false
