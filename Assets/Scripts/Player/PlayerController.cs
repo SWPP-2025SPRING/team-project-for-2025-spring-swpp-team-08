@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 30f;
     public float acceleration = 100f;
     public float deceleration = 100f;
-    public float fallThreshold = 5f;
+    public float fallThresholdSeconds = 5f;
     public Transform cameraPivot;
 
     private Rigidbody _rb;
