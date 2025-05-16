@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class saveCheckpoint : MonoBehaviour
+public class SaveCheckpoint : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
