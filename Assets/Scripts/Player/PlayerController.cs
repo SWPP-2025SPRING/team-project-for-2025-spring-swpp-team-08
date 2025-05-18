@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
         {
             float alignment = Vector3.Dot(horizontalVelocity.normalized, moveDir);
 
+            // 일반적인 경우 빠르게 가속
             if (moveDirSpeed < maxSpeed - 0.1f)
             {
                 Vector3 desiredVelocity = moveDir * maxSpeed;
@@ -94,6 +95,7 @@ public class PlayerController : MonoBehaviour
                 Vector3 force = Vector3.ClampMagnitude(velocityDelta * effectiveAccel, acceleration);
                 _rb.AddForce(force, ForceMode.Acceleration);
             }
+            // 경사면 이동 등으로 인해 최대 속도를 초과한 상태에서 input이 있다면, 최대 속도에 천천히 수렴
             else if (alignment > 0.9f && moveDirSpeed > maxSpeed + 0.5f && slopeAngle < 3f)
             {
                 float excess = moveDirSpeed - maxSpeed;
@@ -101,6 +103,7 @@ public class PlayerController : MonoBehaviour
                 Vector3 decel = -moveDir * (excess * dampingStrength);
                 _rb.AddForce(decel, ForceMode.Acceleration);
             }
+            // 최대 속도를 초과한 상태에서 반대방향 키를 누르면 빠르게 멈춤
             else if (alignment < -0.1f)
             {
                 Vector3 steer = (moveDir - horizontalVelocity.normalized) * effectiveAccel * 0.5f;
@@ -108,6 +111,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        // 평지에서 입력 없으면 감속
         if (!isSliding && grounded)
         {
             bool inputExists = _inputDirection.magnitude > 0;
@@ -115,16 +119,19 @@ public class PlayerController : MonoBehaviour
 
             if (!inputExists || oppositeDir)
             {
+                // 평지에서 고속 + 무입력 → 빠르게 감속
                 if (horizontalSpeed > moveSpeed)
                 {
                     Vector3 decel = -horizontalVelocity.normalized * deceleration * 0.5f;
                     _rb.AddForce(decel, ForceMode.Acceleration);
                 }
+                // 중속 → 일반 감속
                 else if (horizontalSpeed > 0.1f)
                 {
                     Vector3 decel = -horizontalVelocity.normalized * deceleration;
                     _rb.AddForce(decel, ForceMode.Acceleration);
                 }
+                // 저속 → 확실히 멈춤
                 else
                 {
                     Vector3 stop = -horizontalVelocity.normalized * deceleration * 2f;
@@ -133,6 +140,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        // 공중 -> 미세 조정만 가능
         if (_inputDirection.magnitude > 0 && !grounded)
         {
             Vector3 desiredVelocity = moveDir * moveSpeed;
@@ -141,6 +149,7 @@ public class PlayerController : MonoBehaviour
             _rb.AddForce(force, ForceMode.Acceleration);
         }
 
+        // 경사면에서 뜨지 않게 보정
         if (onSlope && grounded)
         {
             if (_rb.velocity.y > 0f)
