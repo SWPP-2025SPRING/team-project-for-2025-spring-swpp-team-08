@@ -47,7 +47,9 @@ public class PlayerController : MonoBehaviour
         camRight.Normalize();
 
         Vector3 inputDir = _inputDirection.normalized;
-        Vector3 moveDir = (camForward * inputDir.z + camRight * inputDir.x).normalized;
+        Vector3 desiredMoveDir = (camForward * inputDir.z + camRight * inputDir.x).normalized;
+        Vector3 moveDir = desiredMoveDir;
+
         Vector3 currentVelocity = _rb.velocity;
         Vector3 horizontalVelocity = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
         float horizontalSpeed = horizontalVelocity.magnitude;
@@ -58,48 +60,54 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         bool onSlope = false;
         Vector3 slopeNormal = Vector3.up;
+        float slopeAngle = 0f;
 
         if (grounded && Physics.Raycast(transform.position, Vector3.down, out hit, 1.1f))
         {
             slopeNormal = hit.normal;
-            float slopeAngle = Vector3.Angle(slopeNormal, Vector3.up);
+            slopeAngle = Vector3.Angle(slopeNormal, Vector3.up);
             if (slopeAngle > 5f)
             {
                 onSlope = true;
-                moveDir = Vector3.ProjectOnPlane(moveDir, slopeNormal).normalized;
+                Vector3 slopeMoveDir = Vector3.ProjectOnPlane(desiredMoveDir, slopeNormal).normalized;
+
+                // 방향 보간 (급격한 전환 방지)
+                float angleBetween = Vector3.Angle(desiredMoveDir, slopeMoveDir);
+                float t = Mathf.Clamp01(angleBetween / 45f);
+                moveDir = Vector3.Slerp(desiredMoveDir, slopeMoveDir, t);
             }
         }
+
+        float slopeAccelFactor = onSlope ? Mathf.Cos(slopeAngle * Mathf.Deg2Rad) : 1f;
+        float maxSpeed = moveSpeed * slopeAccelFactor;
+        float effectiveAccel = acceleration * slopeAccelFactor;
+        float moveDirSpeed = Vector3.Dot(currentVelocity, moveDir);
 
         if (_inputDirection.magnitude > 0 && grounded)
         {
             float alignment = Vector3.Dot(horizontalVelocity.normalized, moveDir);
-            float slopeFactor = onSlope ? 0.5f : 1f;
 
-            // 일반적인 경우 빠르게 가속
-            if (horizontalSpeed < moveSpeed - 0.5f)
+            if (moveDirSpeed < maxSpeed - 0.1f)
             {
-                Vector3 desiredVelocity = moveDir * moveSpeed;
-                Vector3 velocityDelta = desiredVelocity - horizontalVelocity;
-                Vector3 force = Vector3.ClampMagnitude(velocityDelta * acceleration * slopeFactor, acceleration);
+                Vector3 desiredVelocity = moveDir * maxSpeed;
+                Vector3 velocityDelta = desiredVelocity - currentVelocity;
+                Vector3 force = Vector3.ClampMagnitude(velocityDelta * effectiveAccel, acceleration);
                 _rb.AddForce(force, ForceMode.Acceleration);
             }
-            // 경사면 이동 등으로 인해 최대 속도를 초과한 상태에서 input이 있다면, 최대 속도에 천천히 수렴
-            else if (alignment > 0.9f && horizontalSpeed > moveSpeed + 0.5f)
+            else if (alignment > 0.9f && moveDirSpeed > maxSpeed + 0.5f && slopeAngle < 3f)
             {
-                float excess = horizontalSpeed - moveSpeed;
+                float excess = moveDirSpeed - maxSpeed;
                 float dampingStrength = 0.003f;
-                Vector3 decel = -horizontalVelocity.normalized * (excess * dampingStrength);
+                Vector3 decel = -moveDir * (excess * dampingStrength);
                 _rb.AddForce(decel, ForceMode.Acceleration);
             }
-            // 최대 속도를 초과한 상태에서 반대방향 키를 누르면 빠르게 멈춤
-            else
+            else if (alignment < -0.1f)
             {
-                Vector3 steer = (moveDir - horizontalVelocity.normalized) * acceleration * 0.5f * slopeFactor;
+                Vector3 steer = (moveDir - horizontalVelocity.normalized) * effectiveAccel * 0.5f;
                 _rb.AddForce(steer, ForceMode.Acceleration);
             }
         }
 
-        // 평지에서 입력 없으면 감속
         if (!isSliding && grounded)
         {
             bool inputExists = _inputDirection.magnitude > 0;
@@ -109,35 +117,49 @@ public class PlayerController : MonoBehaviour
             {
                 if (horizontalSpeed > moveSpeed)
                 {
-                    // 평지에서 고속 + 무입력 → 빠르게 감속
                     Vector3 decel = -horizontalVelocity.normalized * deceleration * 0.5f;
                     _rb.AddForce(decel, ForceMode.Acceleration);
                 }
                 else if (horizontalSpeed > 0.1f)
                 {
-                    // 중속 → 일반 감속
                     Vector3 decel = -horizontalVelocity.normalized * deceleration;
                     _rb.AddForce(decel, ForceMode.Acceleration);
                 }
                 else
                 {
-                    // 저속 → 확실히 멈춤
                     Vector3 stop = -horizontalVelocity.normalized * deceleration * 2f;
                     _rb.AddForce(stop, ForceMode.Acceleration);
                 }
             }
         }
 
-        // 공중 -> 미세 조정만 가능
         if (_inputDirection.magnitude > 0 && !grounded)
         {
             Vector3 desiredVelocity = moveDir * moveSpeed;
             Vector3 velocityDelta = desiredVelocity - horizontalVelocity;
-            Vector3 force = Vector3.ClampMagnitude(velocityDelta * 0.2f, 1f);
+            Vector3 force = Vector3.ClampMagnitude(velocityDelta * 0.05f, 0.3f);
             _rb.AddForce(force, ForceMode.Acceleration);
         }
 
-        // Debug.Log($"|v|: {_rb.velocity.magnitude:F2}, horizontal: {horizontalSpeed:F2}, onSlope: {onSlope}, grounded: {grounded}");
+        if (onSlope && grounded)
+        {
+            if (_rb.velocity.y > 0f)
+            {
+                _rb.AddForce(-slopeNormal * 50f, ForceMode.Acceleration);
+            }
+
+            Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
+            if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hitSlope, 1.5f))
+            {
+                float distanceToGround = hitSlope.distance;
+                if (distanceToGround > 0.01f && distanceToGround < 0.2f && _rb.velocity.y <= 0f)
+                {
+                    _rb.MovePosition(transform.position - slopeNormal * (distanceToGround - 0.01f));
+                }
+            }
+        }
+
+        // Debug.Log($"|v|: {_rb.velocity.magnitude:F2}, moveDirSpeed: {moveDirSpeed:F2}, slopeAngle: {slopeAngle:F1}");
     }
 
     private bool IsGrounded()
@@ -174,8 +196,8 @@ public class PlayerController : MonoBehaviour
 
     public void MoveTo(Vector3 position)
     {
-        _rb.velocity = Vector3.zero;        
-        _rb.angularVelocity = Vector3.zero; 
+        _rb.velocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
         transform.position = position;
     }
 
