@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class SaveCheckpoint : MonoBehaviour
+public class Checkpoint : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
