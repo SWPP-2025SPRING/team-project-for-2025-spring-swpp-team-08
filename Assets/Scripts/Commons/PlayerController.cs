@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _rb.centerOfMass = new Vector3(0, -0.5f, 0);
         Cursor.lockState = CursorLockMode.Locked;
     }
 
