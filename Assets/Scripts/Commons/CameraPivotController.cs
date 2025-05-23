@@ -27,5 +27,6 @@ public class CameraPivotController : MonoBehaviour
 
         transform.position = player.position;
         transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
+
     }
 }

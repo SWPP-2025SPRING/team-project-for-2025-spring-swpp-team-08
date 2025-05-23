@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         Vector3 slopeNormal = Vector3.up;
         float slopeAngle = 0f;
 
-        if (grounded && Physics.Raycast(transform.position, Vector3.down, out hit, 1.1f))
+        if (grounded && Physics.Raycast(transform.position + Vector3.up * 0.1f, - transform.up, out hit, 1.2f))
         {
             slopeNormal = hit.normal;
             slopeAngle = Vector3.Angle(slopeNormal, Vector3.up);
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
                     _rb.AddForce(decel, ForceMode.Acceleration);
                 }
                 // 중속 → 일반 감속
-                else if (horizontalSpeed > 0.1f)
+                else if (horizontalSpeed > 1f)
                 {
                     Vector3 decel = -horizontalVelocity.normalized * deceleration;
                     _rb.AddForce(decel, ForceMode.Acceleration);
@@ -135,8 +135,10 @@ public class PlayerController : MonoBehaviour
                 // 저속 → 확실히 멈춤
                 else
                 {
-                    Vector3 stop = -horizontalVelocity.normalized * deceleration * 2f;
-                    _rb.AddForce(stop, ForceMode.Acceleration);
+                    Vector3 velocity = _rb.velocity;
+                    velocity.x = 0f;
+                    velocity.z = 0f;
+                    _rb.velocity = velocity;
                 }
             }
         }
@@ -169,7 +171,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Debug.Log($"|v|: {_rb.velocity.magnitude:F2}, moveDirSpeed: {moveDirSpeed:F2}, slopeAngle: {slopeAngle:F1}");
+        if (IsGrounded())
+        {
+            rotateByGroundAndCamera();
+        }
+
+        Debug.DrawRay(transform.position, Vector3.down * 0.9f, Color.red, 1f);
+
+        Debug.Log($"onslope: {onSlope}, grounded: {grounded}");
+        Debug.Log($"|v|: {_rb.velocity.magnitude:F2}, moveDirSpeed: {moveDirSpeed:F2}, slopeAngle: {slopeAngle:F1}");
     }
 
     private bool IsGrounded()
@@ -209,6 +219,28 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
         transform.position = position;
+    }
+
+    private void rotateByGroundAndCamera()
+    {
+        // 1. 현재 플레이어가 서 있는 지면 노멀 계산
+        Vector3 surfaceNormal = Vector3.up;  // 기본값
+        if (Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out RaycastHit hit2, 2f))
+        {
+            surfaceNormal = hit2.normal;
+        }
+
+        // 2. 카메라 방향 기반으로 y축 회전만 추출
+        Vector3 cameraForward = cameraPivot.forward;
+        cameraForward.y = 0f;
+        cameraForward.Normalize();
+        Quaternion yRotation = Quaternion.LookRotation(cameraForward, Vector3.up);
+
+        // 3. 최종 회전 계산: 지면 노멀에 align + y축은 카메라 기준
+        Quaternion targetRotation = Quaternion.FromToRotation(Vector3.up, surfaceNormal) * yRotation;
+
+        // 4. 부드럽게 회전 (옵션)
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
     }
 
 }
