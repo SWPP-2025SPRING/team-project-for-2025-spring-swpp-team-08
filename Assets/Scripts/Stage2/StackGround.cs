@@ -13,6 +13,7 @@ namespace Stage2
 
         void OnCollisionEnter(Collision collision)
         {
+            Debug.Log("hi");
             if (!_triggered && collision.gameObject.CompareTag("Player"))
             {
                 Debug.Log("collision");

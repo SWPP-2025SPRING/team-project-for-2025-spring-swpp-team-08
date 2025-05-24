@@ -187,6 +187,11 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(transform.position, Vector3.down, out _, 1.2f);
     }
 
+    public void Jump(float magnitude = 1.0f)
+    {
+        _rb.AddForce(Vector3.up * magnitude, ForceMode.Impulse);
+    }
+
     private bool ApplySlopeSlide()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1.1f))
