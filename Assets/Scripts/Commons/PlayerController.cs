@@ -176,10 +176,10 @@ public class PlayerController : MonoBehaviour
             rotateByGroundAndCamera();
         }
 
-        Debug.DrawRay(transform.position, Vector3.down * 0.9f, Color.red, 1f);
+        // Debug.DrawRay(transform.position, Vector3.down * 0.9f, Color.red, 1f);
 
-        Debug.Log($"onslope: {onSlope}, grounded: {grounded}");
-        Debug.Log($"|v|: {_rb.velocity.magnitude:F2}, moveDirSpeed: {moveDirSpeed:F2}, slopeAngle: {slopeAngle:F1}");
+        // Debug.Log($"onslope: {onSlope}, grounded: {grounded}");
+        // Debug.Log($"|v|: {_rb.velocity.magnitude:F2}, moveDirSpeed: {moveDirSpeed:F2}, slopeAngle: {slopeAngle:F1}");
     }
 
     private bool IsGrounded()
