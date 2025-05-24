@@ -1250,6 +1250,25 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2797687578962592920, guid: 01e5f0baa5af7a742aafaaa72689b8e6, type: 3}
+--- !u!1 &558852487 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7772081099492493843, guid: 2c51fbe2e57795c458ef9e13376b5ed9, type: 3}
+  m_PrefabInstance: {fileID: 638644053}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &558852492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558852487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdec3841a1c9c814bb8976c6f1f355e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disappearDelay: 5
+  destroyCompletely: 1
 --- !u!1001 &564077221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1451,6 +1470,14 @@ PrefabInstance:
     - target: {fileID: 1609528293888127690, guid: 2c51fbe2e57795c458ef9e13376b5ed9, type: 3}
       propertyPath: m_Name
       value: BumpedRampCurveLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 1916097633255509913, guid: 2c51fbe2e57795c458ef9e13376b5ed9, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1916097633255509913, guid: 2c51fbe2e57795c458ef9e13376b5ed9, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2098081320320378992, guid: 2c51fbe2e57795c458ef9e13376b5ed9, type: 3}
       propertyPath: m_RootOrder
@@ -3676,7 +3703,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8795907554477687065, guid: 0f01df8527e2efe4387e2c2c3b88caf7, type: 3}
       propertyPath: m_Convex
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8795907554477687065, guid: 0f01df8527e2efe4387e2c2c3b88caf7, type: 3}
       propertyPath: m_IsTrigger

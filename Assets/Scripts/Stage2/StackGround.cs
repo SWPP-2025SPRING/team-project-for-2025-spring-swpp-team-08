@@ -7,7 +7,7 @@ namespace Stage2
     public class StackGround : MonoBehaviour
     {
         public float disappearDelay = 0.5f;
-        public bool destroyCompletely = true;
+        public bool destroyCompletely = false;
 
         private bool _triggered = false;
 
