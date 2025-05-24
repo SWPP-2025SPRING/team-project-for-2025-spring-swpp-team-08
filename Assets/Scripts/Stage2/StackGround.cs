@@ -2,32 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StackGround : MonoBehaviour
+namespace Stage2
 {
-    public float disappearDelay = 0.5f; 
-    public bool destroyCompletely = true; 
-
-    private bool _triggered = false;
-
-    void OnCollisionEnter(Collision collision)
+    public class StackGround : MonoBehaviour
     {
-        if (!_triggered && collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("collision");
-            _triggered = true;
-            Invoke(nameof(Disappear), disappearDelay);
-        }
-    }
+        public float disappearDelay = 0.5f;
+        public bool destroyCompletely = true;
 
-    void Disappear()
-    {
-        if (destroyCompletely)
+        private bool _triggered = false;
+
+        void OnCollisionEnter(Collision collision)
         {
-            Destroy(gameObject);
+            if (!_triggered && collision.gameObject.CompareTag("Player"))
+            {
+                Debug.Log("collision");
+                _triggered = true;
+                Invoke(nameof(Disappear), disappearDelay);
+            }
         }
-        else
+
+        void Disappear()
         {
-            gameObject.SetActive(false);
+            if (destroyCompletely)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }
