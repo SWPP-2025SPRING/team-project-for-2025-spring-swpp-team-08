@@ -34,8 +34,11 @@ public class PlayerController : MonoBehaviour
         if (IsFallen())
         {
             Vector3 currentCheckPoint = GameManager.Instance.playManager.GetCurrentCheckpoint();
-            RESPWAN_START = true;
             MoveTo(currentCheckPoint);
+            if (GameManager.Instance.playManager.stageNo == 2)
+            {
+                Stage2.StackGround.RESPAWN_START = true;
+            }
         }
     }
 
