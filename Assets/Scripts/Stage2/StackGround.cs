@@ -8,8 +8,16 @@ namespace Stage2
     {
         public float disappearDelay = 0.5f;
         public bool destroyCompletely = false;
-
+        public static bool RESPAWN_START = true;
         private bool _triggered = false;
+
+        void Update()
+        {
+            if (RESPAWN_START && !gameObject.activeSelf)
+            {
+                gameObject.SetActive(true);
+            }
+        }
 
         void OnCollisionEnter(Collision collision)
         {
@@ -18,6 +26,7 @@ namespace Stage2
             {
                 Debug.Log("collision");
                 _triggered = true;
+                RESPAWN_START = false;
                 Invoke(nameof(Disappear), disappearDelay);
             }
         }

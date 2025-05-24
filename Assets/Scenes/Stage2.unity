@@ -608,7 +608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdec3841a1c9c814bb8976c6f1f355e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearDelay: 2
+  disappearDelay: 3
   destroyCompletely: 0
 --- !u!4 &294931599 stripped
 Transform:
@@ -2956,7 +2956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdec3841a1c9c814bb8976c6f1f355e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearDelay: 1
+  disappearDelay: 2
   destroyCompletely: 0
 --- !u!1 &1034661654 stripped
 GameObject:
@@ -2994,7 +2994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdec3841a1c9c814bb8976c6f1f355e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearDelay: 1
+  disappearDelay: 2
   destroyCompletely: 0
 --- !u!1 &1090115507 stripped
 GameObject:
@@ -3013,7 +3013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdec3841a1c9c814bb8976c6f1f355e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearDelay: 0.5
+  disappearDelay: 2
   destroyCompletely: 0
 --- !u!1 &1092108366
 GameObject:
@@ -5208,7 +5208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdec3841a1c9c814bb8976c6f1f355e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearDelay: 0.5
+  disappearDelay: 2
   destroyCompletely: 0
 --- !u!1001 &1612322360
 PrefabInstance:
@@ -5289,7 +5289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdec3841a1c9c814bb8976c6f1f355e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearDelay: 0.5
+  disappearDelay: 2
   destroyCompletely: 0
 --- !u!1 &1634804349 stripped
 GameObject:
@@ -5801,7 +5801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdec3841a1c9c814bb8976c6f1f355e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearDelay: 0.5
+  disappearDelay: 2
   destroyCompletely: 0
 --- !u!1001 &1846034912
 PrefabInstance:

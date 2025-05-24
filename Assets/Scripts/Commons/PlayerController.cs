@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
         if (IsFallen())
         {
             Vector3 currentCheckPoint = GameManager.Instance.playManager.GetCurrentCheckpoint();
+            RESPWAN_START = true;
             MoveTo(currentCheckPoint);
         }
     }
