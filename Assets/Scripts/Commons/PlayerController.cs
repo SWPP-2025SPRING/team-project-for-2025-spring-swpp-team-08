@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public float deceleration = 100f;
     public Transform cameraPivot;
 
+    public static bool RESPAWN_START = false;
+
     private Rigidbody _rb;
     private Vector3 _inputDirection;
     private float _fallTimer = 0f;
