@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public float deceleration = 100f;
     public Transform cameraPivot;
 
+    public static bool RESPAWN_START = false;
+
     private Rigidbody _rb;
     private Vector3 _inputDirection;
     private float _fallTimer = 0f;
@@ -35,6 +37,10 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 currentCheckPoint = GameManager.Instance.playManager.GetCurrentCheckpoint();
             MoveTo(currentCheckPoint);
+            if (GameManager.Instance.playManager.stageNo == 2)
+            {
+                Stage2.StackGround.ResetAllFootsteps();
+            }
         }
     }
 
