@@ -5,13 +5,14 @@ namespace Stage2
 {
     public class StackGround : MonoBehaviour
     {
-        public static bool RESPAWN_START = true;
+        public static bool RESPAWN_START = false; // Start as false
         public float disappearDelay = 5f;
         private bool _disappearStarted = false;
         private Coroutine _disappearCoroutine;
-        private bool _wasRespawnStart = true;
+        private bool _wasRespawnStart = false; // Start as false
         private bool _resetCalled = false;
 
+        // Cache components for efficiency
         private Renderer _renderer;
         private Collider _collider;
 
@@ -35,6 +36,16 @@ namespace Stage2
             _wasRespawnStart = RESPAWN_START;
         }
 
+        // Public method to be called directly from player script
+        public static void ResetAllFootsteps()
+        {
+            StackGround[] allFootsteps = FindObjectsOfType<StackGround>();
+            foreach (StackGround footstep in allFootsteps)
+            {
+                footstep.ResetAll();
+            }
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.CompareTag("Player") && !_disappearStarted)
@@ -48,6 +59,7 @@ namespace Stage2
         {
             yield return new WaitForSeconds(delay);
 
+            // Hide visually and disable collision instead of deactivating
             if (_renderer != null) _renderer.enabled = false;
             if (_collider != null) _collider.enabled = false;
         }
@@ -64,6 +76,7 @@ namespace Stage2
 
             _disappearStarted = false;
 
+            // Restore visibility and collision
             if (_renderer != null) _renderer.enabled = true;
             if (_collider != null) _collider.enabled = true;
         }

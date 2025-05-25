@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
             MoveTo(currentCheckPoint);
             if (GameManager.Instance.playManager.stageNo == 2)
             {
-                Stage2.StackGround.RESPAWN_START = true;
+                Stage2.StackGround.ResetAllFootsteps();
             }
         }
     }
