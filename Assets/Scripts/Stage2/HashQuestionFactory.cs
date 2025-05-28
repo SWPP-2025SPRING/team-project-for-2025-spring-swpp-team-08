@@ -6,12 +6,12 @@ namespace Stage2
 {
     public class HashQuestionFactory
     {
-        private List<IHashFunction> hashFunctions;
-        private System.Random rng = new System.Random();
+        private List<IHashFunction> _hashFunctions;
+        private System.Random _rng = new System.Random();
 
         public HashQuestionFactory()
         {
-            hashFunctions = new List<IHashFunction>
+            _hashFunctions = new List<IHashFunction>
             {
                 new ModHash(5),
                 new ModHash(7),
@@ -21,9 +21,9 @@ namespace Stage2
 
         public HashQuestion GenerateRandomQuestion()
         {
-            int key = rng.Next(50, 1000); 
-            int index = rng.Next(hashFunctions.Count);
-            IHashFunction chosenFunction = hashFunctions[index];
+            int key = _rng.Next(50, 1000); 
+            int index = _rng.Next(_hashFunctions.Count);
+            IHashFunction chosenFunction = _hashFunctions[index];
 
             return new HashQuestion(key, chosenFunction);
         }

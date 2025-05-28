@@ -23,5 +23,10 @@ namespace Stage2
             return "h(k) = k % " + _divisor;
         }
 
+        public int GetDivisor()
+        {
+            return _divisor;
+        }
+
     }
 }

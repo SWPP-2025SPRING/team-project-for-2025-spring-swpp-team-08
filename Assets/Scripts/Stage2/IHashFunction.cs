@@ -4,7 +4,8 @@ namespace Stage2
 {
     public interface IHashFunction
     {
-        int Compute(int key);
-        string GetFormula();
+        public int Compute(int key);
+        public string GetFormula();
+        public int GetDivisor();
     }
 }
