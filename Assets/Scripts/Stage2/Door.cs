@@ -19,7 +19,7 @@ namespace Stage2
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Player")
+            if (collision.gameObject.CompareTag("Player"))
             {
                 if (isCorrect)
                 {
