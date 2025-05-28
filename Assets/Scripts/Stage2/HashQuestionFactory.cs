@@ -21,7 +21,7 @@ namespace Stage2
 
         public HashQuestion GenerateRandomQuestion()
         {
-            int key = rng.Next(10, 100); // Random key in range 10–99
+            int key = rng.Next(50, 1000); 
             int index = rng.Next(hashFunctions.Count);
             IHashFunction chosenFunction = hashFunctions[index];
 
