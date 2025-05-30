@@ -12,7 +12,7 @@ namespace Stage2
             displayedAnswer = answer;
             isCorrect = correct;
 
-            TextMesh text = GetComponentInChildren<TextMesh>();
+            public TextMesh text;
             if (text != null)
                 text.text = answer.ToString();
         }
