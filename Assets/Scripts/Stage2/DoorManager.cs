@@ -22,7 +22,7 @@ namespace Stage2
 
             // Generate two wrong but unique answers
             HashSet<int> answers = new HashSet<int> { correctAnswer };
-            while (answers.Count < 3)
+            while (answers.Count < doors.Length)
             {
                 int wrong = Random.Range(0, divisor); // tweak range if needed
                 if (wrong != correctAnswer)
