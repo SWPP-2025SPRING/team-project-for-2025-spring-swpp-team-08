@@ -7,6 +7,7 @@ namespace Stage4
     {
         public Vector3 destination;
         public float duration;
+        public bool isDestinationRelative;
 
         private Rigidbody _rigidbody;
 
@@ -25,18 +26,19 @@ namespace Stage4
             IEnumerator StopAfterDelay()
             {
                 var initialPosition = transform.position;
+                var finalPosition = isDestinationRelative ? initialPosition + destination : destination;
                 var elapsedTime = 0f;
 
                 while (elapsedTime <= duration)
                 {
-                    transform.position = Vector3.Lerp(initialPosition, destination, elapsedTime / duration);
+                    transform.position = Vector3.Lerp(initialPosition, finalPosition, elapsedTime / duration);
 
                     elapsedTime += Time.deltaTime;
 
                     yield return null;
                 }
 
-                transform.position = destination;
+                transform.position = finalPosition;
 
                 _rigidbody.velocity = Vector3.zero;
             }
