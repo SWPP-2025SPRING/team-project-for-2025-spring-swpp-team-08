@@ -7,21 +7,21 @@ using UnityEngine.UI;
 
 public class UIIntegration
 {
-    private UIManager uiManager;
-    private GameObject go;
+    private UIManager _uiManager;
+    private GameObject _go;
 
     [SetUp]
     public IEnumerator SetUp()
     {
-        go = new GameObject("UIManagerGO");
-        uiManager = go.AddComponent<UIManager>();
+        _go = new GameObject("UIManagerGO");
+        _uiManager = go.AddComponent<UIManager>();
 
-        uiManager.playTimeText = new GameObject("PlayTimeText").AddComponent<TextMeshProUGUI>();
-        uiManager.currentPlayTimeText = new GameObject("CurrentPlayTimeText").AddComponent<TextMeshProUGUI>();
-        uiManager.currentStageText = new GameObject("StageText").AddComponent<TextMeshProUGUI>();
-        uiManager.subtitleText = new GameObject("SubtitleText").AddComponent<TextMeshProUGUI>();
-        uiManager.percentText = new GameObject("PercentText").AddComponent<TextMeshProUGUI>();
-        uiManager.progressBar = new GameObject("ProgressBar").AddComponent<Slider>();
+        _uiManager.playTimeText = new GameObject("PlayTimeText").AddComponent<TextMeshProUGUI>();
+        _uiManager.currentPlayTimeText = new GameObject("CurrentPlayTimeText").AddComponent<TextMeshProUGUI>();
+        _uiManager.currentStageText = new GameObject("StageText").AddComponent<TextMeshProUGUI>();
+        _uiManager.subtitleText = new GameObject("SubtitleText").AddComponent<TextMeshProUGUI>();
+        _uiManager.percentText = new GameObject("PercentText").AddComponent<TextMeshProUGUI>();
+        _uiManager.progressBar = new GameObject("ProgressBar").AddComponent<Slider>();
 
         yield return null;
     }
@@ -33,23 +33,23 @@ public class UIIntegration
 
         foreach (float p in steps)
         {
-            uiManager.SetProgressBar(p);
+            _uiManager.SetProgressBar(p);
             Debug.Log($"Progress set to: {p}");
             yield return new WaitForSeconds(0.5f);
         }
 
-        Assert.AreEqual(1f, uiManager.progressBar.value);
+        Assert.AreEqual(1f, _uiManager.progressBar.value);
     }
 
     [Test]
     public IEnumerator Subtitle_Appears_And_Disappears()
     {
-        uiManager.UpdateSubtitle("Hello World", 1f);
-        Assert.IsTrue(uiManager.subtitleText.gameObject.activeSelf);
+        _uiManager.UpdateSubtitle("Hello World", 1f);
+        Assert.IsTrue(_uiManager.subtitleText.gameObject.activeSelf);
 
         yield return new WaitForSeconds(1.1f);
 
-        Assert.IsFalse(uiManager.subtitleText.gameObject.activeSelf);
+        Assert.IsFalse(_uiManager.subtitleText.gameObject.activeSelf);
     }
 
     [TearDown]
