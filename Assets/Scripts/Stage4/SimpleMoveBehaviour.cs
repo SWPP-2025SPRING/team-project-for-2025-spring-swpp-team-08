@@ -26,19 +26,24 @@ namespace Stage4
             IEnumerator StopAfterDelay()
             {
                 var initialPosition = transform.position;
-                var finalPosition = isDestinationRelative ? initialPosition + destination : destination;
+                var finalPosition = isDestinationRelative
+                    ? transform.position + transform.rotation * destination
+                    : destination;
                 var elapsedTime = 0f;
+
+                Debug.Log($"moving from {initialPosition} to {finalPosition} over {duration} seconds");
 
                 while (elapsedTime <= duration)
                 {
-                    transform.position = Vector3.Lerp(initialPosition, finalPosition, elapsedTime / duration);
+                    var position = Vector3.Lerp(initialPosition, finalPosition, elapsedTime / duration);
+                    _rigidbody.MovePosition(position);
 
                     elapsedTime += Time.deltaTime;
 
                     yield return null;
                 }
 
-                transform.position = finalPosition;
+                _rigidbody.MovePosition(finalPosition);
 
                 _rigidbody.velocity = Vector3.zero;
             }
