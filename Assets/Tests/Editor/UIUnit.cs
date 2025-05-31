@@ -4,21 +4,21 @@ using TMPro;
 
 public class UIUnit
 {
-    private UIManager uiManager;
-    private GameObject go;
+    private UIManager _uiManager;
+    private GameObject _go;
 
     [SetUp]
     public void SetUp()
     {
-        go = new GameObject();
-        uiManager = go.AddComponent<UIManager>();
+        _go = new GameObject();
+        _uiManager = _go.AddComponent<UIManager>();
 
-        uiManager.playTimeText = new GameObject().AddComponent<TextMeshProUGUI>();
-        uiManager.currentPlayTimeText = new GameObject().AddComponent<TextMeshProUGUI>();
-        uiManager.currentStageText = new GameObject().AddComponent<TextMeshProUGUI>();
-        uiManager.subtitleText = new GameObject().AddComponent<TextMeshProUGUI>();
-        uiManager.percentText = new GameObject().AddComponent<TextMeshProUGUI>();
-        uiManager.progressBar = new GameObject().AddComponent<UnityEngine.UI.Slider>();
+        _uiManager.playTimeText = new GameObject().AddComponent<TextMeshProUGUI>();
+        _uiManager.currentPlayTimeText = new GameObject().AddComponent<TextMeshProUGUI>();
+        _uiManager.currentStageText = new GameObject().AddComponent<TextMeshProUGUI>();
+        _uiManager.subtitleText = new GameObject().AddComponent<TextMeshProUGUI>();
+        _uiManager.percentText = new GameObject().AddComponent<TextMeshProUGUI>();
+        _uiManager.progressBar = new GameObject().AddComponent<UnityEngine.UI.Slider>();
     }
 
     [TearDown]
@@ -30,44 +30,44 @@ public class UIUnit
     [Test]
     public void UpdatePlayTime_SetsTextCorrectly()
     {
-        uiManager.UpdatePlayTime(65.4321f);
-        Assert.AreEqual("Playtime...01:05.43", uiManager.playTimeText.text);
+        _uiManager.UpdatePlayTime(65.4321f);
+        Assert.AreEqual("Playtime...01:05.43", _uiManager.playTimeText.text);
     }
 
     [Test]
     public void UpdateCurrentPlayTime_SetsTextCorrectly()
     {
-        uiManager.UpdateCurrentPlayTime(123.456f);
-        Assert.AreEqual("On current stage...02:03.46", uiManager.currentPlayTimeText.text);
+        _uiManager.UpdateCurrentPlayTime(123.456f);
+        Assert.AreEqual("On current stage...02:03.46", _uiManager.currentPlayTimeText.text);
     }
 
     [Test]
     public void UpdateStage_SetsStageTextCorrectly()
     {
-        uiManager.UpdateStage("EEC");
-        Assert.AreEqual("EEC", uiManager.currentStageText.text);
+        _uiManager.UpdateStage("EEC");
+        Assert.AreEqual("EEC", _uiManager.currentStageText.text);
     }
 
     [Test]
     public void SetProgress_FormatsPercentCorrectly()
     {
-        uiManager.SetProgress(0.6789f);
-        Assert.AreEqual("67.9", uiManager.percentText.text);
+        _uiManager.SetProgress(0.6789f);
+        Assert.AreEqual("67.9", _uiManager.percentText.text);
     }
 
     [Test]
     public void SetProgressBar_SetsSliderValueCorrectly()
     {
-        uiManager.SetProgressBar(0.42f);
-        Assert.AreEqual(0.42f, uiManager.progressBar.value);
+        _uiManager.SetProgressBar(0.42f);
+        Assert.AreEqual(0.42f, _uiManager.progressBar.value);
     }
 
     [Test]
     public void UpdateSubtitle_SetsSubtitleTextAndActivatesObject()
     {
-        uiManager.UpdateSubtitle("Hello", 2f);
+        _uiManager.UpdateSubtitle("Hello", 2f);
 
-        Assert.AreEqual("Hello", uiManager.subtitleText.text);
+        Assert.AreEqual("Hello", _uiManager.subtitleText.text);
         Assert.IsTrue(uiManager.subtitleText.gameObject.activeSelf);
     }
 
