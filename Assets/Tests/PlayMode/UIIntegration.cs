@@ -14,7 +14,7 @@ public class UIIntegration
     public IEnumerator SetUp()
     {
         _go = new GameObject("UIManagerGO");
-        _uiManager = go.AddComponent<UIManager>();
+        _uiManager = _go.AddComponent<UIManager>();
 
         _uiManager.playTimeText = new GameObject("PlayTimeText").AddComponent<TextMeshProUGUI>();
         _uiManager.currentPlayTimeText = new GameObject("CurrentPlayTimeText").AddComponent<TextMeshProUGUI>();
