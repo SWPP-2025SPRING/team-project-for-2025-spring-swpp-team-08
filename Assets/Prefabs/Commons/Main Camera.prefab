@@ -90,7 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPivot: {fileID: 0}
-  offset: {x: 0, y: 2, z: -5}
+  pivotOffset: {x: 0, y: 2, z: 0}
+  cameraOffset: {x: 0, y: 2, z: -5}
   followSpeed: 10
 --- !u!81 &-1723334414005357527
 AudioListener:
