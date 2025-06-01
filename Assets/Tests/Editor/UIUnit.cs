@@ -24,7 +24,7 @@ public class UIUnit
     [TearDown]
     public void TearDown()
     {
-        Object.DestroyImmediate(go);
+        Object.DestroyImmediate(_go);
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class UIUnit
         _uiManager.UpdateSubtitle("Hello", 2f);
 
         Assert.AreEqual("Hello", _uiManager.subtitleText.text);
-        Assert.IsTrue(uiManager.subtitleText.gameObject.activeSelf);
+        Assert.IsTrue(_uiManager.subtitleText.gameObject.activeSelf);
     }
 
 
