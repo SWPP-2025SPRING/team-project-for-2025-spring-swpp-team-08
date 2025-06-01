@@ -9,16 +9,14 @@ namespace Stage4
         public float duration;
         public bool isDestinationRelative;
 
-        private Rigidbody _rigidbody;
-
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            Rigidbody = GetComponent<Rigidbody>();
         }
 
         protected override void PerformInternal()
         {
-            _rigidbody.isKinematic = true;
+            Rigidbody.isKinematic = true;
 
             StartCoroutine(StopAfterDelay());
             return;
@@ -36,16 +34,16 @@ namespace Stage4
                 while (elapsedTime <= duration)
                 {
                     var position = Vector3.Lerp(initialPosition, finalPosition, elapsedTime / duration);
-                    _rigidbody.MovePosition(position);
+                    Rigidbody.MovePosition(position);
 
                     elapsedTime += Time.deltaTime;
 
                     yield return null;
                 }
 
-                _rigidbody.MovePosition(finalPosition);
+                Rigidbody.MovePosition(finalPosition);
 
-                _rigidbody.velocity = Vector3.zero;
+                Rigidbody.velocity = Vector3.zero;
             }
         }
     }

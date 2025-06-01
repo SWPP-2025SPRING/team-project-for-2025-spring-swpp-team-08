@@ -10,17 +10,15 @@ namespace Stage4
         public Vector3 initialVelocity;
         public Vector3 initialAngularVelocity;
 
-        private Rigidbody _rigidbody;
-
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            Rigidbody = GetComponent<Rigidbody>();
         }
 
         private void Start()
         {
-            _rigidbody.velocity = initialVelocity;
-            _rigidbody.angularVelocity = initialAngularVelocity;
+            Rigidbody.velocity = initialVelocity;
+            Rigidbody.angularVelocity = initialAngularVelocity;
         }
 
         protected override void PerformInternal()
@@ -30,24 +28,24 @@ namespace Stage4
 
             IEnumerator StopMoveCoroutine()
             {
-                var initialVelocity = _rigidbody.velocity;
-                var initialAngularVelocity = _rigidbody.angularVelocity;
+                var initialVelocity = Rigidbody.velocity;
+                var initialAngularVelocity = Rigidbody.angularVelocity;
                 var elapsedTime = 0f;
 
                 while (elapsedTime < duration)
                 {
                     var progress = elapsedTime / duration;
-                    _rigidbody.velocity = Vector3.Lerp(initialVelocity, Vector3.zero, progress);
-                    _rigidbody.angularVelocity = Vector3.Lerp(initialAngularVelocity, Vector3.zero, progress);
+                    Rigidbody.velocity = Vector3.Lerp(initialVelocity, Vector3.zero, progress);
+                    Rigidbody.angularVelocity = Vector3.Lerp(initialAngularVelocity, Vector3.zero, progress);
 
                     elapsedTime += Time.deltaTime;
 
                     yield return null;
                 }
 
-                _rigidbody.velocity = Vector3.zero;
-                _rigidbody.angularVelocity = Vector3.zero;
-                _rigidbody.isKinematic = true;
+                Rigidbody.velocity = Vector3.zero;
+                Rigidbody.angularVelocity = Vector3.zero;
+                Rigidbody.isKinematic = true;
             }
         }
     }
