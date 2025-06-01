@@ -9,7 +9,14 @@ namespace Stage4
         public bool isActivated;
         public float reactivationDelay;    // Cannot be reactivated if set to 0
 
+        private MeshRenderer _meshRenderer;
+
         private float _reactivationTimer;
+
+        private void Awake()
+        {
+            _meshRenderer = GetComponent<MeshRenderer>();
+        }
 
         private void Start()
         {
@@ -31,6 +38,7 @@ namespace Stage4
             {
                 isActivated = false;
                 _reactivationTimer = 0f;
+                _meshRenderer.enabled = true;
             }
         }
 
@@ -53,6 +61,7 @@ namespace Stage4
             }
 
             _reactivationTimer = reactivationDelay;
+            _meshRenderer.enabled = false;
         }
     }
 }
