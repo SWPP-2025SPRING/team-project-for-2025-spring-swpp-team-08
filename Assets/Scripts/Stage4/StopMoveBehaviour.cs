@@ -29,7 +29,7 @@ namespace Stage4
             var deltaPosition = _velocity * Time.fixedDeltaTime;
             Rigidbody.MovePosition(transform.position + deltaPosition);
 
-            var deltaAngle = Quaternion.Euler(Time.fixedDeltaTime * Mathf.Deg2Rad * _angularVelocity);
+            var deltaAngle = Quaternion.Euler(_angularVelocity * (Time.fixedDeltaTime * Mathf.Deg2Rad));
             Rigidbody.MoveRotation(Rigidbody.rotation * deltaAngle);
         }
 
