@@ -10,6 +10,9 @@ namespace Stage4
         public Vector3 initialVelocity;
         public Vector3 initialAngularVelocity;
 
+        private Vector3 _velocity;
+        private Vector3 _angularVelocity;
+
         private void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
@@ -17,8 +20,17 @@ namespace Stage4
 
         private void Start()
         {
-            Rigidbody.velocity = initialVelocity;
-            Rigidbody.angularVelocity = initialAngularVelocity;
+            _velocity = initialVelocity;
+            _angularVelocity = initialAngularVelocity;
+        }
+
+        private void FixedUpdate()
+        {
+            var deltaPosition = _velocity * Time.fixedDeltaTime;
+            Rigidbody.MovePosition(transform.position + deltaPosition);
+
+            var deltaAngle = Quaternion.Euler(Time.fixedDeltaTime * Mathf.Deg2Rad * _angularVelocity);
+            Rigidbody.MoveRotation(Rigidbody.rotation * deltaAngle);
         }
 
         protected override void PerformInternal()
@@ -28,24 +40,21 @@ namespace Stage4
 
             IEnumerator StopMoveCoroutine()
             {
-                var initialVelocity = Rigidbody.velocity;
-                var initialAngularVelocity = Rigidbody.angularVelocity;
                 var elapsedTime = 0f;
 
                 while (elapsedTime < duration)
                 {
                     var progress = elapsedTime / duration;
-                    Rigidbody.velocity = Vector3.Lerp(initialVelocity, Vector3.zero, progress);
-                    Rigidbody.angularVelocity = Vector3.Lerp(initialAngularVelocity, Vector3.zero, progress);
+                    _velocity = initialVelocity * (1 - progress);
+                    _angularVelocity = initialAngularVelocity * (1 - progress);
 
                     elapsedTime += Time.deltaTime;
 
                     yield return null;
                 }
 
-                Rigidbody.velocity = Vector3.zero;
-                Rigidbody.angularVelocity = Vector3.zero;
-                Rigidbody.isKinematic = true;
+                _velocity = Vector3.zero;
+                _angularVelocity = Vector3.zero;
             }
         }
     }
