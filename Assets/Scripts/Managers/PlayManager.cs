@@ -50,6 +50,8 @@ public class PlayManager : MonoBehaviour
         uiManager.UpdatePlayTime(_playTimeTotal);
         uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
         uiManager.UpdateStage(stageName);
+
+        StartGame();
     }
 
     private void Update()
