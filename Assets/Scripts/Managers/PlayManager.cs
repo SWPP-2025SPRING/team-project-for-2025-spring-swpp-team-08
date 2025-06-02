@@ -11,6 +11,9 @@ public enum PlayStates
 
 public class PlayManager : MonoBehaviour
 {
+    private const float DelayBeforeStart = 5f;
+    private const float DelayAfterFinish = 5f;
+
     /// <summary>
     /// Stage number of current scene.
     /// Must be assigned in Unity Inspector.
@@ -36,10 +39,13 @@ public class PlayManager : MonoBehaviour
     private float _playTimeCurrent;
     private float _playTimeTotal;
     private Vector3 _checkpoint;
+    private GameObject _player;
 
     private void Awake()
     {
         GameManager.Instance.playManager = this;
+
+        _player = GameObject.FindWithTag("Player");
     }
 
     private void Start()
@@ -53,7 +59,9 @@ public class PlayManager : MonoBehaviour
         uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
         uiManager.UpdateStage(stageName);
 
-        StartGame();
+        SetPlayerControllable(false);
+
+        ReadyGame();
     }
 
     private void Update()
@@ -86,11 +94,27 @@ public class PlayManager : MonoBehaviour
         return _checkpoint;
     }
 
+    public void ReadyGame()
+    {
+        Debug.Log("Ready");
+
+        StartCoroutine(ReadyGameCoroutine());
+        return;
+
+        IEnumerator ReadyGameCoroutine()
+        {
+            yield return new WaitForSeconds(DelayBeforeStart);
+
+            StartGame();
+        }
+    }
+
     public void StartGame()
     {
         if (_state != PlayStates.Ready) return;
 
         _state = PlayStates.Playing;
+        SetPlayerControllable(true);
         Debug.Log("Playing");
         // TODO: Implement start logic
     }
@@ -100,20 +124,19 @@ public class PlayManager : MonoBehaviour
         if (_state != PlayStates.Playing) return;
 
         _state = PlayStates.Finished;
-
+        SetPlayerControllable(false);
         Debug.Log("Finished");
         // TODO: Implement finish logic
 
-        // TEST:
-        // StartCoroutine(LoadNextStageCoroutine());
-        // return;
-        //
-        // IEnumerator LoadNextStageCoroutine()
-        // {
-        //     yield return new WaitForSeconds(5f);
-        //
-        //     LoadNextStage();
-        // }
+        StartCoroutine(LoadNextStageCoroutine());
+        return;
+
+        IEnumerator LoadNextStageCoroutine()
+        {
+            yield return new WaitForSeconds(DelayAfterFinish);
+
+            LoadNextStage();
+        }
     }
 
     public void LoadNextStage()
@@ -121,6 +144,12 @@ public class PlayManager : MonoBehaviour
         GameManager.Instance.totalPlayTime += _playTimeCurrent;
         GameManager.LoadScene(nextSceneName);
 
+    }
+
+    private void SetPlayerControllable(bool value)
+    {
+        _player.GetComponent<PlayerController>().enabled = value;
+        _player.GetComponentInChildren<CameraPivotController>().enabled = value;
     }
     // TODO: Add UI related functions
 }
