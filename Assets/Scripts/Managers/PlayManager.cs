@@ -1,3 +1,5 @@
+using System.Collections;
+
 using UnityEngine;
 
 public enum PlayStates
@@ -89,6 +91,7 @@ public class PlayManager : MonoBehaviour
         if (_state != PlayStates.Ready) return;
 
         _state = PlayStates.Playing;
+        Debug.Log("Playing");
         // TODO: Implement start logic
     }
 
@@ -97,7 +100,20 @@ public class PlayManager : MonoBehaviour
         if (_state != PlayStates.Playing) return;
 
         _state = PlayStates.Finished;
+
+        Debug.Log("Finished");
         // TODO: Implement finish logic
+
+        // TEST:
+        // StartCoroutine(LoadNextStageCoroutine());
+        // return;
+        //
+        // IEnumerator LoadNextStageCoroutine()
+        // {
+        //     yield return new WaitForSeconds(5f);
+        //
+        //     LoadNextStage();
+        // }
     }
 
     public void LoadNextStage()
