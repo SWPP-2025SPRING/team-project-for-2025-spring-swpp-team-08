@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class JumpPad : MonoBehaviour
 {
-    public float velocityMultiplier = 1.2f;
+    public float velocityMultiplier = 2.0f;
     public float maxJumpForce = 500f;
 
     private void OnCollisionEnter(Collision other)
