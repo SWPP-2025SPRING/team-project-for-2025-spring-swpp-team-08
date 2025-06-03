@@ -12,11 +12,13 @@ public class Playermovement2 : MonoBehaviour
     [Header("Jumping")]
     public float jumpForce = 10f;
     public KeyCode jumpKey = KeyCode.Space;
-    public LayerMask groundLayer; // Used for isGrounded check and jitter reduction
+    public float groundCheckDistance = 0.7f; // Distance from pivot to check for ground
+    public LayerMask groundLayer; // Set this to your ground layer in the Inspector
 
-    [Header("Jitter Reduction")]
-    public float jitterDampeningFactor = 0.5f;
-    public float maxJitterVelocity = 0.5f;
+    [Header("Braking")]
+    public KeyCode brakeKey = KeyCode.LeftShift;
+    public float brakingAngularDrag = 1.5f; 
+    public float brakingLinearDrag = 0.8f;   
 
     [Header("Steering Boost at Speed")]
     public float highSpeedThresholdForSteeringBoost = 5f;
@@ -33,14 +35,22 @@ public class Playermovement2 : MonoBehaviour
     public bool hideBallMesh = true;
     public float arrowRotationSpeed = 20f;
 
+    // Removed Wall Interaction Header and its public variables
+
     private Rigidbody rb;
     private Collider col;
     private MeshRenderer meshRenderer;
     private Vector3 lastPlayerInputDirection;
     private GameObject arrowInstance;
-    private bool isGrounded; 
+    private bool isGrounded;
     private bool tryingToJumpThisFrame; 
-    private int groundContactCount = 0; 
+
+    // Store original drag values
+    private float originalAngularDrag;
+    private float originalLinearDrag;
+
+    // Removed private variables for Wall Interaction
+    
 
     void Start()
     {
@@ -48,14 +58,22 @@ public class Playermovement2 : MonoBehaviour
         col = GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
 
-        if (rb == null) { enabled = false; return; }
-        if (col == null) { enabled = false; return; }
-        if (highFrictionMaterial == null) { enabled = false; return; }
-        if (cameraTransform == null) { enabled = false; return; }
-        
+        // Null checks
+        if (rb == null) { Debug.LogError("PlayerMovement2: No Rigidbody found!"); enabled = false; return; }
+        if (col == null) { Debug.LogError("PlayerMovement2: No Collider found!"); enabled = false; return; }
+        if (meshRenderer == null && hideBallMesh) { Debug.LogWarning("PlayerMovement2: No MeshRenderer found to hide!"); }
+        if (highFrictionMaterial == null) { Debug.LogError("PlayerMovement2: High Friction Physic Material not assigned!"); enabled = false; return; }
+        if (cameraTransform == null) { Debug.LogError("PlayerMovement2: Camera Transform not assigned!"); enabled = false; return; }
+        if (groundLayer == 0) { Debug.LogWarning("PlayerMovement2: Ground Layer not assigned in the Inspector! Ground check might not work correctly."); }
+
         rb.maxAngularVelocity = maxAngularVelocity;
-        rb.drag = linearDrag;
-        rb.angularDrag = angularDrag;
+        
+        // Store original drag values and then set initial drag
+        originalAngularDrag = angularDrag;
+        originalLinearDrag = linearDrag;
+        rb.angularDrag = originalAngularDrag;
+        rb.drag = originalLinearDrag;
+
 
         if (col != null) 
         {
@@ -78,7 +96,10 @@ public class Playermovement2 : MonoBehaviour
             }
             arrowInstance.SetActive(true);
         }
-        isGrounded = false;
+        else
+        {
+            Debug.LogWarning("PlayerMovement2: Arrow Prefab not assigned.");
+        }
     }
 
     Vector3 GetInitialInputDirection()
@@ -88,27 +109,34 @@ public class Playermovement2 : MonoBehaviour
         return (initialDir == Vector3.zero) ? Vector3.forward : initialDir;
     }
 
-    void Update()
+    void Update() 
     {
-        // Check for jump input
-        if (Input.GetKeyDown(jumpKey) && isGrounded) // MODIFIED: Added '&& isGrounded' back
+        // Jump input detection
+        if (Input.GetKeyDown(jumpKey))
         {
-            tryingToJumpThisFrame = true; // Set the flag if jump key is pressed AND player is grounded
+            if (isGrounded) 
+            {
+                tryingToJumpThisFrame = true; 
+            }
         }
     }
 
     void FixedUpdate()
     {
+        PerformGroundCheck(); // Ground check using Raycast
+
+        HandleBraking(); // Apply braking logic
+
         if (tryingToJumpThisFrame)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            tryingToJumpThisFrame = false; // Consume the jump action; reset the flag HERE
+            tryingToJumpThisFrame = false; // Consume jump action
         }
-
-        // --- Movement Torque ---
+        
+        // --- Input and Direction Update (for Arrow) ---
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-
+        
         if (cameraTransform != null) 
         {
             Vector3 camForward = Vector3.Scale(cameraTransform.forward, new Vector3(1, 0, 1)).normalized;
@@ -117,24 +145,40 @@ public class Playermovement2 : MonoBehaviour
 
             if (currentPlayerInputDirection.magnitude >= 0.01f)
             {
-                Vector3 normalizedCurrentPlayerInput = currentPlayerInputDirection.normalized;
-                float actualSidewaysTorquePower = sidewaysTorquePowerBase;
-                if (rb != null) 
+                lastPlayerInputDirection = currentPlayerInputDirection.normalized;
+            }
+            // If there's no significant new input, lastPlayerInputDirection retains its previous value for the arrow.
+            // Or, you could decide to make it point forward if input is zero:
+            // else { lastPlayerInputDirection = camForward != Vector3.zero ? camForward : transform.forward; }
+
+
+            // --- Movement Torque Application (Conditional on Braking) ---
+            if (!Input.GetKey(brakeKey) || rb.angularVelocity.magnitude < 0.5f) 
+            {
+                if (currentPlayerInputDirection.magnitude >= 0.01f)
                 {
-                    float currentSpeedAlongCamForward = Vector3.Dot(rb.velocity, camForward);
-                    if (Mathf.Abs(currentSpeedAlongCamForward) > highSpeedThresholdForSteeringBoost && Mathf.Abs(h) > 0.1f)
+                    // Use base torque powers directly
+                    float currentForwardTorquePower = forwardTorquePower;
+                    float currentSidewaysTorquePower = sidewaysTorquePowerBase;
+                    
+                    // Apply steering boost directly to currentSidewaysTorquePower
+                    if (rb != null) 
                     {
-                        actualSidewaysTorquePower *= steeringBoostFactor;
+                        float currentSpeedAlongCamForward = Vector3.Dot(rb.velocity, camForward);
+                        if (Mathf.Abs(currentSpeedAlongCamForward) > highSpeedThresholdForSteeringBoost && Mathf.Abs(h) > 0.1f)
+                        {
+                            currentSidewaysTorquePower *= steeringBoostFactor;
+                        }
+                    }
+
+                    Vector3 torqueFromV = new Vector3(camForward.z * v, 0, -camForward.x * v) * currentForwardTorquePower;
+                    Vector3 torqueFromH = new Vector3(camRight.z * h, 0, -camRight.x * h) * currentSidewaysTorquePower; 
+                    
+                    if (rb != null) 
+                    {
+                        rb.AddTorque(torqueFromV + torqueFromH);
                     }
                 }
-
-                Vector3 torqueFromV = new Vector3(camForward.z * v, 0, -camForward.x * v) * forwardTorquePower;
-                Vector3 torqueFromH = new Vector3(camRight.z * h, 0, -camRight.x * h) * actualSidewaysTorquePower;
-                if (rb != null) 
-                {
-                    rb.AddTorque(torqueFromV + torqueFromH);
-                }
-                lastPlayerInputDirection = normalizedCurrentPlayerInput;
             }
         }
 
@@ -143,54 +187,40 @@ public class Playermovement2 : MonoBehaviour
         if (arrowInstance != null)
         {
             arrowInstance.transform.position = transform.position;
-            if (lastPlayerInputDirection != Vector3.zero)
+            if (lastPlayerInputDirection != Vector3.zero) 
             {
                  Quaternion targetArrowRotation = Quaternion.LookRotation(lastPlayerInputDirection, Vector3.up);
                  arrowInstance.transform.rotation = Quaternion.Slerp(arrowInstance.transform.rotation, targetArrowRotation, arrowRotationSpeed * Time.fixedDeltaTime);
             }
         }
+    }
 
-        // --- Jitter Reduction ---
-        if (isGrounded && !tryingToJumpThisFrame && rb != null && rb.velocity.y > 0 && rb.velocity.y < maxJitterVelocity)
+    void HandleBraking()
+    {
+        if (rb == null) return;
+
+        if (Input.GetKey(brakeKey))
         {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * (1 - jitterDampeningFactor), rb.velocity.z);
+            rb.angularDrag = brakingAngularDrag;
+            rb.drag = brakingLinearDrag;
+        }
+        else
+        {
+            rb.angularDrag = originalAngularDrag;
+            rb.drag = originalLinearDrag;
         }
     }
 
-    // Collision methods to manage isGrounded state
-    void OnCollisionEnter(Collision collision)
+    void PerformGroundCheck()
     {
-        if ((groundLayer.value & (1 << collision.gameObject.layer)) > 0)
-        {
-            groundContactCount++;
-            isGrounded = (groundContactCount > 0);
-        }
-    }
-
-    void OnCollisionStay(Collision collision)
-    {
-        if ((groundLayer.value & (1 << collision.gameObject.layer)) > 0)
-        {
-            if (!isGrounded) { // If somehow isGrounded is false but we are staying on ground
-                isGrounded = true; 
-            }
-            if (groundContactCount == 0 && isGrounded) { // If isGrounded is true but count is 0 (e.g. missed Enter)
-                groundContactCount = 1; 
-            }
-        }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        if ((groundLayer.value & (1 << collision.gameObject.layer)) > 0)
-        {
-            groundContactCount--;
-            if (groundContactCount < 0) 
-            {
-                groundContactCount = 0;
-            }
-            isGrounded = (groundContactCount > 0);
-        }
+        Vector3 rayStart = transform.position; 
+        isGrounded = Physics.Raycast(rayStart, Vector3.down, groundCheckDistance, groundLayer);
+        
+        #if UNITY_EDITOR
+        // Keep this debug ray as it's useful for basic ground check visualization
+        Color rayColor = isGrounded ? Color.green : Color.red;
+        Debug.DrawRay(rayStart, Vector3.down * groundCheckDistance, rayColor);
+        #endif
     }
 
     void OnDisable()
