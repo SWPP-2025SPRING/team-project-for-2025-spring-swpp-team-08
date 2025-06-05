@@ -27,6 +27,7 @@ public class CheckpointManager : MonoBehaviour
 
     public void DisablePreviousCheckpoints(int currentNum)
     {
+        Debug.Log(currentNum);
         foreach (Checkpoint cp in allCheckpoints)
         {
             if (cp.currentCheckpointNum < currentNum)
