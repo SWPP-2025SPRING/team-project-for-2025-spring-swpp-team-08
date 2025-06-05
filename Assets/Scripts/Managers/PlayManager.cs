@@ -11,7 +11,7 @@ public enum PlayStates
 
 public class PlayManager : MonoBehaviour
 {
-    private const float DelayBeforeStart = 5f;
+    private const float DelayBeforeStart = 1f;
     private const float DelayAfterFinish = 5f;
 
     /// <summary>
