@@ -35,12 +35,4 @@ public class CheckpointManager : MonoBehaviour
             }
         }
     }
-
-    public void ResetAllCheckpoints()
-    {
-        foreach (Checkpoint cp in allCheckpoints)
-        {
-            cp.gameObject.SetActive(true);
-        }
-    }
 }
