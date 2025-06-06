@@ -60,8 +60,6 @@ public class PlayManager : MonoBehaviour
         uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
         uiManager.UpdateStage(stageName);
 
-        SetPlayerControllable(false);
-
         ReadyGame();
     }
 
@@ -115,7 +113,6 @@ public class PlayManager : MonoBehaviour
         if (State != PlayStates.Ready) return;
 
         State = PlayStates.Playing;
-        SetPlayerControllable(true);
         Debug.Log("Playing");
         // TODO: Implement start logic
     }
@@ -125,7 +122,6 @@ public class PlayManager : MonoBehaviour
         if (State != PlayStates.Playing) return;
 
         State = PlayStates.Finished;
-        SetPlayerControllable(false);
         Debug.Log("Finished");
         // TODO: Implement finish logic
 
@@ -147,10 +143,5 @@ public class PlayManager : MonoBehaviour
 
     }
 
-    private void SetPlayerControllable(bool value)
-    {
-        _player.GetComponent<PlayerController>().enabled = value;
-        _player.GetComponentInChildren<CameraPivotController>().enabled = value;
-    }
     // TODO: Add UI related functions
 }
