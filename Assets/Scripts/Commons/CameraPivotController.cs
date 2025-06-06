@@ -18,12 +18,15 @@ public class CameraPivotController : MonoBehaviour
 
     private void LateUpdate()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        if (GameManager.Instance.playManager.State == PlayStates.Playing)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-        _yaw += mouseX;
-        _pitch -= mouseY;
-        _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
+            _yaw += mouseX;
+            _pitch -= mouseY;
+            _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
+        }
 
         transform.position = player.position;
         transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
