@@ -8,18 +8,6 @@ public class CheckpointManager : MonoBehaviour
 
     private List<Checkpoint> allCheckpoints = new List<Checkpoint>();
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
-
     public void RegisterCheckpoint(Checkpoint checkpoint)
     {
         allCheckpoints.Add(checkpoint);
