@@ -8,10 +8,12 @@ public class Checkpoint : MonoBehaviour
     public int currentCheckpointNum;
     public Material triggeredMaterial;
     private bool _isTriggered = false;
+    private CheckpointManager _checkpointManager;
 
     private void Start()
     {
-        CheckpointManager.Instance.RegisterCheckpoint(this); 
+        _checkpointManager = FindObjectOfType<CheckpointManager>();
+        _checkpointManager.Instance.RegisterCheckpoint(this); 
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,7 +24,7 @@ public class Checkpoint : MonoBehaviour
             GameManager.Instance.playManager.UpdateCheckpoint(checkpointPosition);
             Debug.Log("Checkpoint saved at: " + checkpointPosition);
             usedCheckpoint();
-            CheckpointManager.Instance.DisablePreviousCheckpoints(currentCheckpointNum);
+            _checkpointManager.Instance.DisablePreviousCheckpoints(currentCheckpointNum);
         }
     }
 
