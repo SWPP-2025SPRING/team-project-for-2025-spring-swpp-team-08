@@ -9,9 +9,8 @@ public class Checkpoint : MonoBehaviour
     public Material triggeredMaterial;
     private bool _isTriggered = false;
 
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return new WaitUntil(() => CheckpointManager.Instance != null);
         CheckpointManager.Instance.RegisterCheckpoint(this); 
     }
 
