@@ -5,13 +5,41 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+    public int currentCheckpointNum;
+    public Material triggeredMaterial;
+    private bool _isTriggered = false;
+    private CheckpointManager _checkpointManager;
+
+    private void Start()
+    {
+        _checkpointManager = FindObjectOfType<CheckpointManager>();
+        _checkpointManager.RegisterCheckpoint(this); 
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !_isTriggered)
         {
             Vector3 checkpointPosition = transform.position;
             GameManager.Instance.playManager.UpdateCheckpoint(checkpointPosition);
             Debug.Log("Checkpoint saved at: " + checkpointPosition);
+            UsedCheckpoint();
+            _checkpointManager.DisablePreviousCheckpoints(currentCheckpointNum);
         }
+    }
+
+    private void UsedCheckpoint()
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        _isTriggered = true;
+        if (renderer != null && triggeredMaterial != null)
+        {
+            renderer.material = triggeredMaterial;
+        }
+    }
+
+    public void DisableCheckpoint()
+    {
+        UsedCheckpoint();
     }
 }
