@@ -23,12 +23,12 @@ public class Checkpoint : MonoBehaviour
             Vector3 checkpointPosition = transform.position;
             GameManager.Instance.playManager.UpdateCheckpoint(checkpointPosition);
             Debug.Log("Checkpoint saved at: " + checkpointPosition);
-            usedCheckpoint();
+            UsedCheckpoint();
             _checkpointManager.DisablePreviousCheckpoints(currentCheckpointNum);
         }
     }
 
-    private void usedCheckpoint()
+    private void UsedCheckpoint()
     {
         Renderer renderer = GetComponent<Renderer>();
         _isTriggered = true;
@@ -40,6 +40,6 @@ public class Checkpoint : MonoBehaviour
 
     public void DisableCheckpoint()
     {
-        usedCheckpoint();
+        UsedCheckpoint();
     }
 }
