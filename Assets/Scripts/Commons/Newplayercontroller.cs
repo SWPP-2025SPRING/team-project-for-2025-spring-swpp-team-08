@@ -1,7 +1,6 @@
-// PlayerMovement2.cs - WITH COYOTE TIME
 using UnityEngine;
 
-public class Newplayercontroller : MonoBehaviour
+public class NewPlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float forwardTorquePower = 25f;
