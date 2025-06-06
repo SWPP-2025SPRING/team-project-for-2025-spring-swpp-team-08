@@ -35,7 +35,8 @@ public class PlayManager : MonoBehaviour
     public float fallThresholdHeight = 0f;
     public float fallThresholdSecond = 5f;
 
-    private PlayStates _state;
+    public PlayStates State { get; private set; }
+
     private float _playTimeCurrent;
     private float _playTimeTotal;
     private Vector3 _checkpoint;
@@ -50,7 +51,7 @@ public class PlayManager : MonoBehaviour
 
     private void Start()
     {
-        _state = PlayStates.Ready;
+        State = PlayStates.Ready;
         _playTimeCurrent = 0f;
         _playTimeTotal = GameManager.Instance.totalPlayTime;
         _checkpoint = spawnPoint;
@@ -66,7 +67,7 @@ public class PlayManager : MonoBehaviour
 
     private void Update()
     {
-        if (_state == PlayStates.Playing)
+        if (State == PlayStates.Playing)
         {
             _playTimeCurrent += Time.deltaTime;
             _playTimeTotal += Time.deltaTime;
@@ -111,9 +112,9 @@ public class PlayManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (_state != PlayStates.Ready) return;
+        if (State != PlayStates.Ready) return;
 
-        _state = PlayStates.Playing;
+        State = PlayStates.Playing;
         SetPlayerControllable(true);
         Debug.Log("Playing");
         // TODO: Implement start logic
@@ -121,9 +122,9 @@ public class PlayManager : MonoBehaviour
 
     public void FinishGame()
     {
-        if (_state != PlayStates.Playing) return;
+        if (State != PlayStates.Playing) return;
 
-        _state = PlayStates.Finished;
+        State = PlayStates.Finished;
         SetPlayerControllable(false);
         Debug.Log("Finished");
         // TODO: Implement finish logic

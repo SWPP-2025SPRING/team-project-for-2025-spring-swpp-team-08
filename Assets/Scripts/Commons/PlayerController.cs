@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         {
             _fallTimer = 0f;
         }
-        if (IsFallen())
+        if (IsFallen() && GameManager.Instance.playManager.State == PlayStates.Playing)
         {
             Vector3 currentCheckPoint = GameManager.Instance.playManager.GetCurrentCheckpoint();
             MoveTo(currentCheckPoint);
