@@ -1,7 +1,7 @@
 // PlayerMovement2.cs - WITH COYOTE TIME
 using UnityEngine;
 
-public class New_playercontroller : MonoBehaviour
+public class Newplayercontroller : MonoBehaviour
 {
     [Header("Movement")]
     public float forwardTorquePower = 25f;
@@ -45,6 +45,9 @@ public class New_playercontroller : MonoBehaviour
     private float coyoteTimeCounter; // NEW: Timer for coyote jump
     private float originalAngularDrag;
     private float originalLinearDrag;
+    private float _fallTimer = 0f;
+    public static bool RESPAWN_START = false;
+
 
     void Start()
     {
@@ -56,7 +59,21 @@ public class New_playercontroller : MonoBehaviour
         if (col == null) { Debug.LogError("PlayerMovement2: No Collider found!"); enabled = false; return; }
         if (meshRenderer == null) { Debug.LogWarning("PlayerMovement2: No MeshRenderer found for the ball!"); }
         if (highFrictionMaterial == null) { Debug.LogError("PlayerMovement2: High Friction Physic Material not assigned!"); enabled = false; return; }
-        if (New_MainCamera == null) { Debug.LogError("PlayerMovement2: Camera Transform not assigned!"); enabled = false; return; }
+        if (New_MainCamera == null)
+{
+    GameObject cam = GameObject.Find("Main Camera");
+    if (cam != null)
+    {
+        New_MainCamera = cam.transform;
+    }
+    else
+    {
+        Debug.LogError("PlayerMovement2: 'Main Camera' not found in scene, and no camera assigned.", this);
+        enabled = false;
+        return;
+    }
+}
+
         if (groundLayer == 0) { Debug.LogWarning("PlayerMovement2: Ground Layer not assigned!"); }
 
         rb.maxAngularVelocity = maxAngularVelocity;
@@ -79,14 +96,34 @@ public class New_playercontroller : MonoBehaviour
     }
 
     void Update()
+{
+    // Handle jump input
+    if (Input.GetKeyDown(jumpKey) && coyoteTimeCounter > 0f)
     {
-        // NEW: Check for jump input. Allow jumping if the coyote time counter is positive.
-        // This replaces the old check for 'isGrounded'.
-        if (Input.GetKeyDown(jumpKey) && coyoteTimeCounter > 0f)
+        tryingToJumpThisFrame = true;
+    }
+
+    // --- Respawn Check Logic ---
+    if (!isGrounded && rb.velocity.y < 0f)
+    {
+        _fallTimer += Time.deltaTime;
+    }
+    else
+    {
+        _fallTimer = 0f;
+    }
+
+    if (IsFallen())
+    {
+        Vector3 currentCheckpoint = GameManager.Instance.playManager.GetCurrentCheckpoint();
+        MoveTo(currentCheckpoint);
+        
+        if (GameManager.Instance.playManager.stageNo == 2)
         {
-            tryingToJumpThisFrame = true;
+            Stage2.StackGround.ResetAllFootsteps();
         }
     }
+}
 
     void FixedUpdate()
     {
@@ -165,4 +202,24 @@ public class New_playercontroller : MonoBehaviour
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
     }
+
+    public void MoveTo(Vector3 position)
+{
+    rb.velocity = Vector3.zero;
+    rb.angularVelocity = Vector3.zero;
+    transform.position = position;
+}
+
+private bool IsFallen()
+{
+    float fallUnder = GameManager.Instance.playManager.fallThresholdHeight;
+    return transform.position.y <= fallUnder || IsFallingTooLong();
+}
+
+private bool IsFallingTooLong()
+{
+    float fallSecond = GameManager.Instance.playManager.fallThresholdSecond;
+    return _fallTimer >= fallSecond;
+}
+
 }

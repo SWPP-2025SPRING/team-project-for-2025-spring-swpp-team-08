@@ -9,7 +9,7 @@ public class Follower : MonoBehaviour
 
     [Header("Movement Controller")]
     [Tooltip("The script that provides the input direction. This should be the Playermovement2 script on your ball.")]
-    public New_playercontroller playerMovementScript;
+    public Newplayercontroller playerMovementScript;
 
     [Header("Settings")]
     [Tooltip("How quickly the character turns to face the movement direction.")]

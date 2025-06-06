@@ -26,11 +26,20 @@ public class SimpleOrbitCamera : MonoBehaviour
     void Start()
     {
         if (Ball == null)
-        {
-            Debug.LogError("SimpleOrbitCamera: Target is not assigned! Please assign a Ball in the Inspector.", this);
-            enabled = false; // Disable script if Ball is missing
-            return;
-        }
+{
+    GameObject foundBall = GameObject.Find("Ball");
+    if (foundBall != null)
+    {
+        Ball = foundBall.transform;
+    }
+    else
+    {
+        Debug.LogError("SimpleOrbitCamera: Could not find GameObject named 'Ball' and no target assigned in the Inspector.", this);
+        enabled = false;
+        return;
+    }
+}
+
 
         // Initialize yaw and pitch based on the camera's initial rotation in the editor.
         // This allows you to set a starting camera view.
@@ -105,4 +114,17 @@ public class SimpleOrbitCamera : MonoBehaviour
             Gizmos.DrawSphere(Ball.position, 0.15f); // Sphere at Ball position
         }
     }
+    private Transform FindDeepChild(Transform parent, string name)
+{
+    foreach (Transform child in parent)
+    {
+        if (child.name == name)
+            return child;
+
+        Transform result = FindDeepChild(child, name);
+        if (result != null)
+            return result;
+    }
+    return null;
+}
 }
