@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class GoToSpecificScene : MonoBehaviour
 {
-    // 전환할 씬 이름을 인스펙터에서 설정할 수 있도록 함
+
     public string sceneName;
 
     public void LoadSceneByName()
