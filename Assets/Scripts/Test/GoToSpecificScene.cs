@@ -10,7 +10,7 @@ public class GoToSpecificScene : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(sceneName))
         {
-            SceneManager.LoadScene(sceneName);
+            GameManager.Instance.playManager.LoadNextStage();
         }
         else
         {
