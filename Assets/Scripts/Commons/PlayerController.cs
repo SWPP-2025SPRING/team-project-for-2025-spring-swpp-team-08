@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public float deceleration = 100f;
     public Transform cameraPivot;
 
+    public static bool RESPAWN_START = false;
+
     private Rigidbody _rb;
     private Vector3 _inputDirection;
     private float _fallTimer = 0f;
@@ -20,6 +22,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.playManager.State != PlayStates.Playing)
+        {
+            _inputDirection = Vector3.zero;
+            return;
+        }
+
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         _inputDirection = new Vector3(h, 0, v).normalized;
@@ -35,6 +43,10 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 currentCheckPoint = GameManager.Instance.playManager.GetCurrentCheckpoint();
             MoveTo(currentCheckPoint);
+            if (GameManager.Instance.playManager.stageNo == 2)
+            {
+                Stage2.StackGround.ResetAllFootsteps();
+            }
         }
     }
 

@@ -1,3 +1,5 @@
+using System.Collections;
+
 using UnityEngine;
 
 public enum PlayStates
@@ -9,6 +11,9 @@ public enum PlayStates
 
 public class PlayManager : MonoBehaviour
 {
+    private const float DelayBeforeStart = 1f;
+    private const float DelayAfterFinish = 5f;
+
     /// <summary>
     /// Stage number of current scene.
     /// Must be assigned in Unity Inspector.
@@ -30,19 +35,23 @@ public class PlayManager : MonoBehaviour
     public float fallThresholdHeight = 0f;
     public float fallThresholdSecond = 5f;
 
-    private PlayStates _state;
+    public PlayStates State { get; private set; }
+
     private float _playTimeCurrent;
     private float _playTimeTotal;
     private Vector3 _checkpoint;
+    private GameObject _player;
 
     private void Awake()
     {
         GameManager.Instance.playManager = this;
+
+        _player = GameObject.FindWithTag("Player");
     }
 
     private void Start()
     {
-        _state = PlayStates.Ready;
+        State = PlayStates.Ready;
         _playTimeCurrent = 0f;
         _playTimeTotal = GameManager.Instance.totalPlayTime;
         _checkpoint = spawnPoint;
@@ -50,11 +59,13 @@ public class PlayManager : MonoBehaviour
         uiManager.UpdatePlayTime(_playTimeTotal);
         uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
         uiManager.UpdateStage(stageName);
+
+        ReadyGame();
     }
 
     private void Update()
     {
-        if (_state == PlayStates.Playing)
+        if (State == PlayStates.Playing)
         {
             _playTimeCurrent += Time.deltaTime;
             _playTimeTotal += Time.deltaTime;
@@ -82,20 +93,47 @@ public class PlayManager : MonoBehaviour
         return _checkpoint;
     }
 
+    public void ReadyGame()
+    {
+        Debug.Log("Ready");
+
+        StartCoroutine(ReadyGameCoroutine());
+        return;
+
+        IEnumerator ReadyGameCoroutine()
+        {
+            yield return new WaitForSeconds(DelayBeforeStart);
+
+            StartGame();
+        }
+    }
+
     public void StartGame()
     {
-        if (_state != PlayStates.Ready) return;
+        if (State != PlayStates.Ready) return;
 
-        _state = PlayStates.Playing;
+        State = PlayStates.Playing;
+        Debug.Log("Playing");
         // TODO: Implement start logic
     }
 
     public void FinishGame()
     {
-        if (_state != PlayStates.Playing) return;
+        if (State != PlayStates.Playing) return;
 
-        _state = PlayStates.Finished;
+        State = PlayStates.Finished;
+        Debug.Log("Finished");
         // TODO: Implement finish logic
+
+        StartCoroutine(LoadNextStageCoroutine());
+        return;
+
+        IEnumerator LoadNextStageCoroutine()
+        {
+            yield return new WaitForSeconds(DelayAfterFinish);
+
+            LoadNextStage();
+        }
     }
 
     public void LoadNextStage()
@@ -104,5 +142,6 @@ public class PlayManager : MonoBehaviour
         GameManager.LoadScene(nextSceneName);
 
     }
+
     // TODO: Add UI related functions
 }
