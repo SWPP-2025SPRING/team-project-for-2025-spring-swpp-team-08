@@ -6,7 +6,9 @@ namespace Stage4
     public class SimpleMoveRestoreBehaviour : PredefinedBehaviour
     {
         public Vector3 destination;
+        public Vector3 destinationRotation;
         public float duration;
+        public float delayBeforeMove;
         public float delayAfterMove;
         public bool isDestinationRelative;
 
@@ -24,18 +26,27 @@ namespace Stage4
 
             IEnumerator MoveRestore()
             {
+                yield return new WaitForSeconds(delayBeforeMove);
+
                 var initialPosition = transform.position;
+                var initialRotation = transform.rotation;
                 var finalPosition = isDestinationRelative
                     ? transform.position + transform.rotation * destination
                     : destination;
+                var finalRotation = isDestinationRelative
+                    ? transform.rotation * Quaternion.Euler(destinationRotation)
+                    : Quaternion.Euler(destinationRotation);
 
                 /* Move from initial to final position */
                 var elapsedTime = 0f;
 
                 while (elapsedTime <= duration)
                 {
-                    var position = Vector3.Lerp(initialPosition, finalPosition, elapsedTime / duration);
+                    var progress = elapsedTime / duration;
+                    var position = Vector3.Lerp(initialPosition, finalPosition, progress);
+                    var rotation = Quaternion.Lerp(initialRotation, finalRotation, progress);
                     Rigidbody.MovePosition(position);
+                    Rigidbody.MoveRotation(rotation);
 
                     elapsedTime += Time.deltaTime;
 
@@ -43,7 +54,9 @@ namespace Stage4
                 }
 
                 Rigidbody.MovePosition(finalPosition);
+                Rigidbody.MoveRotation(finalRotation);
                 Rigidbody.velocity = Vector3.zero;
+                Rigidbody.angularVelocity = Vector3.zero;
 
                 yield return new WaitForSeconds(delayAfterMove);
 
@@ -52,8 +65,10 @@ namespace Stage4
 
                 while (elapsedTime <= duration)
                 {
-                    var position = Vector3.Lerp(finalPosition, initialPosition, elapsedTime / duration);
+                    var progress = elapsedTime / duration;
+                    var position = Vector3.Lerp(finalPosition, initialPosition, progress);
                     Rigidbody.MovePosition(position);
+                    Rigidbody.MoveRotation(initialRotation);
 
                     elapsedTime += Time.deltaTime;
 
@@ -61,7 +76,9 @@ namespace Stage4
                 }
 
                 Rigidbody.MovePosition(initialPosition);
+                Rigidbody.MoveRotation(initialRotation);
                 Rigidbody.velocity = Vector3.zero;
+                Rigidbody.angularVelocity = Vector3.zero;
             }
         }
     }
