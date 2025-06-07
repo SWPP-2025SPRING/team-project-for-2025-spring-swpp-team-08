@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NewPlayerController : MonoBehaviour
+public class NewPlayerControl : MonoBehaviour
 {
     [Header("Movement")]
     public float forwardTorquePower = 25f;
