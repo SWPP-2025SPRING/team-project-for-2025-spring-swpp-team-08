@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GoToSpecificScene : MonoBehaviour
+public class GoToSpecificSceneForTest : MonoBehaviour
 {
 
     public string sceneName;
