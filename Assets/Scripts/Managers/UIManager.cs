@@ -35,12 +35,12 @@ public class UIManager : MonoBehaviour
 
     public void UpdatePlayTime(float playTime)
     {
-        playTimeText.text = $"Playtime...{FormatPlayTime(playTime)}";
+        playTimeText.text = $"Playtime... {FormatPlayTime(playTime)}";
     }
 
     public void UpdateCurrentPlayTime(float playTime)
     {
-        currentPlayTimeText.text = $"On current stage...{FormatPlayTime(playTime)}";
+        currentPlayTimeText.text = $"On current stage... {FormatPlayTime(playTime)}";
     }
 
     public void UpdateStage(string stageName)
