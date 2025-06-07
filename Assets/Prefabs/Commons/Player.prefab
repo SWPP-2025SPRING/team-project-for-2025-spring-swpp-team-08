@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 247410191748921876}
   m_Layer: 0
-  m_Name: Final_Newplayer
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,6 +235,23 @@ MonoBehaviour:
   brakingLinearDrag: 0.8
   highSpeedThresholdForSteeringBoost: 5
   steeringBoostFactor: 1.5
+  jumpAudio: {fileID: 8300000, guid: fa8f33d43c0cd44fe8a59222bee330d2, type: 3}
+  landAudio: {fileID: 8300000, guid: 72ed386a9ba9641bfb2a600e006c4be1, type: 3}
+  bumpAudio: {fileID: 8300000, guid: 0a8d1268b11b649d5a4fb81fba068cb1, type: 3}
+  cruiseAudio: {fileID: 8300000, guid: 9b2902f7329b447cebda317bdf34af92, type: 3}
+  jumpVolume: 0.245
+  landVolume: 0.406
+  bumpVolume: 0.55
+  cruiseMaxVolume: 1
+  pitchRandomness: 0.2
+  maxSpeedForCruiseAudio: 50
+  minCruisePitch: 0.8
+  maxCruisePitch: 1.8
+  minFallDistanceForSound: 0.5
+  maxFallDistanceForSound: 8
+  minSpeedForBump: 10
+  bumpSoundCooldown: 0.8
+  wallAngleThreshold: 0.5
   New_MainCamera: {fileID: 0}
   highFrictionMaterial: {fileID: 13400000, guid: b11a6ccd7769b436ab36481d72bccbb8, type: 2}
   hideBallMesh: 0
@@ -326,7 +343,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdf4e0719021b443f9559f51353492f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetToFollow: {fileID: 5065461758210047151}
-  playerMovementScript: {fileID: 247410192720308088}
   rotationSpeed: 15
   positionOffset: {x: 0, y: 0, z: 0}
+  ballObjectName: Ball
