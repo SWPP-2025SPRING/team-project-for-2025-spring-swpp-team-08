@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.playManager.State != PlayStates.Playing)
+        {
+            _inputDirection = Vector3.zero;
+            return;
+        }
+
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         _inputDirection = new Vector3(h, 0, v).normalized;
