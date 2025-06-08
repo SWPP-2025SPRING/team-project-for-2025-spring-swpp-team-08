@@ -1,9 +1,10 @@
 ﻿using System.Collections;
+
 using UnityEngine;
 
 namespace Stage4
 {
-    public class StopMoveBehaviour : PredefinedBehaviour
+    public class ReverseMoveBehaviour : PredefinedBehaviour
     {
         public float duration;
 
@@ -35,26 +36,26 @@ namespace Stage4
 
         protected override void PerformInternal()
         {
-            StartCoroutine(StopMoveCoroutine());
+            StartCoroutine(ReverseMoveCoroutine());
             return;
 
-            IEnumerator StopMoveCoroutine()
+            IEnumerator ReverseMoveCoroutine()
             {
                 var elapsedTime = 0f;
 
                 while (elapsedTime < duration)
                 {
                     var progress = elapsedTime / duration;
-                    _velocity = initialVelocity * (1 - progress);
-                    _angularVelocity = initialAngularVelocity * (1 - progress);
+                    _velocity = initialVelocity * (1 - 2 * progress);
+                    _angularVelocity = initialAngularVelocity * (1 - 2 * progress);
 
                     elapsedTime += Time.deltaTime;
 
                     yield return null;
                 }
 
-                _velocity = Vector3.zero;
-                _angularVelocity = Vector3.zero;
+                _velocity = -initialVelocity;
+                _angularVelocity = -initialAngularVelocity;
             }
         }
     }

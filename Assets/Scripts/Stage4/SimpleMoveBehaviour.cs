@@ -7,17 +7,16 @@ namespace Stage4
     {
         public Vector3 destination;
         public float duration;
-
-        private Rigidbody _rigidbody;
+        public bool isDestinationRelative;
 
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            Rigidbody = GetComponent<Rigidbody>();
         }
 
         protected override void PerformInternal()
         {
-            _rigidbody.isKinematic = true;
+            Rigidbody.isKinematic = true;
 
             StartCoroutine(StopAfterDelay());
             return;
@@ -25,20 +24,26 @@ namespace Stage4
             IEnumerator StopAfterDelay()
             {
                 var initialPosition = transform.position;
+                var finalPosition = isDestinationRelative
+                    ? transform.position + transform.rotation * destination
+                    : destination;
                 var elapsedTime = 0f;
+
+                Debug.Log($"moving from {initialPosition} to {finalPosition} over {duration} seconds");
 
                 while (elapsedTime <= duration)
                 {
-                    transform.position = Vector3.Lerp(initialPosition, destination, elapsedTime / duration);
+                    var position = Vector3.Lerp(initialPosition, finalPosition, elapsedTime / duration);
+                    Rigidbody.MovePosition(position);
 
                     elapsedTime += Time.deltaTime;
 
                     yield return null;
                 }
 
-                transform.position = destination;
+                Rigidbody.MovePosition(finalPosition);
 
-                _rigidbody.velocity = Vector3.zero;
+                Rigidbody.velocity = Vector3.zero;
             }
         }
     }
