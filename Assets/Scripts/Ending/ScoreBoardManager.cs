@@ -9,7 +9,9 @@ public class ScoreBoardManager : MonoBehaviour
 
     private void Awake()
     {
-        filePath = Path.Combine(Application.dataPath, "ScoreBoard", "scoreboard.json");
+        string dirPath = Path.Combine(Application.persistentDataPath, "ScoreBoard");
+        Directory.CreateDirectory(dirPath);
+        filePath = Path.Combine(dirPath, "scoreboard.json");
         Debug.Log(filePath);
     }
 
