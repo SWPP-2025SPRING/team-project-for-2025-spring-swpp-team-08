@@ -7,6 +7,9 @@ public class HatCollideEnd : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("🎓 Graduation Hat triggered by Player!");
+            GameManager.Instance.playManager.uiManager.UpdateSubtitle("Congratulations!", 3f);
+
+
         }
     }
 }
