@@ -9,7 +9,8 @@ public class ScoreBoardManager : MonoBehaviour
 
     private void Awake()
     {
-        filePath = Path.Combine(Application.persistentDataPath, "scoreboard.json");
+        filePath = Path.Combine(Application.dataPath, "ScoreBoard", "scoreboard.json");
+        Debug.Log(filePath);
     }
 
     public void SaveScore(string name, float score)
@@ -20,6 +21,7 @@ public class ScoreBoardManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(new ScoreList { scores = scores }, true);
         File.WriteAllText(filePath, json);
+        Debug.Log(filePath);
     }
 
     public List<ScoreData> LoadScores()
