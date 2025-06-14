@@ -12,7 +12,7 @@ public class InputName : MonoBehaviour
     public GameObject endingCreditPanel;
     public EndingCreditScript creditRoll;
 
-    public GameObject leaderboardPanel;
+    public Button scoreButton;
     public Button restartButton;
 
     private System.Action<string> onNameSubmitted;
@@ -21,7 +21,7 @@ public class InputName : MonoBehaviour
     {
         nameInputPanel.SetActive(false);
         endingCreditPanel.SetActive(false);
-        leaderboardPanel.SetActive(false);
+        scoreButton.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
 
         submitButton.onClick.AddListener(OnSubmitClicked);
@@ -51,7 +51,7 @@ public class InputName : MonoBehaviour
 
     private void StartCredits()
     {
-        Debug.Log("qqqqqq");
+        //Debug.Log("qqqqqq");
         endingCreditPanel.SetActive(true);
         creditRoll.onCreditEnd = OnCreditEnd;
         creditRoll.StartRoll();
@@ -59,8 +59,12 @@ public class InputName : MonoBehaviour
 
     private void OnCreditEnd()
     {
+        Debug.Log("qqqqqq");
         endingCreditPanel.SetActive(false);
-        leaderboardPanel.SetActive(true);
+        Debug.Log("qqqqqq1");
+        scoreButton.gameObject.SetActive(true);
+        Debug.Log("qqqqqq2");
         restartButton.gameObject.SetActive(true);
+        Debug.Log("qqqqqq3");
     }
 }
