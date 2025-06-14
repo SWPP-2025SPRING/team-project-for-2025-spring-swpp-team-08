@@ -26,7 +26,8 @@ public class HatCollideEnd : MonoBehaviour
 
     private void OnNameEntered(string playerName)
     {
-        float finalScore = GameManager.Instance.totalPlayTime;
+        //float finalScore = GameManager.Instance.totalPlayTime; 나중에 이거로 바꾸기
+        float finalScore = UnityEngine.Random.Range(0f, 100f);
 
         var scoreboard = FindObjectOfType<ScoreBoardManager>();
         if (scoreboard != null)
