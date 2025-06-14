@@ -51,7 +51,7 @@ public class InputName : MonoBehaviour
 
     private void StartCredits()
     {
-        
+        Debug.Log("qqqqqq");
         endingCreditPanel.SetActive(true);
         creditRoll.onCreditEnd = OnCreditEnd;
         creditRoll.StartRoll();

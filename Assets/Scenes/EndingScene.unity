@@ -176,10 +176,10 @@ MonoBehaviour:
   nameInputPanel: {fileID: 8678321}
   nameInputField: {fileID: 851162100}
   submitButton: {fileID: 1343630917}
-  endingCreditPanel: {fileID: 1732704089}
-  creditRoll: {fileID: 0}
-  leaderboardPanel: {fileID: 0}
-  restartButton: {fileID: 0}
+  endingCreditPanel: {fileID: 1389744150}
+  creditRoll: {fileID: 1732704090}
+  leaderboardPanel: {fileID: 466005201}
+  restartButton: {fileID: 268210007}
 --- !u!1 &20166591
 GameObject:
   m_ObjectHideFlags: 0
@@ -3580,7 +3580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &937245208
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6287,7 +6287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creditText: {fileID: 232319642}
   scrollSpeed: 30
-  endY: 1000
+  endY: 450
 --- !u!4 &1732704091
 Transform:
   m_ObjectHideFlags: 0
