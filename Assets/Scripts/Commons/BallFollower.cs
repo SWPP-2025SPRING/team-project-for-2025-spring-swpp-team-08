@@ -5,7 +5,7 @@ public class BallFollower : MonoBehaviour
 {
     // These are now private as they will be found automatically by the script.
     private Transform targetToFollow;
-    private NewPlayerControl playerMovementScript;
+    private HihiController playerMovementScript;
 
     [Header("Settings")]
     [Tooltip("How quickly the character turns to face the movement direction.")]
@@ -41,7 +41,7 @@ public class BallFollower : MonoBehaviour
         }
 
         // 3. Get the movement script component from the ball we just found.
-        playerMovementScript = targetToFollow.GetComponent<NewPlayerControl>();
+        playerMovementScript = targetToFollow.GetComponent<HihiController>();
 
         // 4. Check if the script was found on the ball.
         if (playerMovementScript == null)
