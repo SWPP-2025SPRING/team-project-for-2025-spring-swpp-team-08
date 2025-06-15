@@ -11,10 +11,10 @@ public class JumpPad : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+            NewPlayerControl newPlayerControl = other.gameObject.GetComponent<NewPlayerControl>();
             float computedJump = Math.Min(maxJumpForce, Math.Abs(other.impulse.y) * velocityMultiplier);
             // Debug.Log($"impulse: {other.impulse.y} computed: {computedJump}");
-            playerController.Jump(computedJump);
+            newPlayerControl.Jump(computedJump);
         }
     }
 }

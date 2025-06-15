@@ -209,10 +209,7 @@ public class NewPlayerControl : MonoBehaviour
 
         if (tryingToJumpThisFrame)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            PlayJumpSound();
-            tryingToJumpThisFrame = false;
-            coyoteTimeCounter = 0f;
+            Jump(jumpForce);
         }
         
         // --- Movement and Braking Logic (Unchanged) ---
@@ -264,6 +261,14 @@ public class NewPlayerControl : MonoBehaviour
         // --- End of Movement Logic ---
         
         wasGrounded = isGrounded;
+    }
+
+    public void Jump(float magnitude)
+    {
+        rb.AddForce(Vector3.up * magnitude, ForceMode.Impulse);
+        PlayJumpSound();
+        tryingToJumpThisFrame = false;
+        coyoteTimeCounter = 0f;
     }
     
     void OnCollisionEnter(Collision collision)
