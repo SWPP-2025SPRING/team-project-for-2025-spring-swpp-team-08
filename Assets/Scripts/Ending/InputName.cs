@@ -15,7 +15,7 @@ public class InputName : MonoBehaviour
     public Button scoreButton;
     public Button restartButton;
 
-    private System.Action<string> onNameSubmitted;
+    private System.Action<string> _onNameSubmitted;
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class InputName : MonoBehaviour
 
     public void Show(System.Action<string> onSubmit)
     {
-        onNameSubmitted = onSubmit;
+        _onNameSubmitted = onSubmit;
         nameInputPanel.SetActive(true);
         nameInputField.text = "";
         nameInputField.ActivateInputField();
@@ -43,7 +43,7 @@ public class InputName : MonoBehaviour
             playerName = "Anonymous";
         }
 
-        onNameSubmitted?.Invoke(playerName);
+        _onNameSubmitted?.Invoke(playerName);
         nameInputPanel.SetActive(false);
 
         StartCredits();
