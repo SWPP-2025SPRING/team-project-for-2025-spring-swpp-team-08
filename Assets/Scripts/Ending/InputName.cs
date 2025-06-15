@@ -15,8 +15,6 @@ public class InputName : MonoBehaviour
     public Button scoreButton;
     public Button restartButton;
 
-    private System.Action<string> _onNameSubmitted;
-
     private void Awake()
     {
         nameInputPanel.SetActive(false);
@@ -27,9 +25,8 @@ public class InputName : MonoBehaviour
         submitButton.onClick.AddListener(OnSubmitClicked);
     }
 
-    public void Show(System.Action<string> onSubmit)
+    public void Show()
     {
-        _onNameSubmitted = onSubmit;
         nameInputPanel.SetActive(true);
         nameInputField.text = "";
         nameInputField.ActivateInputField();
@@ -39,15 +36,24 @@ public class InputName : MonoBehaviour
     {
         string playerName = nameInputField.text;
         if (string.IsNullOrEmpty(playerName))
-        {
             playerName = "Anonymous";
-        }
 
-        _onNameSubmitted?.Invoke(playerName);
+        SaveScore(playerName); 
+
         nameInputPanel.SetActive(false);
-
         StartCredits();
     }
+
+    private void SaveScore(string playerName)
+    {
+        //float finalScore = GameManager.Instance.totalPlayTime; 나중에 이거로 바꾸기
+        float finalScore = 100f; // UnityEngine.Random.Range(0f, 100f); 
+
+        var scoreboard = FindObjectOfType<ScoreBoardManager>();
+        if (scoreboard != null)
+            scoreboard.SaveScore(playerName, finalScore);
+    }
+
 
     private void StartCredits()
     {
