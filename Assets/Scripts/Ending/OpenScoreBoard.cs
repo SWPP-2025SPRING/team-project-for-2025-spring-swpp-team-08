@@ -37,7 +37,7 @@ public class OpenScoreBoard : MonoBehaviour
     private void ShowTopScores(int count)
     {
         List<ScoreData> scores = LoadScores();
-        scores.Sort((a, b) => b.score.CompareTo(a.score));
+        scores.Sort((a, b) => a.score.CompareTo(b.score));
 
         int displayCount = Mathf.Min(count, scores.Count);
         string displayText = "";

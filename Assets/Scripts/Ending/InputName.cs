@@ -47,7 +47,7 @@ public class InputName : MonoBehaviour
     private void SaveScore(string playerName)
     {
         //float finalScore = GameManager.Instance.totalPlayTime; 나중에 이거로 바꾸기
-        float finalScore = 100f; // UnityEngine.Random.Range(0f, 100f); 
+        float finalScore = 1f; // UnityEngine.Random.Range(0f, 100f); 
 
         var scoreboard = FindObjectOfType<ScoreBoardManager>();
         if (scoreboard != null)
