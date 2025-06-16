@@ -1,18 +1,22 @@
 using System.Collections;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Text")]
     public TextMeshProUGUI playTimeText;
     public TextMeshProUGUI currentPlayTimeText;
     public TextMeshProUGUI currentStageText;
     public TextMeshProUGUI subtitleText;
     public TextMeshProUGUI percentText;
+
+    [Header("Animation")]
+    public Animator canvasAnimator;
+
+    [Header("Slider")]
     public Slider progressBar;
 
     private Coroutine _coroutine;
@@ -21,12 +25,6 @@ public class UIManager : MonoBehaviour
     {
         subtitleText.gameObject.SetActive(false);
     }
-
-    //UImanager for each scene, UImanager as prefab
-
-    //playtime UI
-    //sec:min:millisec
-    //overall play time
 
     private string FormatPlayTime(float playtime)
     {
@@ -73,6 +71,21 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(totalDurationSeconds);
         subtitleText.gameObject.SetActive(false);
+    }
+
+    public void ShowUI()
+    {
+        canvasAnimator.SetBool("IsShown", true);
+    }
+
+    public void HideUI()
+    {
+        canvasAnimator.SetBool("IsShown", false);
+    }
+
+    public void StartCountdown()
+    {
+        // TODO
     }
 
     //set stage text at each scene UI

@@ -11,8 +11,9 @@ public enum PlayStates
 
 public class PlayManager : MonoBehaviour
 {
-    private const float DelayBeforeStart = 1f;
+    private const float DelayBeforeStart = 2f;
     private const float DelayAfterFinish = 5f;
+    private const float DelayAnimationAfterFinish = 3f;
 
     /// <summary>
     /// Stage number of current scene.
@@ -96,6 +97,7 @@ public class PlayManager : MonoBehaviour
     public IEnumerator ReadyGame()
     {
         _playerControl.canControl = false;
+        uiManager.ShowUI();
         Debug.Log("Ready");
 
         yield return new WaitForSeconds(DelayBeforeStart);
@@ -127,7 +129,11 @@ public class PlayManager : MonoBehaviour
 
         IEnumerator LoadNextStageCoroutine()
         {
-            yield return new WaitForSeconds(DelayAfterFinish);
+            yield return new WaitForSeconds(DelayAnimationAfterFinish);
+
+            uiManager.HideUI();
+
+            yield return new WaitForSeconds(DelayAfterFinish - DelayAnimationAfterFinish);
 
             LoadNextStage();
         }
