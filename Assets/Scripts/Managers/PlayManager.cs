@@ -40,13 +40,13 @@ public class PlayManager : MonoBehaviour
     private float _playTimeCurrent;
     private float _playTimeTotal;
     private Vector3 _checkpoint;
-    private GameObject _player;
+    private NewPlayerControl _playerControl;
 
     private void Awake()
     {
         GameManager.Instance.playManager = this;
 
-        _player = GameObject.FindWithTag("Player");
+        _playerControl = GameObject.FindWithTag("Player").GetComponentInChildren<NewPlayerControl>();
     }
 
     private void Start()
@@ -60,7 +60,7 @@ public class PlayManager : MonoBehaviour
         uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
         uiManager.UpdateStage(stageName);
 
-        ReadyGame();
+        StartCoroutine(ReadyGame());
     }
 
     private void Update()
@@ -93,19 +93,14 @@ public class PlayManager : MonoBehaviour
         return _checkpoint;
     }
 
-    public void ReadyGame()
+    public IEnumerator ReadyGame()
     {
+        _playerControl.canControl = false;
         Debug.Log("Ready");
 
-        StartCoroutine(ReadyGameCoroutine());
-        return;
+        yield return new WaitForSeconds(DelayBeforeStart);
 
-        IEnumerator ReadyGameCoroutine()
-        {
-            yield return new WaitForSeconds(DelayBeforeStart);
-
-            StartGame();
-        }
+        StartGame();
     }
 
     public void StartGame()
@@ -113,6 +108,7 @@ public class PlayManager : MonoBehaviour
         if (State != PlayStates.Ready) return;
 
         State = PlayStates.Playing;
+        _playerControl.canControl = true;
         Debug.Log("Playing");
         // TODO: Implement start logic
     }
@@ -122,6 +118,7 @@ public class PlayManager : MonoBehaviour
         if (State != PlayStates.Playing) return;
 
         State = PlayStates.Finished;
+        _playerControl.canControl = false;
         Debug.Log("Finished");
         // TODO: Implement finish logic
 
