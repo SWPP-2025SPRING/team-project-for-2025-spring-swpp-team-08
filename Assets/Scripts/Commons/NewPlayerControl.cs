@@ -165,14 +165,15 @@ public class NewPlayerControl : MonoBehaviour
         {
             _fallTimer = 0f;
         }
+        // Debug.LogWarning($"{_fallTimer}, {GameManager.Instance.playManager.fallThresholdSecond}");
 
         if (IsFallen())
         {
-            Vector3 currentCheckpoint = FakeGameManager.Instance.playManager.GetCurrentCheckpoint();
+            Vector3 currentCheckpoint = GameManager.Instance.playManager.GetCurrentCheckpoint();
             MoveTo(currentCheckpoint);
-            if (FakeGameManager.Instance.playManager.stageNo == 2)
+            if (GameManager.Instance.playManager.stageNo == 2)
             {
-                FakeGameManager.Stage2.StackGround.ResetAllFootsteps();
+                Stage2.StackGround.ResetAllFootsteps();
             }
         }
         
@@ -379,33 +380,13 @@ public class NewPlayerControl : MonoBehaviour
 
     private bool IsFallen()
     {
-        float fallUnder = FakeGameManager.Instance.playManager.fallThresholdHeight;
+        float fallUnder = GameManager.Instance.playManager.fallThresholdHeight;
         return transform.position.y <= fallUnder || IsFallingTooLong();
     }
 
     private bool IsFallingTooLong()
     {
-        float fallSecond = FakeGameManager.Instance.playManager.fallThresholdSecond;
+        float fallSecond = GameManager.Instance.playManager.fallThresholdSecond;
         return _fallTimer >= fallSecond;
-    }
-    
-    // --- Placeholder GameManager ---
-    private static class FakeGameManager
-    {
-        public static class Instance
-        {
-            public static class playManager
-            {
-                public static float fallThresholdHeight = -50f;
-                public static float fallThresholdSecond = 8f;
-                public static int stageNo = 1;
-                public static Vector3 GetCurrentCheckpoint() { return new Vector3(0, 5, 0); } // Start a little higher up
-            }
-        }
-        public static class Stage2 {
-            public static class StackGround {
-                public static void ResetAllFootsteps() { /* Debug.Log("Resetting footsteps"); */ }
-            }
-        }
     }
 }
