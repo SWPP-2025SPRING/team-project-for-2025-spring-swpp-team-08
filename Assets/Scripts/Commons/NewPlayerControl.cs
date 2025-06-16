@@ -398,3 +398,4 @@ public class NewPlayerControl : MonoBehaviour
         float fallSecond = GameManager.Instance.playManager.fallThresholdSecond;
         return _fallTimer >= fallSecond;
     }
+}
