@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Stage4
 {
-    [RequireComponent(typeof(Rigidbody))]
     public abstract class PredefinedBehaviour : MonoBehaviour
     {
         public bool performed;
