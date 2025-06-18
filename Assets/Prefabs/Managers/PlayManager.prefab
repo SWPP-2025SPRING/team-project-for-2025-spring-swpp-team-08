@@ -44,3 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d91f1b81dec04ef2ad80f933e219067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageNo: 0
+  nextSceneName: 
+  uiManager: {fileID: 0}
+  stageName: 
+  setCheckpoint: {fileID: 8300000, guid: 44bd09602d159264788919e9e1080e52, type: 3}
+  fallDown: {fileID: 8300000, guid: 80d70570be792f4429ad7a62cc1b7c60, type: 3}
+  spawnPoint: {x: 0, y: 0, z: 0}
+  fallThresholdHeight: 0
+  fallThresholdSecond: 5
