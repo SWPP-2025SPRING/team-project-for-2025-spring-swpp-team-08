@@ -20,6 +20,8 @@ public class PlayManager : MonoBehaviour
     /// </summary>
     public int stageNo;
 
+    public SceneType sceneType;
+
     /// <summary>
     /// Scene name of next stage.
     /// Must be assigned in Unity Inspector.
@@ -52,15 +54,19 @@ public class PlayManager : MonoBehaviour
     private void Start()
     {
         State = PlayStates.Ready;
-        _playTimeCurrent = 0f;
-        _playTimeTotal = GameManager.Instance.totalPlayTime;
-        _checkpoint = spawnPoint;
 
-        uiManager.UpdatePlayTime(_playTimeTotal);
-        uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
-        uiManager.UpdateStage(stageName);
+        if (sceneType == SceneType.STAGE)
+        {
+            _playTimeCurrent = 0f;
+            _playTimeTotal = GameManager.Instance.totalPlayTime;
+            _checkpoint = spawnPoint;
 
-        StartCoroutine(ReadyGame());
+            uiManager.UpdatePlayTime(_playTimeTotal);
+            uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
+            uiManager.UpdateStage(stageName);
+
+            StartCoroutine(ReadyGame());
+        }
     }
 
     private void Update()
@@ -95,12 +101,17 @@ public class PlayManager : MonoBehaviour
 
     public IEnumerator ReadyGame()
     {
-        _playerControl.canControl = false;
+        DisablePlayerControl();
         Debug.Log("Ready");
 
         yield return new WaitForSeconds(DelayBeforeStart);
 
         StartGame();
+    }
+
+    public void DisablePlayerControl()
+    {
+        _playerControl.canControl = false;
     }
 
     public void StartGame()
