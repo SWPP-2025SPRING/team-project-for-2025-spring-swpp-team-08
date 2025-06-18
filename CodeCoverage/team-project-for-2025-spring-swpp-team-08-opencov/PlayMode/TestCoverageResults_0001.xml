@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageSession xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="0.0.0.0">
+  <Summary numSequencePoints="8" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0.0" branchCoverage="0.0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="1" />
+  <Modules>
+    <Module>
+      <Summary numSequencePoints="8" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0.0" branchCoverage="0.0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="1" />
+      <ModuleTime>0001-01-01T00:00:00</ModuleTime>
+      <ModuleName>Assembly-CSharp</ModuleName>
+      <Files>
+        <File uid="1" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/DownloadedAssets/TrueClouds/ExampleScenes/Scripts/FPS60.cs" />
+        <File uid="2" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Commons/BallFollower.cs" />
+        <File uid="3" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Commons/CameraFollow.cs" />
+        <File uid="4" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Commons/CameraPivotController.cs" />
+        <File uid="5" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Commons/Checkpoint.cs" />
+        <File uid="6" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Commons/CheckpointManager.cs" />
+        <File uid="7" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Commons/NewPlayerControl.cs" />
+        <File uid="8" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Commons/PlayerController.cs" />
+        <File uid="9" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Commons/SimpleOrbitCamera.cs" />
+        <File uid="10" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/EndingCreditScript.cs" />
+        <File uid="11" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/GraduateHatMove.cs" />
+        <File uid="12" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/HatCollideEnd.cs" />
+        <File uid="13" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/InputName.cs" />
+        <File uid="14" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/NewPlayerMoveToHeaven.cs" />
+        <File uid="15" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/OpenScoreBoard.cs" />
+        <File uid="16" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/PlayMusic.cs" />
+        <File uid="17" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/ResetButton.cs" />
+        <File uid="18" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/RestartGame.cs" />
+        <File uid="19" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/SceneEnterMusic.cs" />
+        <File uid="20" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Ending/ScoreBoardManager.cs" />
+        <File uid="21" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Managers/GameManager.cs" />
+        <File uid="22" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Managers/PlayManager.cs" />
+        <File uid="23" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Managers/UIManager.cs" />
+        <File uid="24" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Obstacles/JumpPad.cs" />
+        <File uid="25" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage4/ActivateButton.cs" />
+        <File uid="26" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage4/PredefinedBehaviour.cs" />
+        <File uid="27" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage4/ReverseMoveBehaviour.cs" />
+        <File uid="28" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage4/SimpleMoveBehaviour.cs" />
+        <File uid="29" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage4/SimpleMoveRestoreBehaviour.cs" />
+        <File uid="30" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage4/StopMoveBehaviour.cs" />
+        <File uid="31" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage2/Door.cs" />
+        <File uid="32" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage2/DoorManager.cs" />
+        <File uid="33" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage2/HashQuestion.cs" />
+        <File uid="34" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage2/HashQuestionFactory.cs" />
+        <File uid="35" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage2/LinkedListGround.cs" />
+        <File uid="36" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage2/ModHash.cs" />
+        <File uid="37" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/Stage2/StackGround.cs" />
+        <File uid="38" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/Scripts/SampleScene/SampleSceneGoalObject.cs" />
+        <File uid="39" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/DownloadedAssets/TrueClouds/ExampleScenes/Scripts/FPSDisplay.cs" />
+        <File uid="40" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/DownloadedAssets/TrueClouds/ExampleScenes/Scripts/ScriptPerformanceMeasure.cs" />
+        <File uid="41" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/DownloadedAssets/TrueClouds/Scripts/CloudCamera.cs" />
+        <File uid="42" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/DownloadedAssets/TrueClouds/Scripts/CloudCamera3D.cs" />
+        <File uid="43" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/DownloadedAssets/TrueClouds/Scripts/CloudPointLight.cs" />
+        <File uid="44" fullPath="C:/Users/82105/team-project-for-2025-spring-swpp-team-08/Assets/DownloadedAssets/FastMesh/Scripts/SceneViewText.cs" />
+      </Files>
+      <Classes>
+        <Class>
+          <Summary numSequencePoints="8" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0.0" branchCoverage="0.0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="0" numClasses="1" visitedMethods="0" numMethods="1" />
+          <FullName>TrueClouds.ScriptPerformanceMeasure</FullName>
+          <Methods>
+            <Method visited="false" cyclomaticComplexity="0" nPathComplexity="0" sequenceCoverage="0.0" branchCoverage="0" crapScore="0" isConstructor="false" isStatic="true" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="8" visitedSequencePoints="0" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="0.0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="0" numClasses="0" visitedMethods="0" numMethods="1" />
+              <MetadataToken>100663495</MetadataToken>
+              <Name>static System.Void TrueClouds.ScriptPerformanceMeasure::Shuffle[T](System.Collections.Generic.List[T])</Name>
+              <FileRef uid="40" />
+              <SequencePoints>
+                <SequencePoint vc="0" uspid="2798" ordinal="0" offset="0" sl="123" sc="0" el="123" ec="0" bec="0" bev="0" fileid="40" />
+                <SequencePoint vc="0" uspid="2799" ordinal="0" offset="9" sl="126" sc="0" el="126" ec="0" bec="0" bev="0" fileid="40" />
+                <SequencePoint vc="0" uspid="2800" ordinal="0" offset="13" sl="127" sc="0" el="127" ec="0" bec="0" bev="0" fileid="40" />
+                <SequencePoint vc="0" uspid="2801" ordinal="0" offset="27" sl="128" sc="0" el="128" ec="0" bec="0" bev="0" fileid="40" />
+                <SequencePoint vc="0" uspid="2802" ordinal="0" offset="35" sl="129" sc="0" el="129" ec="0" bec="0" bev="0" fileid="40" />
+                <SequencePoint vc="0" uspid="2803" ordinal="0" offset="49" sl="130" sc="0" el="130" ec="0" bec="0" bev="0" fileid="40" />
+                <SequencePoint vc="0" uspid="2804" ordinal="0" offset="57" sl="124" sc="0" el="124" ec="0" bec="0" bev="0" fileid="40" />
+                <SequencePoint vc="0" uspid="2805" ordinal="0" offset="61" sl="132" sc="0" el="132" ec="0" bec="0" bev="0" fileid="40" />
+              </SequencePoints>
+              <BranchPoints />
+            </Method>
+          </Methods>
+        </Class>
+      </Classes>
+    </Module>
+  </Modules>
+</CoverageSession>
