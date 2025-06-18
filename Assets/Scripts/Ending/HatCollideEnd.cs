@@ -3,16 +3,14 @@ using UnityEngine;
 public class HatCollideEnd : MonoBehaviour
 {
     private bool _triggered = false;
-
+    public GameObject currentPlayer;
+    public GameObject newPlayer;
+    public GameObject originalHat;
+    public float liftSpeed = 1.0f;
     public InputName inputUIManager;
+    public AudioClip collidingSfx;
 
-    private void Start()
-    {
-        if (inputUIManager == null)
-        {
-            Debug.LogError("NameInputUIManager가 씬에 없습니다!");
-        }
-    }
+    private Transform newPlayerTransform;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,7 +18,21 @@ public class HatCollideEnd : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _triggered = true;
+            GameManager.Instance.PlaySfx(collidingSfx);
+            currentPlayer.SetActive(false);
+            //originalHat.SetActive(false);
             inputUIManager.Show();
+            newPlayer.SetActive(true);
+            originalHat.SetActive(false);
+            newPlayerTransform = newPlayer.transform;
+        }
+    }
+
+    private void Update()
+    {
+        if (_triggered && newPlayerTransform != null)
+        {
+            newPlayerTransform.position += Vector3.up * liftSpeed * Time.deltaTime;
         }
     }
 }
