@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class NewPlayerMove : MonoBehaviour
+public class NewPlayerMoveToHeaven : MonoBehaviour
 {
     public float liftSpeed = 0.5f;
 
