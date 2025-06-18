@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CoverageReport scope="Summary">
   <Summary>
-    <Generatedon>2025-06-18 - 오후 5:24:15</Generatedon>
+    <Generatedon>2025-06-18 - 오후 5:33:14</Generatedon>
     <Parser>MultiReportParser (2x OpenCoverParser)</Parser>
     <Assemblies>2</Assemblies>
     <Classes>49</Classes>
     <Files>48</Files>
     <Coveredlines>0</Coveredlines>
-    <Uncoveredlines>1815</Uncoveredlines>
-    <Coverablelines>1815</Coverablelines>
+    <Uncoveredlines>2476</Uncoveredlines>
+    <Coverablelines>2476</Coverablelines>
     <Totallines>4323</Totallines>
     <Linecoverage>0</Linecoverage>
     <Coveredbranches>0</Coveredbranches>
     <Totalbranches>0</Totalbranches>
     <Coveredmethods>0</Coveredmethods>
-    <Totalmethods>255</Totalmethods>
+    <Totalmethods>257</Totalmethods>
     <Methodcoverage>0</Methodcoverage>
   </Summary>
   <Coverage>
-    <Assembly name="Assembly-CSharp" classes="44" coverage="0" coveredlines="0" coverablelines="1352" totallines="3381" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="214" methodcoverage="0">
-      <Class name="BallFollower" coverage="0" coveredlines="0" coverablelines="24" totallines="72" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="CameraFollow" coverage="0" coveredlines="0" coverablelines="4" totallines="16" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
-      <Class name="CameraPivotController" coverage="0" coveredlines="0" coverablelines="16" totallines="35" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="Checkpoint" coverage="0" coveredlines="0" coverablelines="17" totallines="45" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
-      <Class name="CheckpointManager" coverage="0" coveredlines="0" coverablelines="9" totallines="27" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
-      <Class name="EndingCreditScript" coverage="0" coveredlines="0" coverablelines="11" totallines="30" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="FastMesh_Example.SceneViewText" coverage="0" coveredlines="0" coverablelines="26" totallines="58" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
-      <Class name="FPS60" coverage="0" coveredlines="0" coverablelines="3" totallines="14" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
-      <Class name="GameManager" coverage="0" coveredlines="0" coverablelines="26" totallines="78" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="9" methodcoverage="0" />
-      <Class name="GraduateHatMove" coverage="0" coveredlines="0" coverablelines="7" totallines="20" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="HatCollideEnd" coverage="0" coveredlines="0" coverablelines="14" totallines="38" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="InputName" coverage="0" coveredlines="0" coverablelines="34" totallines="76" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="6" methodcoverage="0" />
-      <Class name="JumpPad" coverage="0" coveredlines="0" coverablelines="7" totallines="20" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
-      <Class name="NewPlayerControl" coverage="0" coveredlines="0" coverablelines="172" totallines="401" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="18" methodcoverage="0" />
-      <Class name="NewPlayerMoveToHeaven" coverage="0" coveredlines="0" coverablelines="3" totallines="14" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
-      <Class name="OpenScoreBoard" coverage="0" coveredlines="0" coverablelines="27" totallines="83" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="6" methodcoverage="0" />
-      <Class name="PlayerController" coverage="0" coveredlines="0" coverablelines="125" totallines="262" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="11" methodcoverage="0" />
-      <Class name="PlayManager" coverage="0" coveredlines="0" coverablelines="50" totallines="144" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="14" methodcoverage="0" />
-      <Class name="PlayMusic" coverage="0" coveredlines="0" coverablelines="3" totallines="16" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
-      <Class name="ResetButton" coverage="0" coveredlines="0" coverablelines="5" totallines="24" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
-      <Class name="RestartGame" coverage="0" coveredlines="0" coverablelines="9" totallines="23" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="SampleScene.SampleSceneGoalObject" coverage="0" coveredlines="0" coverablelines="4" totallines="17" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
-      <Class name="SceneEnterMusic" coverage="0" coveredlines="0" coverablelines="18" totallines="42" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
-      <Class name="ScoreBoardManager" coverage="0" coveredlines="0" coverablelines="17" totallines="44" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="SimpleOrbitCamera" coverage="0" coveredlines="0" coverablelines="48" totallines="130" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
-      <Class name="Stage2.Door" coverage="0" coveredlines="0" coverablelines="10" totallines="39" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
-      <Class name="Stage2.DoorManager" coverage="0" coveredlines="0" coverablelines="21" totallines="51" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
-      <Class name="Stage2.HashQuestion" coverage="0" coveredlines="0" coverablelines="6" totallines="20" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
-      <Class name="Stage2.HashQuestionFactory" coverage="0" coveredlines="0" coverablelines="8" totallines="31" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
-      <Class name="Stage2.LinkedListGround" coverage="0" coveredlines="0" coverablelines="18" totallines="56" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
-      <Class name="Stage2.ModHash" coverage="0" coveredlines="0" coverablelines="6" totallines="32" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
-      <Class name="Stage2.StackGround" coverage="0" coveredlines="0" coverablelines="31" totallines="84" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="7" methodcoverage="0" />
-      <Class name="Stage4.ActivateButton" coverage="0" coveredlines="0" coverablelines="23" totallines="67" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
-      <Class name="Stage4.PredefinedBehaviour" coverage="0" coveredlines="0" coverablelines="9" totallines="35" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="Stage4.ReverseMoveBehaviour" coverage="0" coveredlines="0" coverablelines="22" totallines="62" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
-      <Class name="Stage4.SimpleMoveBehaviour" coverage="0" coveredlines="0" coverablelines="17" totallines="50" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="Stage4.SimpleMoveRestoreBehaviour" coverage="0" coveredlines="0" coverablelines="37" totallines="85" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
-      <Class name="Stage4.StopMoveBehaviour" coverage="0" coveredlines="0" coverablelines="22" totallines="61" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
-      <Class name="TrueClouds.CloudCamera" coverage="0" coveredlines="0" coverablelines="289" totallines="586" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="20" methodcoverage="0" />
-      <Class name="TrueClouds.CloudCamera3D" coverage="0" coveredlines="0" coverablelines="2" totallines="18" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
-      <Class name="TrueClouds.CloudPointLight" coverage="0" coveredlines="0" coverablelines="62" totallines="132" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="12" methodcoverage="0" />
-      <Class name="TrueClouds.FPSDisplay" coverage="0" coveredlines="0" coverablelines="8" totallines="27" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
-      <Class name="TrueClouds.ScriptPerformanceMeasure" coverage="0" coveredlines="0" coverablelines="59" totallines="134" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="8" methodcoverage="0" />
-      <Class name="UIManager" coverage="0" coveredlines="0" coverablelines="23" totallines="82" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="9" methodcoverage="0" />
+    <Assembly name="Assembly-CSharp" classes="44" coverage="0" coveredlines="0" coverablelines="1879" totallines="3381" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="216" methodcoverage="0">
+      <Class name="BallFollower" coverage="0" coveredlines="0" coverablelines="32" totallines="72" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="CameraFollow" coverage="0" coveredlines="0" coverablelines="5" totallines="16" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="CameraPivotController" coverage="0" coveredlines="0" coverablelines="21" totallines="35" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="Checkpoint" coverage="0" coveredlines="0" coverablelines="26" totallines="45" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
+      <Class name="CheckpointManager" coverage="0" coveredlines="0" coverablelines="15" totallines="27" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
+      <Class name="EndingCreditScript" coverage="0" coveredlines="0" coverablelines="16" totallines="30" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="FastMesh_Example.SceneViewText" coverage="0" coveredlines="0" coverablelines="31" totallines="58" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
+      <Class name="FPS60" coverage="0" coveredlines="0" coverablelines="6" totallines="14" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="GameManager" coverage="0" coveredlines="0" coverablelines="35" totallines="78" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="10" methodcoverage="0" />
+      <Class name="GraduateHatMove" coverage="0" coveredlines="0" coverablelines="9" totallines="20" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="HatCollideEnd" coverage="0" coveredlines="0" coverablelines="21" totallines="38" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="InputName" coverage="0" coveredlines="0" coverablelines="40" totallines="76" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="6" methodcoverage="0" />
+      <Class name="JumpPad" coverage="0" coveredlines="0" coverablelines="10" totallines="20" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="NewPlayerControl" coverage="0" coveredlines="0" coverablelines="252" totallines="401" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="18" methodcoverage="0" />
+      <Class name="NewPlayerMoveToHeaven" coverage="0" coveredlines="0" coverablelines="4" totallines="14" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="OpenScoreBoard" coverage="0" coveredlines="0" coverablelines="43" totallines="83" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="6" methodcoverage="0" />
+      <Class name="PlayerController" coverage="0" coveredlines="0" coverablelines="188" totallines="262" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="11" methodcoverage="0" />
+      <Class name="PlayManager" coverage="0" coveredlines="0" coverablelines="66" totallines="144" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="14" methodcoverage="0" />
+      <Class name="PlayMusic" coverage="0" coveredlines="0" coverablelines="6" totallines="16" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="ResetButton" coverage="0" coveredlines="0" coverablelines="8" totallines="24" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="RestartGame" coverage="0" coveredlines="0" coverablelines="13" totallines="23" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="SampleScene.SampleSceneGoalObject" coverage="0" coveredlines="0" coverablelines="6" totallines="17" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="SceneEnterMusic" coverage="0" coveredlines="0" coverablelines="26" totallines="42" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
+      <Class name="ScoreBoardManager" coverage="0" coveredlines="0" coverablelines="21" totallines="44" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="SimpleOrbitCamera" coverage="0" coveredlines="0" coverablelines="68" totallines="130" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
+      <Class name="Stage2.Door" coverage="0" coveredlines="0" coverablelines="20" totallines="39" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="Stage2.DoorManager" coverage="0" coveredlines="0" coverablelines="30" totallines="51" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
+      <Class name="Stage2.HashQuestion" coverage="0" coveredlines="0" coverablelines="7" totallines="20" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="Stage2.HashQuestionFactory" coverage="0" coveredlines="0" coverablelines="11" totallines="31" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="Stage2.LinkedListGround" coverage="0" coveredlines="0" coverablelines="32" totallines="56" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="Stage2.ModHash" coverage="0" coveredlines="0" coverablelines="13" totallines="32" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
+      <Class name="Stage2.StackGround" coverage="0" coveredlines="0" coverablelines="50" totallines="84" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="7" methodcoverage="0" />
+      <Class name="Stage4.ActivateButton" coverage="0" coveredlines="0" coverablelines="34" totallines="67" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
+      <Class name="Stage4.PredefinedBehaviour" coverage="0" coveredlines="0" coverablelines="13" totallines="35" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="Stage4.ReverseMoveBehaviour" coverage="0" coveredlines="0" coverablelines="30" totallines="62" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
+      <Class name="Stage4.SimpleMoveBehaviour" coverage="0" coveredlines="0" coverablelines="23" totallines="50" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="Stage4.SimpleMoveRestoreBehaviour" coverage="0" coveredlines="0" coverablelines="45" totallines="85" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="Stage4.StopMoveBehaviour" coverage="0" coveredlines="0" coverablelines="30" totallines="61" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
+      <Class name="TrueClouds.CloudCamera" coverage="0" coveredlines="0" coverablelines="354" totallines="586" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="20" methodcoverage="0" />
+      <Class name="TrueClouds.CloudCamera3D" coverage="0" coveredlines="0" coverablelines="3" totallines="18" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="TrueClouds.CloudPointLight" coverage="0" coveredlines="0" coverablelines="84" totallines="132" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="12" methodcoverage="0" />
+      <Class name="TrueClouds.FPSDisplay" coverage="0" coveredlines="0" coverablelines="10" totallines="27" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="TrueClouds.ScriptPerformanceMeasure" coverage="0" coveredlines="0" coverablelines="87" totallines="134" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="8" methodcoverage="0" />
+      <Class name="UIManager" coverage="0" coveredlines="0" coverablelines="35" totallines="82" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="9" methodcoverage="0" />
     </Assembly>
-    <Assembly name="Assembly-CSharp-Editor" classes="5" coverage="0" coveredlines="0" coverablelines="463" totallines="1369" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="41" methodcoverage="0">
-      <Class name="TrueClouds.CloudCameraEditor" coverage="0" coveredlines="0" coverablelines="193" totallines="427" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="16" methodcoverage="0" />
-      <Class name="TrueClouds.IndentLevelScope" coverage="0" coveredlines="0" coverablelines="5" totallines="427" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
-      <Class name="TrueClouds.NoiseGenerator" coverage="0" coveredlines="0" coverablelines="231" totallines="424" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="14" methodcoverage="0" />
-      <Class name="TrueClouds.TrueCloudsReadOnlyDrawer" coverage="0" coveredlines="0" coverablelines="4" totallines="16" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
-      <Class name="UIUnit" coverage="0" coveredlines="0" coverablelines="30" totallines="75" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="8" methodcoverage="0" />
+    <Assembly name="Assembly-CSharp-Editor" classes="5" coverage="0" coveredlines="0" coverablelines="597" totallines="1369" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="41" methodcoverage="0">
+      <Class name="TrueClouds.CloudCameraEditor" coverage="0" coveredlines="0" coverablelines="259" totallines="427" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="16" methodcoverage="0" />
+      <Class name="TrueClouds.IndentLevelScope" coverage="0" coveredlines="0" coverablelines="7" totallines="427" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="TrueClouds.NoiseGenerator" coverage="0" coveredlines="0" coverablelines="288" totallines="424" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="14" methodcoverage="0" />
+      <Class name="TrueClouds.TrueCloudsReadOnlyDrawer" coverage="0" coveredlines="0" coverablelines="5" totallines="16" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="UIUnit" coverage="0" coveredlines="0" coverablelines="38" totallines="75" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="8" methodcoverage="0" />
     </Assembly>
   </Coverage>
 </CoverageReport>

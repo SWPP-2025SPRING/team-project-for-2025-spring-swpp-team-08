@@ -7,7 +7,7 @@ namespace Stage2
     public class LinkedListGround : MonoBehaviour
     {
         public GameObject player;
-        private PlayerController playerController;
+        private NewPlayerControl playerController;
         public int padNumber;
         private static int LAST_PAD_NUM = 0;
 
@@ -15,7 +15,7 @@ namespace Stage2
         {
             if (player != null)
             {
-                playerController = player.GetComponent<PlayerController>();
+                playerController = player.GetComponent<NewPlayerControl>();
                 if (playerController == null)
                 {
                     Debug.Log("PlayerController 컴포넌트를 찾을 수 없습니다!");
