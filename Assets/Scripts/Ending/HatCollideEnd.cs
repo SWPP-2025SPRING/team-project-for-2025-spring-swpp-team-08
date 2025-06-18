@@ -8,9 +8,9 @@ public class HatCollideEnd : MonoBehaviour
     public GameObject originalHat;
     public float liftSpeed = 1.0f;
     public InputName inputUIManager;
+    public AudioClip collidingSfx;
 
     private Transform newPlayerTransform;
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,6 +18,7 @@ public class HatCollideEnd : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _triggered = true;
+            GameManager.Instance.PlaySfx(collidingSfx);
             currentPlayer.SetActive(false);
             //originalHat.SetActive(false);
             inputUIManager.Show();
