@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class NewPlayerControl : MonoBehaviour
 {
+    [Header("Control")]
+    public bool canControl;
+
     [Header("Movement")]
     public float forwardTorquePower = 25f;
     public float sidewaysTorquePowerBase = 15f;
@@ -86,6 +89,8 @@ public class NewPlayerControl : MonoBehaviour
 
     void Start()
     {
+        canControl = false;
+
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -123,7 +128,7 @@ public class NewPlayerControl : MonoBehaviour
         if (hideBallMesh && meshRenderer != null) { meshRenderer.enabled = false; }
 
         SetupAudioSources();
-        
+
         lastBumpTime = -bumpSoundCooldown;
     }
 
@@ -152,7 +157,7 @@ public class NewPlayerControl : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(jumpKey) && coyoteTimeCounter > 0f)
+        if (canControl && Input.GetKeyDown(jumpKey) && coyoteTimeCounter > 0f)
         {
             tryingToJumpThisFrame = true;
         }
@@ -176,7 +181,7 @@ public class NewPlayerControl : MonoBehaviour
                 Stage2.StackGround.ResetAllFootsteps();
             }
         }
-        
+
         HandleCruiseAudio();
     }
 
@@ -212,10 +217,14 @@ public class NewPlayerControl : MonoBehaviour
         {
             Jump(jumpForce);
         }
-        
+
         // --- Movement and Braking Logic (Unchanged) ---
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = 0f, v = 0f;
+        if (canControl)
+        {
+            h = Input.GetAxis("Horizontal");
+            v = Input.GetAxis("Vertical");
+        }
         Vector3 currentPlayerInputDirection = Vector3.zero;
         Vector3 camForward = Vector3.zero;
         Vector3 camRight = Vector3.zero;
@@ -260,7 +269,7 @@ public class NewPlayerControl : MonoBehaviour
             rb.drag = originalLinearDrag;
         }
         // --- End of Movement Logic ---
-        
+
         wasGrounded = isGrounded;
     }
 
@@ -271,20 +280,20 @@ public class NewPlayerControl : MonoBehaviour
         tryingToJumpThisFrame = false;
         coyoteTimeCounter = 0f;
     }
-    
+
     void OnCollisionEnter(Collision collision)
     {
         if (Time.time < lastBumpTime + bumpSoundCooldown)
         {
             return;
         }
-        
+
         float collisionSpeed = collision.relativeVelocity.magnitude;
         if (collisionSpeed < minSpeedForBump)
         {
             return;
         }
-        
+
         float collisionAngle = Vector3.Dot(collision.contacts[0].normal, Vector3.up);
         if (Mathf.Abs(collisionAngle) > wallAngleThreshold)
         {
@@ -304,7 +313,7 @@ public class NewPlayerControl : MonoBehaviour
         {
             // We just landed. Calculate how far we fell.
             float fallDistance = peakFallHeight - transform.position.y;
-            
+
             // Only play a sound if we fell more than the minimum distance.
             // This prevents the "bump-hop-land" issue.
             if (fallDistance > minFallDistanceForSound)
@@ -312,7 +321,7 @@ public class NewPlayerControl : MonoBehaviour
                 // Calculate volume based on fall distance.
                 // A value from 0 (min fall) to 1 (max fall or more).
                 float fallRatio = Mathf.InverseLerp(minFallDistanceForSound, maxFallDistanceForSound, fallDistance);
-                
+
                 // We use a low minimum volume so even small valid falls are audible.
                 float dynamicVolume = Mathf.Lerp(0.1f, landVolume, fallRatio);
 
@@ -350,7 +359,7 @@ public class NewPlayerControl : MonoBehaviour
             sfxAudioSource.PlayOneShot(bumpAudio, bumpVolume);
         }
     }
-    
+
     void HandleCruiseAudio()
     {
         if (cruiseAudioSource == null) return;
@@ -359,8 +368,8 @@ public class NewPlayerControl : MonoBehaviour
         {
             float speed = rb.velocity.magnitude;
             float speedRatio = Mathf.Clamp01(speed / maxSpeedForCruiseAudio);
-            
-            cruiseAudioSource.volume = speedRatio * cruiseMaxVolume; 
+
+            cruiseAudioSource.volume = speedRatio * cruiseMaxVolume;
             cruiseAudioSource.pitch = Mathf.Lerp(minCruisePitch, maxCruisePitch, speedRatio);
         }
         else
