@@ -1,7 +1,7 @@
 using TMPro;
-
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class InputName : MonoBehaviour
 {
@@ -27,6 +27,14 @@ public class InputName : MonoBehaviour
 
     public void Show()
     {
+        endingCreditPanel.SetActive(true);
+        creditRoll.onCreditEnd = OnCreditEnd;
+        creditRoll.StartRoll();
+    }
+
+    private void OnCreditEnd()
+    {
+        endingCreditPanel.SetActive(false);
         nameInputPanel.SetActive(true);
         nameInputField.text = "";
         nameInputField.ActivateInputField();
@@ -38,39 +46,21 @@ public class InputName : MonoBehaviour
         if (string.IsNullOrEmpty(playerName))
             playerName = "Anonymous";
 
-        SaveScore(playerName); 
+        SaveScore(playerName);
 
         nameInputPanel.SetActive(false);
-        StartCredits();
+
+        SceneManager.LoadScene("LeaderboardScene");
     }
 
     private void SaveScore(string playerName)
     {
-        //float finalScore = GameManager.Instance.totalPlayTime; 나중에 이거로 바꾸기
-        float finalScore = 1f; // UnityEngine.Random.Range(0f, 100f); 
+        //float finalScore = GameManager.Instance.totalPlayTime; :추후 수정 이걸로
+
+        float finalScore = 1f; // 테스트용
 
         var scoreboard = FindObjectOfType<ScoreBoardManager>();
         if (scoreboard != null)
             scoreboard.SaveScore(playerName, finalScore);
-    }
-
-
-    private void StartCredits()
-    {
-        //Debug.Log("qqqqqq");
-        endingCreditPanel.SetActive(true);
-        creditRoll.onCreditEnd = OnCreditEnd;
-        creditRoll.StartRoll();
-    }
-
-    private void OnCreditEnd()
-    {
-        Debug.Log("qqqqqq");
-        endingCreditPanel.SetActive(false);
-        Debug.Log("qqqqqq1");
-        scoreButton.gameObject.SetActive(true);
-        Debug.Log("qqqqqq2");
-        restartButton.gameObject.SetActive(true);
-        Debug.Log("qqqqqq3");
     }
 }
