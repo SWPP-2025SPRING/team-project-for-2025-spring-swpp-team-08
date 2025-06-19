@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Values")]
     public float totalPlayTime = 0;
+    public string username;
 
     [Header("Transition")]
     [SerializeField] private GameObject transitionCanvas;
