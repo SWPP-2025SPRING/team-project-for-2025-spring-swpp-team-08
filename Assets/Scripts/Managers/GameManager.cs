@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     public PlayManager playManager;
     public float totalPlayTime = 0;
+    public string username;
 
     private AudioSource _bgmSource;
     private AudioSource _sfxSource;
