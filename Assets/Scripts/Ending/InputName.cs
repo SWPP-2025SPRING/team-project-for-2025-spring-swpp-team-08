@@ -50,7 +50,7 @@ public class InputName : MonoBehaviour
 
         nameInputPanel.SetActive(false);
 
-        SceneManager.LoadScene("LeaderboardScene");
+        GameManager.LoadScene("LeaderboardScene");
     }
 
     private void SaveScore(string playerName)
