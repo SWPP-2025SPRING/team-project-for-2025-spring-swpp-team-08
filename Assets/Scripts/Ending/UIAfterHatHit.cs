@@ -29,8 +29,7 @@ public class UIAfterHatHit : MonoBehaviour
             playerName = "Anonymous";
 
         SaveScore(playerName);
-
-        GameManager.LoadScene("LeaderboardScene");
+        GameManager.Instance.LoadScene("LeaderboardScene");
     }
 
     private void SaveScore(string playerName)

@@ -142,7 +142,7 @@ public class PlayManager : MonoBehaviour
     public void LoadNextStage()
     {
         GameManager.Instance.totalPlayTime += _playTimeCurrent;
-        GameManager.LoadScene(nextSceneName);
+        GameManager.Instance.LoadScene(nextSceneName);
 
     }
 
