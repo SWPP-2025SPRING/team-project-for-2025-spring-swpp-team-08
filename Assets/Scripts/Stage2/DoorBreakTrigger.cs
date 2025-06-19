@@ -10,15 +10,15 @@ public class DoorBreakTrigger : MonoBehaviour
     public float verticalOffset = 1f;
     public float soundVolume = 0.6f; // 60% volume
 
-    private bool hasBroken = false;
+    private bool _hasBroken = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasBroken) return;
+        if (_hasBroken) return;
 
         if (other.CompareTag("Player"))
         {
-            hasBroken = true;
+            _hasBroken = true;
 
             // Play breaking sound at 60% volume
             if (breakSound != null)

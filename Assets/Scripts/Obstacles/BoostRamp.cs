@@ -8,9 +8,8 @@ public class BoostRamp : MonoBehaviour
     public Vector3 localBoostDirection = new Vector3(0, 1, 1);
     [Tooltip("Cooldown time to prevent repeated boosting.")]
     public float cooldownTime = 2f;
-
-    private readonly string playerTag = "Player"; // You must tag your player object as "Player"
-    private readonly string rigidBodyName = "NewPlayerControl"; // Optional: filter by script name
+    private readonly string _playerTag = "Player";
+    
 
     private float lastBoostTime = -999f;
 
@@ -18,7 +17,7 @@ public class BoostRamp : MonoBehaviour
     {
         if (Time.time < lastBoostTime + cooldownTime) return;
 
-        if (other.CompareTag(playerTag))
+        if (other.CompareTag(_playerTag))
         {
             Rigidbody rb = other.attachedRigidbody;
             if (rb != null)
