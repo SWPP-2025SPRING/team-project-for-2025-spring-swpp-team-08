@@ -6,7 +6,11 @@ using TMPro;
 
 public class ShowTopN : MonoBehaviour
 {
-    public List<TextMeshProUGUI> topScoreTexts; 
+    [Header("Top 5 Ranks UI")]
+    public List<TextMeshProUGUI> rankTexts;    
+    public List<TextMeshProUGUI> nameTexts;     
+    public List<TextMeshProUGUI> timeTexts;     
+
     public int topN = 5;
     private string _filePath;
 
@@ -24,18 +28,25 @@ public class ShowTopN : MonoBehaviour
     private void ShowTopScores(int count)
     {
         List<ScoreData> scores = LoadScores();
-        scores.Sort((a, b) => a.score.CompareTo(b.score)); // 작은 시간이 상위
+        scores.Sort((a, b) => a.score.CompareTo(b.score));
 
-        for (int i = 0; i < topScoreTexts.Count; i++)
+        for (int i = 0; i < topN; i++)
         {
+            string rankText = $"{i + 1}.";
             if (i < scores.Count)
             {
+                string name = scores[i].playerName;
                 string formattedTime = FormatPlayTime(scores[i].score);
-                topScoreTexts[i].text = $"{i + 1}. {scores[i].playerName}: {formattedTime}";
+
+                if (rankTexts.Count > i) rankTexts[i].text = rankText;
+                if (nameTexts.Count > i) nameTexts[i].text = name;
+                if (timeTexts.Count > i) timeTexts[i].text = formattedTime;
             }
             else
             {
-                topScoreTexts[i].text = $"{i + 1}. -";
+                if (rankTexts.Count > i) rankTexts[i].text = rankText;
+                if (nameTexts.Count > i) nameTexts[i].text = "-";
+                if (timeTexts.Count > i) timeTexts[i].text = "-";
             }
         }
     }
