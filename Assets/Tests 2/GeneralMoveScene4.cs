@@ -3,21 +3,33 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections;
 using Stage4;
+using UnityEngine.SceneManagement;
+
 
 public class Scene4
 {
     [UnityTest]
     public IEnumerator TestPlayerControlDisablesAndReenables()
     {
-        // 1. 플레이어 생성 및 컴포넌트 추가
-        var player = new GameObject("Player");
-        player.tag = "Player";
-        var control = player.AddComponent<NewPlayerControl>();
-        control.canControl = true;
+        var asyncLoad = SceneManager.LoadSceneAsync("Stage4Scene");
+        while (!asyncLoad.isDone)
+        {
+            yield return null;  // 씬이 다 로드될 때까지 대기
+        }
+        var parent = GameObject.Find("Player"); 
+        Assert.IsNotNull(parent, "부모 오브젝트가 씬에 존재하지 않습니다.");
 
-        // 플레이어에 Rigidbody 및 Collider 추가
-        player.AddComponent<Rigidbody>().useGravity = false;
-        player.AddComponent<CapsuleCollider>();
+        var player = parent.transform.Find("Ball")?.gameObject;
+        Assert.IsNotNull(player, "부모의 자식 중 Player가 존재하지 않습니다.");
+
+        // NewPlayerControl 컴포넌트 가져오기 (없으면 추가)
+        var control = player.GetComponent<NewPlayerControl>();
+        if (control == null)
+        {
+            control = player.AddComponent<NewPlayerControl>();
+        }
+
+        control.canControl = true;
 
         // 2. 트리거 오브젝트 생성
         var triggerObject = new GameObject("TriggerZone");

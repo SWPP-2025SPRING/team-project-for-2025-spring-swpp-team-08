@@ -8,16 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage4Scene.unity
     guid: c7706997d84074187b9d7824a871b861
-  - enabled: 1
-    path: Assets/Scenes/EndingScene.unity
-    guid: 0817e69d49e96924480c528eab786e82
-  - enabled: 1
-    path: Assets/Scenes/LeaderboardScene.unity
-    guid: d815fe98fcf77c7458dc2f9efcaa693e
-  - enabled: 1
-    path: Assets/Scenes/MainScene.unity
-    guid: 49e06f74b20b7e848ba005335f958080
-  - enabled: 1
-    path: Assets/Scenes/LeaderboardMyRankScene.unity
-    guid: 86a59e6483da226469fbde7623ae8041
   m_configObjects: {}
