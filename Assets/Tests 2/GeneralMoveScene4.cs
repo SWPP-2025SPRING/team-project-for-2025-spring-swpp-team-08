@@ -10,6 +10,7 @@ public class Scene4
     [UnityTest]
     public IEnumerator TestPlayerControlDisablesAndReenables()
     {
+        //disableplayercontroltrigger test
         var asyncLoad = SceneManager.LoadSceneAsync("Stage4Scene");
         while (!asyncLoad.isDone)
         {
@@ -17,10 +18,10 @@ public class Scene4
         }
 
         var parent = GameObject.Find("Player");
-        Assert.IsNotNull(parent, "부모 오브젝트가 씬에 존재하지 않습니다.");
+        Assert.IsNotNull(parent, "No player in scene");
 
         var player = parent.transform.Find("Ball")?.gameObject;
-        Assert.IsNotNull(player, "부모의 자식 중 Ball 오브젝트가 존재하지 않습니다.");
+        Assert.IsNotNull(player, "No ball in player");
 
         var control = player.GetComponent<NewPlayerControl>();
         if (control == null)
@@ -47,53 +48,253 @@ public class Scene4
     }
 
     [UnityTest]
-    public IEnumerator TestReverseMoveBehaviour_Perform_ReversesVelocity()
+    public IEnumerator ReverseMoveBehaviour_ReversesDirection_WithoutScene()
     {
+        //reverse test
+        var go = new GameObject("TempBall");
+        var rb = go.AddComponent<Rigidbody>();
+        rb.useGravity = false;
+
+        var reverse = go.AddComponent<ReverseMoveBehaviour>();
+        reverse.initialVelocity = Vector3.right * 3f;
+        reverse.initialAngularVelocity = Vector3.zero;
+        reverse.duration = 0.5f;
+
+        reverse.Perform();
+        var startX = go.transform.position.x;
+
+        yield return new WaitForSeconds(0.25f);
+        var midX = go.transform.position.x;
+        Assert.Greater(midX, startX, "Object should move forward initially.");
+
+        yield return new WaitForSeconds(0.4f);
+        var endX = go.transform.position.x;
+        Assert.Less(endX, midX, "Object should have reversed and moved backward.");
+
+        Debug.Log($"Start: {startX}, Mid: {midX}, End: {endX}");
+
+        Object.DestroyImmediate(go);
+    }
+
+
+    [UnityTest]
+    public IEnumerator StopMoveBehaviour_SlowsAndStops_GenericRigidbody()
+    {
+        //stop test
+        var go = new GameObject("TempBall");
+        var rb = go.AddComponent<Rigidbody>();
+        rb.useGravity = false;
+
+        var stopMove = go.AddComponent<StopMoveBehaviour>();
+        stopMove.initialVelocity = Vector3.right * 3f;
+        stopMove.initialAngularVelocity = Vector3.zero;
+        stopMove.duration = 1.0f;
+
+        stopMove.Perform();
+        var startX = go.transform.position.x;
+
+        yield return new WaitForSeconds(0.4f);
+        var midX = go.transform.position.x;
+
+        yield return new WaitForSeconds(0.8f);
+        var endX = go.transform.position.x;
+
+        Debug.Log($"Start: {startX}, Mid: {midX}, End: {endX}");
+
+        Assert.Greater(midX, startX, "Object should move at first.");
+        Assert.Less(endX - midX, midX - startX, "Object should have slowed.");
+        Assert.Less(endX - midX, 0.2f, "Object should have nearly stopped.");
+
+        Object.DestroyImmediate(go);
+    }
+
+
+    [UnityTest]
+    public IEnumerator Test_DisappearAfterDelayTrigger_TogglesObjects()
+    {
+        // disappear after trigger test
         var asyncLoad = SceneManager.LoadSceneAsync("Stage4Scene");
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
 
+        var target = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        target.name = "TargetObject";
+        target.SetActive(false);
+
+        var triggerObject = new GameObject("TriggerZone");
+        var collider = triggerObject.AddComponent<BoxCollider>();
+        collider.isTrigger = true;
+
+        var trigger = triggerObject.AddComponent<DisappearAfterDelayTrigger>();
+        trigger.targetObjects = new[] { target };
+        trigger.delay = 0.5f;
+
         var parent = GameObject.Find("Player");
-        Assert.IsNotNull(parent, "부모 오브젝트가 씬에 존재하지 않습니다.");
+        Assert.IsNotNull(parent, "No player in scene");
 
-        var ball = parent.transform.Find("Ball")?.gameObject;
-        Assert.IsNotNull(ball, "Ball 오브젝트가 존재하지 않습니다.");
+        var player = parent.transform.Find("Ball")?.gameObject;
+        Assert.IsNotNull(player, "No ball in player");
 
-        var rb = ball.GetComponent<Rigidbody>();
-        if (rb == null)
+        var control = player.GetComponent<NewPlayerControl>();
+        if (control == null)
         {
-            rb = ball.AddComponent<Rigidbody>();
+            control = player.AddComponent<NewPlayerControl>();
         }
 
-        /*rb.useGravity = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;*/
+        var playerRb = player.AddComponent<Rigidbody>();
+        playerRb.useGravity = false;
 
-        var reverseMove = ball.GetComponent<ReverseMoveBehaviour>();
-        if (reverseMove == null)
-        {
-            reverseMove = ball.AddComponent<ReverseMoveBehaviour>();
-        }
 
-        reverseMove.initialVelocity = new Vector3(1f, 0f, 0f);
-        reverseMove.initialAngularVelocity = Vector3.zero;
-        reverseMove.duration = 0.5f;
+        player.transform.position = Vector3.zero;
+        triggerObject.transform.position = Vector3.zero;
 
-        yield return null;
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForEndOfFrame();
 
-        reverseMove.Perform();
 
-        var startPos = ball.transform.position;
+        Assert.IsTrue(target.activeSelf, "Target object should be active after trigger");
 
-        yield return new WaitForSeconds(0.25f);
-        var midPos = ball.transform.position;
-        Assert.Greater(midPos.x, startPos.x, "Ball should have moved forward.");
-
-        yield return new WaitForSeconds(0.4f);
-        var finalPos = ball.transform.position;
-        Assert.Less(finalPos.x, midPos.x, "Ball should have moved backward after reversal.");
-
-        Debug.Log($"Start: {startPos.x}, Mid: {midPos.x}, Final: {finalPos.x}");
+        yield return new WaitForSeconds(0.6f);
+        Assert.IsFalse(target.activeSelf, "Target object should be inactive after delay");
     }
+
+    [UnityTest]
+    public IEnumerator Test_SimpleMoveBehaviour_MovesToDestination_AndPassesMidpoint()
+    {
+        // GameObject 생성
+        var go = new GameObject("SimpleMover");
+        var rb = go.AddComponent<Rigidbody>();
+        rb.useGravity = false;
+
+        var behaviour = go.AddComponent<SimpleMoveBehaviour>();
+        behaviour.destination = Vector3.forward * 2f;
+        behaviour.duration = 1.0f;
+        behaviour.isDestinationRelative = true;
+
+        var startPos = go.transform.position;
+        var expectedEnd = startPos + Vector3.forward * 2f;
+        var expectedMid = Vector3.Lerp(startPos, expectedEnd, 0.5f);
+
+        behaviour.Perform();
+
+        yield return new WaitForSeconds(0.5f);
+        var midPos = go.transform.position;
+
+        var midDist = Vector3.Distance(midPos, expectedMid);
+        Debug.Log($"[Mid] Expected: {expectedMid}, Actual: {midPos}");
+
+        Assert.That(midDist, Is.LessThan(0.2f), "Object did not reach the expected midpoint");
+
+        yield return new WaitForSeconds(0.6f);
+        var endPos = go.transform.position;
+        var totalDist = Vector3.Distance(endPos, expectedEnd);
+
+        Debug.Log($"[End] Expected: {expectedEnd}, Actual: {endPos}");
+
+        Assert.That(totalDist, Is.LessThan(0.1f), "Object did not reach the final destination");
+    }
+
+    [UnityTest]
+    public IEnumerator Test_SimpleMoveRestoreBehaviour_MovesAndRestores()
+    {
+        var go = new GameObject("MoveRestorer");
+        var rb = go.AddComponent<Rigidbody>();
+        rb.useGravity = false;
+
+        var behaviour = go.AddComponent<SimpleMoveRestoreBehaviour>();
+        behaviour.destination = Vector3.right * 3f;
+        behaviour.destinationRotation = new Vector3(0, 90, 0);
+        behaviour.duration = 0.5f;
+        behaviour.delayBeforeMove = 0.1f;
+        behaviour.delayAfterMove = 0.2f;
+        behaviour.isDestinationRelative = true;
+
+        var startPos = go.transform.position;
+        var startRot = go.transform.rotation;
+
+        behaviour.Perform();
+
+        yield return new WaitForSeconds(0.9f);
+        var midPos = go.transform.position;
+
+        yield return new WaitForSeconds(0.6f);
+        var endPos = go.transform.position;
+        var endRot = go.transform.rotation;
+
+        Debug.Log($"Start: {startPos}, Mid: {midPos}, End: {endPos}");
+
+        Assert.That(Vector3.Distance(midPos, startPos), Is.GreaterThan(2.5f), "Did not move far enough");
+        Assert.That(Vector3.Distance(endPos, startPos), Is.LessThan(0.1f), "Did not return to start");
+        Assert.That(Quaternion.Angle(endRot, startRot), Is.LessThan(1f), "Rotation not restored");
+    }
+
+    private class MockBehaviour : PredefinedBehaviour
+    {
+        public bool wasPerformed = false;
+
+        protected override void PerformInternal()
+        {
+            wasPerformed = true;
+            performed = true;
+        }
+    }
+
+    [UnityTest]
+    public IEnumerator TestActivateButton_ActivatesOnTriggerEnter()
+    {
+        var asyncLoad = SceneManager.LoadSceneAsync("Stage4Scene");
+        while (!asyncLoad.isDone)
+            yield return null;
+
+        var parent = GameObject.Find("Player");
+        Assert.IsNotNull(parent, "No player in scene");
+
+        var player = parent.transform.Find("Ball")?.gameObject;
+        Assert.IsNotNull(player, "No ball in player");
+
+        var control = player.GetComponent<NewPlayerControl>();
+        if (control == null)
+            control = player.AddComponent<NewPlayerControl>();
+
+        control.canControl = true;
+
+        var go = new GameObject("ActivateButtonTestObject");
+        var activateButton = go.AddComponent<ActivateButton>();
+        var meshRenderer = go.AddComponent<MeshRenderer>();
+
+        var collider = go.AddComponent<BoxCollider>();
+        collider.isTrigger = true;
+
+        var rb = go.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+
+        var mockBehaviour = go.AddComponent<MockBehaviour>();
+        activateButton.behaviours = new PredefinedBehaviour[] { mockBehaviour };
+
+        Assert.IsFalse(activateButton.isActivated);
+        Assert.IsTrue(meshRenderer.enabled);
+        Assert.IsFalse(mockBehaviour.wasPerformed);
+
+        var playerRb = player.GetComponent<Rigidbody>();
+        if (playerRb == null)
+            playerRb = player.AddComponent<Rigidbody>();
+        playerRb.isKinematic = true;
+
+        var playerCollider = player.GetComponent<Collider>();
+        if (playerCollider == null)
+            playerCollider = player.AddComponent<SphereCollider>();
+
+        go.transform.position = player.transform.position;
+
+        yield return new WaitForFixedUpdate();
+        Assert.IsTrue(activateButton.isActivated, "ActivateButton should be activated on trigger");
+        Assert.IsFalse(meshRenderer.enabled, "MeshRenderer should be disabled after activation");
+        Assert.IsTrue(mockBehaviour.wasPerformed, "MockBehaviour should have been performed");
+
+        Object.Destroy(go);
+    }
+
 }
