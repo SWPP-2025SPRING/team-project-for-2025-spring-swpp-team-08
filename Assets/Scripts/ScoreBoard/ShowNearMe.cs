@@ -27,10 +27,10 @@ public class ShowNearMe : MonoBehaviour
     private void ShowMySurroundingScores()
     {
         List<ScoreData> scores = LoadScores();
-        //string currentPlayer = GameManager.Instance.GetCurrentPlayerName();
-        //float myScore = GameManager.Instance.totalPlayTime;
-        string currentPlayer = "갯";
-        float myScore = 99.9f;
+        string currentPlayer = GameManager.Instance.GetCurrentPlayerName();
+        float myScore = GameManager.Instance.totalPlayTime;
+        //string currentPlayer = "갯";
+        //float myScore = 99.9f;
 
         scores.Sort((a, b) => a.score.CompareTo(b.score));
 
