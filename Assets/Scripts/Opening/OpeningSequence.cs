@@ -40,12 +40,12 @@ namespace Opening
             StartCoroutine(MoveOverTime(fakePlayerBallObj, fakePlayerBodyObj.transform.position, 5f));
             yield return PrintSubtitle("당신은 구체로 형상화된 대학생이라는 틀에 갇히게 되었습니다.");
 
-            yield return PrintSubtitle("앞으로 열심히 구르며 학업을 이어가야하죠.");
+            yield return PrintSubtitle("앞으로 열심히 구르며 학업을 이어가야 하죠.");
 
             // fade out처럼 수정해야함
             stage1Screen.gameObject.SetActive(true);
             stage1Screen.SetActive(false);
-            yield return PrintSubtitle("때로는 학업의 길을 따라 요리 조리 움직이기도 하고");
+            yield return PrintSubtitle("때로는 학업의 길을 따라 요리조리 움직이기도 하고");
 
             stage1Screen.gameObject.SetActive(true);
             stage2Screen.SetActive(false);
@@ -55,7 +55,7 @@ namespace Opening
             stage3Screen.SetActive(false);
             yield return PrintSubtitle("예측하기 어려운 이슈들을 감수하고 도전하는 경험도 하게 될 것입니다.");
 
-            yield return PrintSubtitle("돌아가고싶어도 늦었습니다.");
+            yield return PrintSubtitle("돌아가고 싶어도 늦었습니다.");
             yield return PrintSubtitle("이제 당신은 구를 일만 남았습니다.");
 
             SetObjVisible(realPlayerObj, true);
