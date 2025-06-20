@@ -41,7 +41,6 @@ public class PlayManager : MonoBehaviour
     private float _playTimeTotal;
     private Vector3 _checkpoint;
     private NewPlayerControl _playerControl;
-    private string _currentPlayerName;
 
     private void Awake()
     {
@@ -139,16 +138,6 @@ public class PlayManager : MonoBehaviour
         GameManager.Instance.totalPlayTime += _playTimeCurrent;
         GameManager.LoadScene(nextSceneName);
 
-    }
-
-    public void SetCurrentPlayerName(string playerName)
-    {
-        _currentPlayerName = playerName;
-    }
-
-    public string GetCurrentPlayerName()
-    {
-        return _currentPlayerName;
     }
 
     // TODO: Add UI related functions
