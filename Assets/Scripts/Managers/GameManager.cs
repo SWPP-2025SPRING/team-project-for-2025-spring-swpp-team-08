@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private AudioSource _sfxSource;
 
     private string _currentPlayerName;
+    private float[] _scores = new float[3];
 
     private void Awake()
     {
@@ -126,8 +127,18 @@ public class GameManager : MonoBehaviour
         _currentPlayerName = playerName;
     }
 
+    public void SetScore(float score, int x)
+    {
+        _scores[x] = score;
+    }
+
     public string GetCurrentPlayerName()
     {
         return _currentPlayerName;
+    }
+
+    public float[] GetScores()
+    {
+        return _scores;
     }
 }
