@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private AudioSource _bgmSource;
     private AudioSource _sfxSource;
 
+    private string _currentPlayerName;
+
     private void Awake()
     {
         if (Instance != null)
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
     public void Initialize()
     {
         totalPlayTime = 0;
+        SetCurrentPlayerName(null);
     }
 
     /// <summary>
@@ -74,5 +77,15 @@ public class GameManager : MonoBehaviour
     public void PlaySfx(AudioClip clip)
     {
         _sfxSource.PlayOneShot(clip);
+    }
+
+    public void SetCurrentPlayerName(string playerName)
+    {
+        _currentPlayerName = playerName;
+    }
+
+    public string GetCurrentPlayerName()
+    {
+        return _currentPlayerName;
     }
 }
