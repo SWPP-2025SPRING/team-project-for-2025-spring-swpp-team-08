@@ -25,20 +25,23 @@ public class UIAfterHatHit : MonoBehaviour
         endingCreditPanel.SetActive(false);
 
         string playerName = GameManager.Instance.GetCurrentPlayerName();
+        float score1 = GameManager.Instance.GetScore1();
+        float score2 = GameManager.Instance.GetScore2();
+        float score3 = GameManager.Instance.GetScore3();
         if (string.IsNullOrEmpty(playerName))
             playerName = "Anonymous";
 
-        SaveScore(playerName);
+        SaveScore(playerName, score1, score2, score3);
 
         GameManager.LoadScene("LeaderboardScene");
     }
 
-    private void SaveScore(string playerName)
+    private void SaveScore(string playerName, float score1, float score2, float score3)
     {
         float finalScore = GameManager.Instance.totalPlayTime;
 
         var scoreboard = FindObjectOfType<ScoreBoardManager>();
         if (scoreboard != null)
-            scoreboard.SaveScore(playerName, finalScore);
+            scoreboard.SaveScore(playerName, score1, score2, score3, finalScore);
     }
 }

@@ -136,6 +136,18 @@ public class PlayManager : MonoBehaviour
     public void LoadNextStage()
     {
         GameManager.Instance.totalPlayTime += _playTimeCurrent;
+        if (stageNo == 1)
+        {
+            GameManager.Instance.SetScore1(_playTimeCurrent);
+        }
+        else if (stageNo == 2)
+        {
+            GameManager.Instance.SetScore2(_playTimeCurrent);
+        }
+        else if (stageNo == 4)
+        {
+            GameManager.Instance.SetScore3(_playTimeCurrent);
+        }
         GameManager.LoadScene(nextSceneName);
 
     }
