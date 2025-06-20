@@ -20,7 +20,6 @@ namespace Stage4
             if (!other.CompareTag("Player")) return;
 
             StartCoroutine(PerformCoroutine());
-            Debug.Log("collided");
             return;
 
             IEnumerator PerformCoroutine()

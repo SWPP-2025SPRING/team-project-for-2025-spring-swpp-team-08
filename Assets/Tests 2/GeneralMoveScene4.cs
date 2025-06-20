@@ -127,6 +127,7 @@ public class Scene4
         var triggerObject = new GameObject("TriggerZone");
         var triggerCollider = triggerObject.AddComponent<BoxCollider>();
         triggerCollider.isTrigger = true;
+        triggerCollider.size = new Vector3(2f, 2f, 2f);
         var triggerRb = triggerObject.AddComponent<Rigidbody>();
         triggerRb.isKinematic = true;
 
@@ -139,6 +140,8 @@ public class Scene4
 
         var player = parent.transform.Find("Ball")?.gameObject;
         Assert.IsNotNull(player, "No ball in player");
+        Debug.Log("Player name: " + player.name);
+        Debug.Log("Player Tag: " + player.tag);
 
         if (player.GetComponent<NewPlayerControl>() == null)
             player.AddComponent<NewPlayerControl>();
@@ -149,13 +152,14 @@ public class Scene4
         var playerRb = player.GetComponent<Rigidbody>();
         if (playerRb == null)
             playerRb = player.AddComponent<Rigidbody>();
+
         playerRb.useGravity = false;
-        player.tag = "Player";
+        player.transform.position = new Vector3(0, 0.5f, 0);        
+        triggerObject.transform.position = new Vector3(0, 0.5f, 0.1f); 
 
-        player.transform.position = Vector3.zero;
-        triggerObject.transform.position = Vector3.zero;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForFixedUpdate();  
+        yield return new WaitForFixedUpdate();
 
         Assert.IsTrue(target.activeSelf, "Target object should be active after trigger");
 
