@@ -41,8 +41,22 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
         Physics.gravity = new Vector3(0, -30f, 0);
+        Initialize();
+
+        StartCoroutine(InitialTransitionCoroutine());
+        return;
+
+        IEnumerator InitialTransitionCoroutine()
+        {
+            var transition = Instantiate(Instance.transitionCanvas);
+            var transitionBehaviour = transition.GetComponent<TransitionBehaviour>();
+
+            transitionBehaviour.EndTransition(transitionDurationSeconds);
+            yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
+
+            Destroy(transition);
+        }
     }
 
     public void Initialize()
@@ -66,38 +80,18 @@ public class GameManager : MonoBehaviour
         IEnumerator TransitionCoroutine()
         {
             var transition = Instantiate(Instance.transitionCanvas);
-            var transitionImage = transition.GetComponentInChildren<Image>();
-            var elapsedTime = 0f;
+            var transitionBehaviour = transition.GetComponent<TransitionBehaviour>();
 
             DontDestroyOnLoad(transition);
 
-            while (elapsedTime < transitionDurationSeconds)
-            {
-                var progress = Mathf.Lerp(0f, 1f, elapsedTime / transitionDurationSeconds);
-                transitionImage.color = new Color(0f, 0f, 0f, progress);
-                _bgmSource.volume = 1f - progress;
-
-                elapsedTime += Time.unscaledDeltaTime;
-                yield return null;
-            }
-
-            transitionImage.color = Color.black;
-            _bgmSource.volume = 0f;
+            transitionBehaviour.StartTransition(transitionDurationSeconds);
+            yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
 
             SceneManager.LoadScene(sceneName);
-            elapsedTime = 0f;
 
-            while (elapsedTime < transitionDurationSeconds)
-            {
-                var progress = Mathf.Lerp(0f, 1f, elapsedTime / transitionDurationSeconds);
-                transitionImage.color = new Color(0f, 0f, 0f, 1f - progress);
-                _bgmSource.volume = progress;
+            transitionBehaviour.EndTransition(transitionDurationSeconds);
+            yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
 
-                elapsedTime += Time.unscaledDeltaTime;
-                yield return null;
-            }
-
-            _bgmSource.volume = 1f;
             Destroy(transition);
         }
     }

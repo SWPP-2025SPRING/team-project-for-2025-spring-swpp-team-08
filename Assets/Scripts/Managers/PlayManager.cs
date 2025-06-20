@@ -32,6 +32,7 @@ public class PlayManager : MonoBehaviour
 
     private float _playTimeCurrent;
     private float _playTimeTotal;
+    private bool _canMoveToNextStage;
     private Vector3 _checkpoint;
     private NewPlayerControl _playerControl;
     private GameObject _cameraObject;
@@ -50,6 +51,7 @@ public class PlayManager : MonoBehaviour
         _playTimeCurrent = 0f;
         _playTimeTotal = GameManager.Instance.totalPlayTime;
         _checkpoint = spawnPoint;
+        _canMoveToNextStage = false;
 
         uiManager.UpdatePlayTime(_playTimeTotal);
         uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
@@ -66,6 +68,14 @@ public class PlayManager : MonoBehaviour
             _playTimeTotal += Time.deltaTime;
             uiManager.UpdatePlayTime(_playTimeTotal);
             uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
+        }
+
+        if (State == PlayStates.Finished && _canMoveToNextStage)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                LoadNextStage();
+            }
         }
     }
 
@@ -119,6 +129,15 @@ public class PlayManager : MonoBehaviour
         uiManager.HidePlayUI();
         uiManager.ShowResultUI();
         _cameraObject.GetComponent<CameraResultPosition>().MoveCamera();
+
+        StartCoroutine(FinishGameCoroutine());
+        return;
+
+        IEnumerator FinishGameCoroutine()
+        {
+            yield return new WaitForSeconds(2.5f);
+            _canMoveToNextStage = true;
+        }
     }
 
     public void LoadNextStage()
