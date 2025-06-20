@@ -44,5 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69136dc4ae56ad64fb28b2d5c4787add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playtimeText: {fileID: 0}
+  playTimeText: {fileID: 0}
+  currentPlayTimeText: {fileID: 0}
   currentStageText: {fileID: 0}
+  subtitleText: {fileID: 0}
+  percentText: {fileID: 0}
+  progressBar: {fileID: 0}
+  stateSubtitleFont: {fileID: 11400000, guid: 5484776a7f58f42e8934c3a00edd1efa, type: 2}
+  storySubtitleFont: {fileID: 11400000, guid: 5484776a7f58f42e8934c3a00edd1efa, type: 2}
+  playerLineSubtitleFont: {fileID: 11400000, guid: 5484776a7f58f42e8934c3a00edd1efa, type: 2}

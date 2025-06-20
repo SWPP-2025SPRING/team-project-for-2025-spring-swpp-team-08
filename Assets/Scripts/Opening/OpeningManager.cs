@@ -8,19 +8,20 @@ namespace Opening
     public class OpeningManager : MonoBehaviour
     {
         public OpeningSequence openingSequence;
+        public InputName playerNameInput;
 
-        void Start()
+        public void Start()
         {
             StartCoroutine(PlayOpening());
         }
 
-        IEnumerator PlayOpening()
+        private IEnumerator PlayOpening()
         {
             yield return openingSequence.PlaySequence();
-            StartTutorial();
+            playerNameInput.Show();
         }
 
-        void StartTutorial()
+        public void StartTutorial()
         {
             GetPlayManager().StartGame();
         }

@@ -55,23 +55,28 @@ public class PlayManager : MonoBehaviour
     {
         State = PlayStates.Ready;
 
-        if (sceneType == SceneType.STAGE)
+        switch (sceneType)
         {
-            _playTimeCurrent = 0f;
-            _playTimeTotal = GameManager.Instance.totalPlayTime;
-            _checkpoint = spawnPoint;
+            case SceneType.OPENING:
+                uiManager.HideAllUIs();
+                break;
+            case SceneType.STAGE:
+                _playTimeCurrent = 0f;
+                _playTimeTotal = GameManager.Instance.totalPlayTime;
+                _checkpoint = spawnPoint;
 
-            uiManager.UpdatePlayTime(_playTimeTotal);
-            uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
-            uiManager.UpdateStage(stageName);
+                uiManager.UpdatePlayTime(_playTimeTotal);
+                uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
+                uiManager.UpdateStage(stageName);
 
-            StartCoroutine(ReadyGame());
+                StartCoroutine(ReadyGame());
+                break;
         }
     }
 
     private void Update()
     {
-        if (State == PlayStates.Playing)
+        if (State == PlayStates.Playing && sceneType == SceneType.STAGE)
         {
             _playTimeCurrent += Time.deltaTime;
             _playTimeTotal += Time.deltaTime;
@@ -82,15 +87,15 @@ public class PlayManager : MonoBehaviour
 
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
-        uiManager.UpdateSubtitle("Checkpoint set...", 3);
+        uiManager.UpdateStateSubtitle("Checkpoint set...", 3);
         _checkpoint = newCheckpoint;
         GameManager.Instance.PlaySfx(setCheckpoint);
     }
 
-    //set player to chosen location
+    // set player to chosen location
     public void DisplayCheckpointReturn()
     {
-        uiManager.UpdateSubtitle("Moved to last checkpoint", 3);
+        uiManager.UpdateStateSubtitle("Moved to last checkpoint", 3);
         GameManager.Instance.PlaySfx(fallDown);
     }
 
@@ -151,5 +156,13 @@ public class PlayManager : MonoBehaviour
 
     }
 
-    // TODO: Add UI related functions
+    public void UpdateStorySubtitle(string content, float durationSeconds = 2)
+    {
+        uiManager.UpdateStorySubtitle(content, durationSeconds);
+    }
+
+    public void UpdatePlayerLineSubtitle(string content, float durationSeconds = 2)
+    {
+        uiManager.UpdatePlayerLineSubtitle(content, durationSeconds);
+    }
 }
