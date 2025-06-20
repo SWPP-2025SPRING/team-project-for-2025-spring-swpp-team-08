@@ -7,18 +7,22 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("Text")]
+    [Header("Play UI")]
+    public GameObject playUI;
+    public Animator playUIAnimator;
+
+    [Space(10)]
     public TextMeshProUGUI playTimeText;
     public TextMeshProUGUI currentPlayTimeText;
     public TextMeshProUGUI currentStageText;
     public TextMeshProUGUI subtitleText;
     public TextMeshProUGUI percentText;
-
-    [Header("Animation")]
-    public Animator canvasAnimator;
-
-    [Header("Slider")]
     public Slider progressBar;
+
+
+    [Header("Result UI")]
+    public GameObject resultUI;
+    public Animator resultUIAnimator;
 
     private Coroutine _coroutine;
 
@@ -74,14 +78,14 @@ public class UIManager : MonoBehaviour
         subtitleText.gameObject.SetActive(false);
     }
 
-    public void ShowUI()
+    public void ShowPlayUI()
     {
-        canvasAnimator.SetBool("IsShown", true);
+        playUIAnimator.SetBool("IsShown", true);
     }
 
-    public void HideUI()
+    public void HidePlayUI()
     {
-        canvasAnimator.SetBool("IsShown", false);
+        playUIAnimator.SetBool("IsShown", false);
     }
 
     public void StartCountdown()

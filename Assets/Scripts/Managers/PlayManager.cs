@@ -12,29 +12,21 @@ public enum PlayStates
 public class PlayManager : MonoBehaviour
 {
     private const float DelayBeforeStart = 2f;
-    private const float DelayAfterFinish = 5f;
-    private const float DelayAnimationAfterFinish = 3f;
 
-    /// <summary>
-    /// Stage number of current scene.
-    /// Must be assigned in Unity Inspector.
-    /// </summary>
+    [Header("Stage Settings")]
     public int stageNo;
-
-    /// <summary>
-    /// Scene name of next stage.
-    /// Must be assigned in Unity Inspector.
-    /// </summary>
     public string nextSceneName;
-
-    // TODO: Add UIManager reference
-    public UIManager uiManager;
     public string stageName;
-    public AudioClip setCheckpoint;
-    public AudioClip fallDown;
-    public Vector3 spawnPoint;
     public float fallThresholdHeight = 0f;
     public float fallThresholdSecond = 5f;
+
+    [Header("References")]
+    public UIManager uiManager;
+    public AudioClip setCheckpoint;
+    public AudioClip fallDown;
+
+    [Header("Runtime Values")]
+    public Vector3 spawnPoint;
 
     public PlayStates State { get; private set; }
 
@@ -42,12 +34,14 @@ public class PlayManager : MonoBehaviour
     private float _playTimeTotal;
     private Vector3 _checkpoint;
     private NewPlayerControl _playerControl;
+    private GameObject _cameraObject;
 
     private void Awake()
     {
         GameManager.Instance.playManager = this;
 
         _playerControl = GameObject.FindWithTag("Player").GetComponentInChildren<NewPlayerControl>();
+        _cameraObject = Camera.main?.gameObject;
     }
 
     private void Start()
@@ -97,7 +91,7 @@ public class PlayManager : MonoBehaviour
     public IEnumerator ReadyGame()
     {
         _playerControl.canControl = false;
-        uiManager.ShowUI();
+        uiManager.ShowPlayUI();
         Debug.Log("Ready");
 
         yield return new WaitForSeconds(DelayBeforeStart);
@@ -112,7 +106,6 @@ public class PlayManager : MonoBehaviour
         State = PlayStates.Playing;
         _playerControl.canControl = true;
         Debug.Log("Playing");
-        // TODO: Implement start logic
     }
 
     public void FinishGame()
@@ -122,28 +115,15 @@ public class PlayManager : MonoBehaviour
         State = PlayStates.Finished;
         _playerControl.canControl = false;
         Debug.Log("Finished");
-        // TODO: Implement finish logic
 
-        StartCoroutine(LoadNextStageCoroutine());
-        return;
-
-        IEnumerator LoadNextStageCoroutine()
-        {
-            yield return new WaitForSeconds(DelayAnimationAfterFinish);
-
-            uiManager.HideUI();
-
-            yield return new WaitForSeconds(DelayAfterFinish - DelayAnimationAfterFinish);
-
-            LoadNextStage();
-        }
+        uiManager.HidePlayUI();
+        // TODO: Implement result UI
     }
 
     public void LoadNextStage()
     {
         GameManager.Instance.totalPlayTime += _playTimeCurrent;
         GameManager.Instance.LoadScene(nextSceneName);
-
     }
 
     // TODO: Add UI related functions
