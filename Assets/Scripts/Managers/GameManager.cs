@@ -129,6 +129,7 @@ public class GameManager : MonoBehaviour
 
     public void SetScore(float score, int x)
     {
+        if (x <= 0) return;
         _scores[x] = score;
     }
 
