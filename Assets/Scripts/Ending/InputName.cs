@@ -5,24 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class InputName : MonoBehaviour
 {
-    public GameObject nameInputPanel;
-    public TMP_InputField nameInputField;
-    public Button submitButton;
-
     public GameObject endingCreditPanel;
     public EndingCreditScript creditRoll;
 
-    public Button scoreButton;
-    public Button restartButton;
-
     private void Awake()
     {
-        nameInputPanel.SetActive(false);
         endingCreditPanel.SetActive(false);
-        scoreButton.gameObject.SetActive(false);
-        restartButton.gameObject.SetActive(false);
-
-        submitButton.onClick.AddListener(OnSubmitClicked);
     }
 
     public void Show()
@@ -35,29 +23,19 @@ public class InputName : MonoBehaviour
     private void OnCreditEnd()
     {
         endingCreditPanel.SetActive(false);
-        nameInputPanel.SetActive(true);
-        nameInputField.text = "";
-        nameInputField.ActivateInputField();
-    }
 
-    private void OnSubmitClicked()
-    {
-        string playerName = nameInputField.text;
+        string playerName = GameManager.Instance.GetCurrentPlayerName();
         if (string.IsNullOrEmpty(playerName))
             playerName = "Anonymous";
 
         SaveScore(playerName);
-
-        nameInputPanel.SetActive(false);
 
         GameManager.LoadScene("LeaderboardScene");
     }
 
     private void SaveScore(string playerName)
     {
-        //float finalScore = GameManager.Instance.totalPlayTime; :추후 수정 이걸로
-
-        float finalScore = 1f; // 테스트용
+        float finalScore = GameManager.Instance.totalPlayTime;
 
         var scoreboard = FindObjectOfType<ScoreBoardManager>();
         if (scoreboard != null)
