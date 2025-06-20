@@ -25,9 +25,9 @@ public class UIAfterHatHit : MonoBehaviour
         endingCreditPanel.SetActive(false);
         
         string playerName = GameManager.Instance.GetCurrentPlayerName();
-        float score1 = GameManager.Instance.GetScore1();
-        float score2 = GameManager.Instance.GetScore2();
-        float score3 = GameManager.Instance.GetScore3();
+        float score1 = GameManager.Instance.GetScores()[0];
+        float score2 = GameManager.Instance.GetScores()[1];
+        float score3 = GameManager.Instance.GetScores()[2];
         if (string.IsNullOrEmpty(playerName))
             playerName = "Anonymous";
         
