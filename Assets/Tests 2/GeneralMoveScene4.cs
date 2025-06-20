@@ -8,7 +8,7 @@ using Stage4;
 public class Scene4
 {
     [UnityTest]
-    public IEnumerator TestPlayerControlDisablesAndReenables()
+    public IEnumerator TestDisablePlayerControlTrigger()
     {
         //disableplayercontroltrigger test
         var asyncLoad = SceneManager.LoadSceneAsync("Stage4Scene");
@@ -48,7 +48,7 @@ public class Scene4
     }
 
     [UnityTest]
-    public IEnumerator ReverseMoveBehaviour_ReversesDirection_WithoutScene()
+    public IEnumerator TestReverseMoveBehaviour()
     {
         //reverse test
         var go = new GameObject("TempBall");
@@ -78,7 +78,7 @@ public class Scene4
 
 
     [UnityTest]
-    public IEnumerator StopMoveBehaviour_SlowsAndStops_GenericRigidbody()
+    public IEnumerator TestStopMoveBehaviour()
     {
         //stop test
         var go = new GameObject("TempBall");
@@ -110,7 +110,7 @@ public class Scene4
 
 
     [UnityTest]
-    public IEnumerator Test_DisappearAfterDelayTrigger_TogglesObjects()
+    public IEnumerator TestDisappearAfterDelayTrigger()
     {
         // disappear after trigger test
         var asyncLoad = SceneManager.LoadSceneAsync("Stage4Scene");
@@ -162,7 +162,7 @@ public class Scene4
     }
 
     [UnityTest]
-    public IEnumerator Test_SimpleMoveBehaviour_MovesToDestination_AndPassesMidpoint()
+    public IEnumerator TestSimpleMoveBehaviour()
     {
         // GameObject 생성
         var go = new GameObject("SimpleMover");
@@ -198,7 +198,7 @@ public class Scene4
     }
 
     [UnityTest]
-    public IEnumerator Test_SimpleMoveRestoreBehaviour_MovesAndRestores()
+    public IEnumerator TestSimpleMoveRestoreBehaviour()
     {
         var go = new GameObject("MoveRestorer");
         var rb = go.AddComponent<Rigidbody>();
@@ -243,7 +243,7 @@ public class Scene4
     }
 
     [UnityTest]
-    public IEnumerator TestActivateButton_ActivatesOnTriggerEnter()
+    public IEnumerator TestActivateButton()
     {
         var asyncLoad = SceneManager.LoadSceneAsync("Stage4Scene");
         while (!asyncLoad.isDone)
@@ -262,8 +262,8 @@ public class Scene4
         control.canControl = true;
 
         var go = new GameObject("ActivateButtonTestObject");
-        var activateButton = go.AddComponent<ActivateButton>();
         var meshRenderer = go.AddComponent<MeshRenderer>();
+        var activateButton = go.AddComponent<ActivateButton>();
 
         var collider = go.AddComponent<BoxCollider>();
         collider.isTrigger = true;
