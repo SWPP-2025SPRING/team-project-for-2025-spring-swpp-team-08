@@ -27,16 +27,15 @@ public class ShowNearMe : MonoBehaviour
     private void ShowMySurroundingScores()
     {
         List<ScoreData> scores = LoadScores();
-        string currentPlayer = GameManager.Instance.GetCurrentPlayerName();
-        float myScore = GameManager.Instance.totalPlayTime;
+        //string currentPlayer = GameManager.Instance.GetCurrentPlayerName();
+        //float myScore = GameManager.Instance.totalPlayTime;
+        string currentPlayer = "갯";
+        float myScore = 99.9f;
 
-        // 정렬 (오름차순: 시간이 짧을수록 높은 순위)
         scores.Sort((a, b) => a.score.CompareTo(b.score));
 
-        // 현재 플레이어의 인덱스 찾기
-        int myIndex = scores.FindIndex(s => s.playerName == currentPlayer && Math.Abs(s.score - myScore) < 0.01f);
+        int myIndex = scores.FindIndex(s => s.playerName == currentPlayer && Mathf.Abs(s.score - myScore) < 0.01f);
 
-        // 못 찾았으면 그냥 처음 5명 보여주기 (예외 처리)
         if (myIndex == -1)
         {
             Debug.LogWarning("현재 플레이어 점수를 찾을 수 없습니다. 상위 5명을 표시합니다.");
@@ -44,11 +43,15 @@ public class ShowNearMe : MonoBehaviour
             return;
         }
 
-        int start = Mathf.Max(0, myIndex - 2);
-        int end = Mathf.Min(scores.Count - 1, myIndex + 2);
+        int total = scores.Count;
+        int desiredCount = 5;
+        int start = myIndex - 2;
+        if (start < 0)
+            start = 0;
+        if (start + desiredCount > total)
+            start = Mathf.Max(0, total - desiredCount);
 
-        // 최대 5개까지만 보여주기
-        List<ScoreData> nearScores = scores.GetRange(start, end - start + 1);
+        List<ScoreData> nearScores = scores.GetRange(start, Mathf.Min(desiredCount, total - start));
         ShowScores(nearScores, start);
     }
 

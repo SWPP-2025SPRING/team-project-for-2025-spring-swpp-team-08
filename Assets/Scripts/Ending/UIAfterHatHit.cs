@@ -31,9 +31,7 @@ public class UIAfterHatHit : MonoBehaviour
         if (string.IsNullOrEmpty(playerName))
             playerName = "Anonymous";
         */
-        float randomNumber = UnityEngine.Random.Range(10f, 100f);
-        string playerName = randomNumber.ToString("F0"); // 소수점 없이 정수 부분만 표시
-        Debug.Log(playerName);
+        string playerName = "갯"; // 소수점 없이 정수 부분만 표시
 
         float score1 = UnityEngine.Random.Range(10f, 100f); 
         float score2 = UnityEngine.Random.Range(10f, 100f);
@@ -46,7 +44,7 @@ public class UIAfterHatHit : MonoBehaviour
     private void SaveScore(string playerName, float score1, float score2, float score3)
     {
         //float finalScore = GameManager.Instance.totalPlayTime;
-        float finalScore = UnityEngine.Random.Range(10f, 100f);
+        float finalScore = 99.9f;
         var scoreboard = FindObjectOfType<ScoreBoardManager>();
         if (scoreboard != null)
             scoreboard.SaveScore(playerName, score1, score2, score3, finalScore);
