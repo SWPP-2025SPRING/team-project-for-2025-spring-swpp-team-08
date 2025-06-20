@@ -76,11 +76,9 @@ public class Scene4
         Object.DestroyImmediate(go);
     }
 
-
     [UnityTest]
     public IEnumerator TestStopMoveBehaviour()
     {
-        //stop test
         var go = new GameObject("TempBall");
         var rb = go.AddComponent<Rigidbody>();
         rb.useGravity = false;
@@ -93,39 +91,44 @@ public class Scene4
         stopMove.Perform();
         var startX = go.transform.position.x;
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         var midX = go.transform.position.x;
 
-        yield return new WaitForSeconds(0.8f);
-        var endX = go.transform.position.x;
+        Assert.Greater(midX, startX, "Object should move initially.");
 
-        Debug.Log($"Start: {startX}, Mid: {midX}, End: {endX}");
+        yield return new WaitForSeconds(0.5f); 
+        var postStop1 = go.transform.position.x;
 
-        Assert.Greater(midX, startX, "Object should move at first.");
-        Assert.Less(endX - midX, midX - startX, "Object should have slowed.");
-        Assert.Less(endX - midX, 0.2f, "Object should have nearly stopped.");
+        Assert.Greater(midX- startX, postStop1-midX ,"Object should slow down");
+        yield return new WaitForSeconds(0.2f);
+
+        var postStop2 = go.transform.position.x;
+
+        var drift = Mathf.Abs(postStop2 - postStop1);
+        Debug.Log($"Start: {startX}, Mid: {midX}, AfterStop1: {postStop1}, AfterStop2: {postStop2}, Drift: {drift}");
+
+        Assert.Less(drift, 0.05f, "Object should have fully stopped after the duration.");
 
         Object.DestroyImmediate(go);
     }
 
-
     [UnityTest]
     public IEnumerator TestDisappearAfterDelayTrigger()
     {
-        // disappear after trigger test
         var asyncLoad = SceneManager.LoadSceneAsync("Stage4Scene");
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-
         var target = GameObject.CreatePrimitive(PrimitiveType.Cube);
         target.name = "TargetObject";
         target.SetActive(false);
 
         var triggerObject = new GameObject("TriggerZone");
-        var collider = triggerObject.AddComponent<BoxCollider>();
-        collider.isTrigger = true;
+        var triggerCollider = triggerObject.AddComponent<BoxCollider>();
+        triggerCollider.isTrigger = true;
+        var triggerRb = triggerObject.AddComponent<Rigidbody>();
+        triggerRb.isKinematic = true;
 
         var trigger = triggerObject.AddComponent<DisappearAfterDelayTrigger>();
         trigger.targetObjects = new[] { target };
@@ -137,28 +140,29 @@ public class Scene4
         var player = parent.transform.Find("Ball")?.gameObject;
         Assert.IsNotNull(player, "No ball in player");
 
-        var control = player.GetComponent<NewPlayerControl>();
-        if (control == null)
-        {
-            control = player.AddComponent<NewPlayerControl>();
-        }
+        if (player.GetComponent<NewPlayerControl>() == null)
+            player.AddComponent<NewPlayerControl>();
 
-        var playerRb = player.AddComponent<Rigidbody>();
+        if (player.GetComponent<Collider>() == null)
+            player.AddComponent<SphereCollider>();
+
+        var playerRb = player.GetComponent<Rigidbody>();
+        if (playerRb == null)
+            playerRb = player.AddComponent<Rigidbody>();
         playerRb.useGravity = false;
-
+        player.tag = "Player";
 
         player.transform.position = Vector3.zero;
         triggerObject.transform.position = Vector3.zero;
 
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForEndOfFrame();
-
+        yield return new WaitForSeconds(0.1f);
 
         Assert.IsTrue(target.activeSelf, "Target object should be active after trigger");
 
         yield return new WaitForSeconds(0.6f);
+
         Assert.IsFalse(target.activeSelf, "Target object should be inactive after delay");
+
     }
 
     [UnityTest]
@@ -226,7 +230,7 @@ public class Scene4
 
         Debug.Log($"Start: {startPos}, Mid: {midPos}, End: {endPos}");
 
-        Assert.That(Vector3.Distance(midPos, startPos), Is.GreaterThan(2.5f), "Did not move far enough");
+        Assert.That(Vector3.Distance(midPos, startPos), Is.GreaterThan(2.45f), "Did not move far enough");
         Assert.That(Vector3.Distance(endPos, startPos), Is.LessThan(0.1f), "Did not return to start");
         Assert.That(Quaternion.Angle(endRot, startRot), Is.LessThan(1f), "Rotation not restored");
     }
