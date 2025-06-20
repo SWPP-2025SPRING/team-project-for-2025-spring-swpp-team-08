@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class InputName : MonoBehaviour
+public class UIAfterHatHit : MonoBehaviour
 {
     public GameObject endingCreditPanel;
     public EndingCreditScript creditRoll;
