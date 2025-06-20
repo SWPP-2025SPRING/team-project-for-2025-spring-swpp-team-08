@@ -67,8 +67,8 @@ public class Scene4
             rb = ball.AddComponent<Rigidbody>();
         }
 
-        rb.useGravity = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        /*rb.useGravity = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;*/
 
         var reverseMove = ball.GetComponent<ReverseMoveBehaviour>();
         if (reverseMove == null)
