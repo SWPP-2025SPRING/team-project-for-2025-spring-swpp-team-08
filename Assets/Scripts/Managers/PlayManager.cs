@@ -118,6 +118,7 @@ public class PlayManager : MonoBehaviour
 
         uiManager.HidePlayUI();
         // TODO: Implement result UI
+        _cameraObject.GetComponent<CameraResultPosition>().MoveCamera();
     }
 
     public void LoadNextStage()
