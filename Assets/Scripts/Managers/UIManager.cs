@@ -33,17 +33,17 @@ public class UIManager : MonoBehaviour
 
     private string FormatPlayTime(float playtime)
     {
-        return TimeSpan.FromSeconds(playtime).ToString(@"mm\:ss\.ff");
+        return TimeSpan.FromSeconds(playtime).ToString(@"m\:ss\.fff");
     }
 
     public void UpdatePlayTime(float playTime)
     {
-        playTimeText.text = $"Playtime... {FormatPlayTime(playTime)}";
+        playTimeText.text = FormatPlayTime(playTime);
     }
 
     public void UpdateCurrentPlayTime(float playTime)
     {
-        currentPlayTimeText.text = $"On current stage... {FormatPlayTime(playTime)}";
+        currentPlayTimeText.text = FormatPlayTime(playTime);
     }
 
     public void UpdateStage(string stageName)
