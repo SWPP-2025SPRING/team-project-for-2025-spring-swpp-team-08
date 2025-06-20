@@ -117,7 +117,7 @@ public class PlayManager : MonoBehaviour
         Debug.Log("Finished");
 
         uiManager.HidePlayUI();
-        // TODO: Implement result UI
+        uiManager.ShowResultUI();
         _cameraObject.GetComponent<CameraResultPosition>().MoveCamera();
     }
 

@@ -88,6 +88,11 @@ public class UIManager : MonoBehaviour
         playUIAnimator.SetBool("IsShown", false);
     }
 
+    public void ShowResultUI()
+    {
+        resultUI.SetActive(true);
+    }
+
     public void StartCountdown()
     {
         // TODO
