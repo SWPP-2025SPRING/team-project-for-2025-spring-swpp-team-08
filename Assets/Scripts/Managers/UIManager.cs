@@ -19,10 +19,18 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI percentText;
     public Slider progressBar;
 
+    [Header("Countdown UI")]
+    public GameObject countdownUI;
+    public Animator countdownUIAnimator;
+    public TextMeshProUGUI countdownText;
 
     [Header("Result UI")]
     public GameObject resultUI;
     public Animator resultUIAnimator;
+    public TextMeshProUGUI resultStageText;
+    public TextMeshProUGUI resultTimeCurrentText;
+    public TextMeshProUGUI resultTimeTotalText;
+    public TextMeshProUGUI resultRetryCountText;
 
     private Coroutine _coroutine;
 
@@ -49,6 +57,7 @@ public class UIManager : MonoBehaviour
     public void UpdateStage(string stageName)
     {
         currentStageText.text = stageName;
+        resultStageText.text = stageName;
     }
 
     public void UpdateSubtitle(string subtitle, float totalDurationSeconds)
@@ -88,14 +97,32 @@ public class UIManager : MonoBehaviour
         playUIAnimator.SetBool("IsShown", false);
     }
 
-    public void ShowResultUI()
+    public void ShowResultUI(float playTimeCurrent, float playTimeTotal, int retryCount)
     {
+        resultTimeCurrentText.text = FormatPlayTime(playTimeCurrent);
+        resultTimeTotalText.text = FormatPlayTime(playTimeTotal);
+        resultRetryCountText.text = retryCount.ToString();
+
         resultUI.SetActive(true);
     }
 
-    public void StartCountdown()
+    public void ShowCountdownText(string text, float duration)
     {
-        // TODO
+        countdownText.text = text;
+        StartCoroutine(CountdownCoroutine());
+        return;
+
+        IEnumerator CountdownCoroutine()
+        {
+            countdownUIAnimator.SetBool("IsShown", true);
+            yield return new WaitForSeconds(duration);
+            countdownUIAnimator.SetBool("IsShown", false);
+        }
+    }
+
+    public void HideCountdownUI()
+    {
+        countdownUI.SetActive(false);
     }
 
     //set stage text at each scene UI

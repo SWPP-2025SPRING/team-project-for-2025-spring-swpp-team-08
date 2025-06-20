@@ -11,7 +11,7 @@ public enum PlayStates
 
 public class PlayManager : MonoBehaviour
 {
-    private const float DelayBeforeStart = 2f;
+    private const float DelayBeforeStart = 3f;
 
     [Header("Stage Settings")]
     public int stageNo;
@@ -32,6 +32,7 @@ public class PlayManager : MonoBehaviour
 
     private float _playTimeCurrent;
     private float _playTimeTotal;
+    private int _retryCount;
     private bool _canMoveToNextStage;
     private Vector3 _checkpoint;
     private NewPlayerControl _playerControl;
@@ -57,7 +58,7 @@ public class PlayManager : MonoBehaviour
         uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
         uiManager.UpdateStage(stageName);
 
-        StartCoroutine(ReadyGame());
+        StartCoroutine(ReadyGameCoroutine());
     }
 
     private void Update()
@@ -98,15 +99,30 @@ public class PlayManager : MonoBehaviour
         return _checkpoint;
     }
 
-    public IEnumerator ReadyGame()
+    public IEnumerator ReadyGameCoroutine()
     {
         _playerControl.canControl = false;
         uiManager.ShowPlayUI();
         Debug.Log("Ready");
 
-        yield return new WaitForSeconds(DelayBeforeStart);
+        uiManager.ShowCountdownText("준비", DelayBeforeStart);
+        yield return new WaitForSeconds(DelayBeforeStart + 0.25f);
 
+        uiManager.ShowCountdownText("3", 0.5f);
+        yield return new WaitForSeconds(1f);
+
+        uiManager.ShowCountdownText("2", 0.5f);
+        yield return new WaitForSeconds(1f);
+
+        uiManager.ShowCountdownText("1", 0.5f);
+        yield return new WaitForSeconds(1f);
+
+        uiManager.ShowCountdownText("GO!", 1f);
+        yield return new WaitForSeconds(0.25f); // Show animation duration = 0.25 seconds
         StartGame();
+        yield return new WaitForSeconds(1f);
+
+        uiManager.HideCountdownUI();
     }
 
     public void StartGame()
@@ -127,7 +143,7 @@ public class PlayManager : MonoBehaviour
         Debug.Log("Finished");
 
         uiManager.HidePlayUI();
-        uiManager.ShowResultUI();
+        uiManager.ShowResultUI(_playTimeCurrent, _playTimeTotal, _retryCount);
         _cameraObject.GetComponent<CameraResultPosition>().MoveCamera();
 
         StartCoroutine(FinishGameCoroutine());
