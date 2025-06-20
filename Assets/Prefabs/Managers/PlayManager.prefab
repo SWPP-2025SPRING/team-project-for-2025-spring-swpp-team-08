@@ -49,11 +49,7 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   stageName: 
   setCheckpoint: {fileID: 8300000, guid: 44bd09602d159264788919e9e1080e52, type: 3}
-<<<<<<< HEAD
-  fallDown: {fileID: 8300000, guid: 80d70570be792f4429ad7a62cc1b7c60, type: 3}
-=======
   fallDown: {fileID: 0}
->>>>>>> main
   spawnPoint: {x: 0, y: 0, z: 0}
   fallThresholdHeight: 0
   fallThresholdSecond: 5

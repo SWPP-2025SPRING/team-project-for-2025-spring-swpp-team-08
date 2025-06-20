@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c8f412b62dd95419d2d2abcc48c373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endingCreditPanel: {fileID: 1389744150}
-  creditRoll: {fileID: 1732704090}
+  nameInputPanel: {fileID: 0}
+  nameInputField: {fileID: 0}
 --- !u!1 &20166591
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,7 +2118,7 @@ MonoBehaviour:
   newPlayer: {fileID: 1491931498}
   originalHat: {fileID: 1598798868}
   liftSpeed: 1
-  inputUIManager: {fileID: 8678323}
+  inputUIManager: {fileID: 0}
   collidingSfx: {fileID: 8300000, guid: 596daf23cf7c47f409b29cd00e9fedc6, type: 3}
 --- !u!64 &547742539
 MeshCollider:
@@ -4812,6 +4812,10 @@ PrefabInstance:
       propertyPath: fallDown
       value: 
       objectReference: {fileID: 8300000, guid: 80d70570be792f4429ad7a62cc1b7c60, type: 3}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: sceneType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
       propertyPath: stageName
       value: Ending

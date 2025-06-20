@@ -6654,6 +6654,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: sceneType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
       propertyPath: stageName
       value: Discrete Mathematics
       objectReference: {fileID: 0}

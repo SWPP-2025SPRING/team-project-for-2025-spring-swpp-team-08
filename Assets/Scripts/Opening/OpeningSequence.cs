@@ -34,11 +34,11 @@ namespace Opening
 
             roomObj.SetActive(false);
 
-            // 플레이어 엎드리는 애니메이션 재생
+            fakePlayerBodyObj.GetComponent<Animator>().SetTrigger("StandupToIdleTrig");
 
             fakePlayerBallObj.SetActive(true);
-            StartCoroutine(MoveOverTime(fakePlayerBallObj, fakePlayerBodyObj.transform.position, 5f));
             yield return PrintSubtitle("당신은 구체로 형상화된 대학생이라는 틀에 갇히게 되었습니다.");
+            StartCoroutine(MoveOverTime(fakePlayerBallObj, fakePlayerBodyObj.transform.position, 4f));
 
             yield return PrintSubtitle("앞으로 열심히 구르며 학업을 이어가야 하죠.");
 
