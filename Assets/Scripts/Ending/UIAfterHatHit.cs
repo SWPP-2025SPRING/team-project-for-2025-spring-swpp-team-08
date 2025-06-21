@@ -31,7 +31,7 @@ public class UIAfterHatHit : MonoBehaviour
         if (string.IsNullOrEmpty(playerName))
             playerName = "Anonymous";
 
-        /*string playerName = "갯"; // 소수점 없이 정수 부분만 표시
+       /* string playerName = "갯"; // 소수점 없이 정수 부분만 표시
 
         float score1 = UnityEngine.Random.Range(10f, 100f);
         float score2 = UnityEngine.Random.Range(10f, 100f);
