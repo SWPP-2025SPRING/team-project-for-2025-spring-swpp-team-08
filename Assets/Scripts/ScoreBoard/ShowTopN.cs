@@ -24,7 +24,7 @@ public class ShowTopN : MonoBehaviour
 
     private void ShowTopScores(int count)
     {
-        List<ScoreBoardHelper.ScoreData> scores = ScoreBoardHelper.LoadScores(ScoreBoardHelper.GetScoreboardFilePath());
+        List<ScoreBoardHelper.ScoreData> scores = ScoreBoardHelper.LoadScores();
         scores.Sort((a, b) => a.score.CompareTo(b.score));
         ScoreBoardHelper.ShowScores(scores.GetRange(0, Mathf.Min(count, scores.Count)), 0, rankTexts, nameTexts, timeTexts, count);
     }

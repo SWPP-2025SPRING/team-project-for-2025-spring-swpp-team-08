@@ -23,7 +23,7 @@ public class ShowNearMe : MonoBehaviour
 
     private void ShowMySurroundingScores()
     {
-        List<ScoreBoardHelper.ScoreData> scores = ScoreBoardHelper.LoadScores(ScoreBoardHelper.GetScoreboardFilePath());
+        List<ScoreBoardHelper.ScoreData> scores = ScoreBoardHelper.LoadScores();
         string currentPlayer = GameManager.Instance.GetCurrentPlayerName();
         float myScore = GameManager.Instance.totalPlayTime;
         //string currentPlayer = "갯";

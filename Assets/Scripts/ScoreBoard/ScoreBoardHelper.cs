@@ -25,8 +25,9 @@ public static class ScoreBoardHelper
         return Path.Combine(dirPath, "scoreboard.json");
     }
 
-    public static List<ScoreData> LoadScores(string filePath)
+    public static List<ScoreData> LoadScores()
     {
+        filePath = GetScoreboardFilePath();
         if (!File.Exists(filePath))
             return new List<ScoreData>();
 
