@@ -2062,7 +2062,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1389692885}
   - component: {fileID: 1389692884}
-  - component: {fileID: 1389692886}
   m_Layer: 0
   m_Name: SBManager
   m_TagString: Untagged
@@ -2077,7 +2076,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389692883}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a564d29473a9594b8d4492ec2741a28, type: 3}
   m_Name: 
@@ -2116,37 +2115,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1389692886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389692883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6a1b7cba7652024e80a1580739d22b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rankTexts:
-  - {fileID: 1553925490}
-  - {fileID: 610967062}
-  - {fileID: 1692518223}
-  - {fileID: 503512177}
-  - {fileID: 1113557290}
-  nameTexts:
-  - {fileID: 49105238}
-  - {fileID: 1896924874}
-  - {fileID: 750400571}
-  - {fileID: 1886104192}
-  - {fileID: 155395044}
-  timeTexts:
-  - {fileID: 1790326858}
-  - {fileID: 869184348}
-  - {fileID: 327131870}
-  - {fileID: 246382283}
-  - {fileID: 1107522636}
-  topN: 5
 --- !u!1 &1417834545
 GameObject:
   m_ObjectHideFlags: 0

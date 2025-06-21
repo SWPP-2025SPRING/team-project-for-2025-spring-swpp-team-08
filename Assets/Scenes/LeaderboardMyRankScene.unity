@@ -2733,7 +2733,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1410781071}
   - component: {fileID: 1410781072}
-  - component: {fileID: 1410781073}
   m_Layer: 0
   m_Name: SBManager
   m_TagString: Untagged
@@ -2763,39 +2762,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410781069}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aa4786aa9cdccf448351bfbbc880fae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rankTexts:
-  - {fileID: 2140084723}
-  - {fileID: 1981952444}
-  - {fileID: 1252361640}
-  - {fileID: 765825912}
-  - {fileID: 1479377826}
-  nameTexts:
-  - {fileID: 558160555}
-  - {fileID: 1119754009}
-  - {fileID: 628512251}
-  - {fileID: 1125677206}
-  - {fileID: 1109882268}
-  timeTexts:
-  - {fileID: 1460496097}
-  - {fileID: 2084795539}
-  - {fileID: 411938316}
-  - {fileID: 1227411699}
-  - {fileID: 36334544}
---- !u!114 &1410781073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1410781069}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c0f7ece431009440802766163bcc56e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9aa4786aa9cdccf448351bfbbc880fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rankTexts:
