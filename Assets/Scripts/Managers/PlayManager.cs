@@ -15,6 +15,8 @@ public class PlayManager : MonoBehaviour
 
     [Header("Stage Settings")]
     public int stageNo;
+
+    public SceneType sceneType;
     public string nextSceneName;
     public string stageName;
     public float fallThresholdHeight = 0f;
@@ -49,21 +51,30 @@ public class PlayManager : MonoBehaviour
     private void Start()
     {
         State = PlayStates.Ready;
-        _playTimeCurrent = 0f;
-        _playTimeTotal = GameManager.Instance.totalPlayTime;
-        _checkpoint = spawnPoint;
-        _canMoveToNextStage = false;
 
-        uiManager.UpdatePlayTime(_playTimeTotal);
-        uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
-        uiManager.UpdateStage(stageName);
+        switch (sceneType)
+        {
+            case SceneType.OPENING:
+                uiManager.HideAllUIs();
+                break;
+            case SceneType.STAGE:
+                _playTimeCurrent = 0f;
+                _playTimeTotal = GameManager.Instance.totalPlayTime;
+                _checkpoint = spawnPoint;
+                _canMoveToNextStage = false;
 
-        StartCoroutine(ReadyGameCoroutine());
+                StartCoroutine(ReadyGameCoroutine());
+                break;
+            case SceneType.ENDING:
+                uiManager.HideAllUIs();
+                StartGame();
+                break;
+        }
     }
 
     private void Update()
     {
-        if (State == PlayStates.Playing)
+        if (State == PlayStates.Playing && sceneType == SceneType.STAGE)
         {
             _playTimeCurrent += Time.deltaTime;
             _playTimeTotal += Time.deltaTime;
@@ -82,15 +93,15 @@ public class PlayManager : MonoBehaviour
 
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
-        uiManager.UpdateSubtitle("Checkpoint set...", 3);
+        uiManager.UpdateStateSubtitle("Checkpoint set...", 3);
         _checkpoint = newCheckpoint;
         GameManager.Instance.PlaySfx(setCheckpoint);
     }
 
-    //set player to chosen location
+    // set player to chosen location
     public void DisplayCheckpointReturn()
     {
-        uiManager.UpdateSubtitle("Moved to last checkpoint", 3);
+        uiManager.UpdateStateSubtitle("Moved to last checkpoint", 3);
         GameManager.Instance.PlaySfx(fallDown);
     }
 
@@ -101,7 +112,7 @@ public class PlayManager : MonoBehaviour
 
     public IEnumerator ReadyGameCoroutine()
     {
-        _playerControl.canControl = false;
+        DisablePlayerControl();
         uiManager.ShowPlayUI();
         Debug.Log("Ready");
 
@@ -123,6 +134,11 @@ public class PlayManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         uiManager.HideCountdownUI();
+    }
+
+    public void DisablePlayerControl()
+    {
+        _playerControl.canControl = false;
     }
 
     public void StartGame()
@@ -163,5 +179,13 @@ public class PlayManager : MonoBehaviour
         GameManager.Instance.LoadScene(nextSceneName);
     }
 
-    // TODO: Add UI related functions
+    public void UpdateStorySubtitle(string content, float durationSeconds = 2)
+    {
+        uiManager.UpdateStorySubtitle(content, durationSeconds);
+    }
+
+    public void UpdatePlayerLineSubtitle(string content, float durationSeconds = 2)
+    {
+        uiManager.UpdatePlayerLineSubtitle(content, durationSeconds);
+    }
 }

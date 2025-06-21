@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI subtitleText;
     public TextMeshProUGUI percentText;
     public Slider progressBar;
+    public TMP_FontAsset stateSubtitleFont;
+    public TMP_FontAsset storySubtitleFont;
+    public TMP_FontAsset playerLineSubtitleFont;
 
     [Header("Countdown UI")]
     public GameObject countdownUI;
@@ -32,7 +35,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI resultTimeTotalText;
     public TextMeshProUGUI resultRetryCountText;
 
-    private Coroutine _coroutine;
+    private Coroutine _subtitleCoroutine;
 
     private void Start()
     {
@@ -60,16 +63,35 @@ public class UIManager : MonoBehaviour
         resultStageText.text = stageName;
     }
 
-    public void UpdateSubtitle(string subtitle, float totalDurationSeconds)
+    public void UpdateStateSubtitle(string subtitle, float totalDurationSeconds)
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-        }
-        subtitleText.text = subtitle;
-        subtitleText.gameObject.SetActive(true);
-        _coroutine = StartCoroutine(HideSubtitleAfterDelay(totalDurationSeconds));
+        UpdateSubtitle(subtitle, totalDurationSeconds, Color.red, stateSubtitleFont);
     }
+
+    public void UpdateStorySubtitle(string subtitle, float totalDurationSeconds)
+    {
+        UpdateSubtitle(subtitle, totalDurationSeconds, Color.black, storySubtitleFont);
+    }
+
+    public void UpdatePlayerLineSubtitle(string subtitle, float totalDurationSeconds)
+    {
+        UpdateSubtitle(subtitle, totalDurationSeconds, Color.black, playerLineSubtitleFont);
+    }
+
+    private void UpdateSubtitle(string subtitle, float totalDurationSeconds, Color color, TMP_FontAsset font)
+    {
+        if (_subtitleCoroutine != null)
+        {
+            StopCoroutine(_subtitleCoroutine);
+        }
+
+        subtitleText.font = font;
+        subtitleText.text = subtitle;
+        subtitleText.color = color;
+        subtitleText.gameObject.SetActive(true);
+        _subtitleCoroutine = StartCoroutine(HideSubtitleAfterDelay(totalDurationSeconds));
+    }
+
     public void SetProgress(float progress)
     {
         float percent = progress * 100;
@@ -84,6 +106,14 @@ public class UIManager : MonoBehaviour
     private IEnumerator HideSubtitleAfterDelay(float totalDurationSeconds)
     {
         yield return new WaitForSeconds(totalDurationSeconds);
+        subtitleText.gameObject.SetActive(false);
+    }
+
+    public void HideAllUIs()
+    {
+        playTimeText.gameObject.SetActive(false);
+        currentPlayTimeText.gameObject.SetActive(false);
+        currentStageText.gameObject.SetActive(false);
         subtitleText.gameObject.SetActive(false);
     }
 
@@ -128,5 +158,4 @@ public class UIManager : MonoBehaviour
     //set stage text at each scene UI
     //stage text:  "DM", "DS", "EEC", "SWPP"
     //thus no need for Updatestage as it will be set in scene
-
 }

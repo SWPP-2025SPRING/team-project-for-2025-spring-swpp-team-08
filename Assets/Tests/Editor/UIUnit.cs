@@ -65,7 +65,7 @@ public class UIUnit
     [Test]
     public void UpdateSubtitle_SetsSubtitleTextAndActivatesObject()
     {
-        _uiManager.UpdateSubtitle("Hello", 2f);
+        _uiManager.UpdateStateSubtitle("Hello", 2f);
 
         Assert.AreEqual("Hello", _uiManager.subtitleText.text);
         Assert.IsTrue(_uiManager.subtitleText.gameObject.activeSelf);

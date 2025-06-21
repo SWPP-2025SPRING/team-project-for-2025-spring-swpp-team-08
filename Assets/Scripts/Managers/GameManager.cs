@@ -74,26 +74,34 @@ public class GameManager : MonoBehaviour
     {
         sceneName ??= SceneManager.GetActiveScene().name;
 
-        StartCoroutine(TransitionCoroutine());
-        return;
+        StartCoroutine(TransitionCoroutine(sceneName));
+    }
 
-        IEnumerator TransitionCoroutine()
+    public IEnumerator InitiateTransition()
+    {
+        StartCoroutine(TransitionCoroutine(null));
+        yield return new WaitForSeconds(transitionDurationSeconds);
+    }
+
+    private IEnumerator TransitionCoroutine(string nextSceneName)
+    {
+        var transition = Instantiate(Instance.transitionCanvas);
+        var transitionBehaviour = transition.GetComponent<TransitionBehaviour>();
+
+        DontDestroyOnLoad(transition);
+
+        transitionBehaviour.StartTransition(transitionDurationSeconds);
+        yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
+
+        if (nextSceneName != null)
         {
-            var transition = Instantiate(Instance.transitionCanvas);
-            var transitionBehaviour = transition.GetComponent<TransitionBehaviour>();
-
-            DontDestroyOnLoad(transition);
-
-            transitionBehaviour.StartTransition(transitionDurationSeconds);
-            yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
-
-            SceneManager.LoadScene(sceneName);
-
-            transitionBehaviour.EndTransition(transitionDurationSeconds);
-            yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
-
-            Destroy(transition);
+            SceneManager.LoadScene(nextSceneName);
         }
+
+        transitionBehaviour.EndTransition(transitionDurationSeconds);
+        yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
+
+        Destroy(transition);
     }
 
     /// <summary>

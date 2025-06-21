@@ -897,7 +897,7 @@ MonoBehaviour:
   newPlayer: {fileID: 1491931498}
   originalHat: {fileID: 1598798868}
   liftSpeed: 1
-  inputUIManager: {fileID: 8678323}
+  inputUIManager: {fileID: 0}
   collidingSfx: {fileID: 8300000, guid: 596daf23cf7c47f409b29cd00e9fedc6, type: 3}
 --- !u!64 &547742539
 MeshCollider:
@@ -2321,6 +2321,10 @@ PrefabInstance:
       propertyPath: fallDown
       value: 
       objectReference: {fileID: 8300000, guid: 80d70570be792f4429ad7a62cc1b7c60, type: 3}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: sceneType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
       propertyPath: stageName
       value: Ending
