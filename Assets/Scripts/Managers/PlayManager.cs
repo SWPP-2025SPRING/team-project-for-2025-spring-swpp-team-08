@@ -65,6 +65,10 @@ public class PlayManager : MonoBehaviour
 
                 StartCoroutine(ReadyGameCoroutine());
                 break;
+            case SceneType.ENDING:
+                uiManager.HideAllUIs();
+                StartGame();
+                break;
         }
     }
 
