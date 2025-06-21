@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endingCreditPanel: {fileID: 1389744150}
-  creditRoll: {fileID: 0}
+  creditRoll: {fileID: 1732704090}
 --- !u!1 &84879643
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +427,7 @@ PrefabInstance:
     - target: {fileID: 456424696575196388, guid: 4d215b81a8bf842f984a477a47d35987, type: 3}
       propertyPath: transitionCanvas
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5136167188738696905, guid: 03f768485a4f14800aedd75fdf6c0765, type: 3}
     - target: {fileID: 1952887676603024736, guid: 4d215b81a8bf842f984a477a47d35987, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -895,50 +895,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557312668e6cafa468357c067a3ddb41, type: 3}
---- !u!1 &536774507
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 536774509}
-  - component: {fileID: 536774508}
-  m_Layer: 0
-  m_Name: ScoreBoardManager (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &536774508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536774507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae98d5f1c93759946a62d807971d552c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &536774509
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536774507}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &547742534 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5568371526223589888, guid: f8606abf7c87ba14f87e3891d613e27c, type: 3}
@@ -960,7 +916,7 @@ MonoBehaviour:
   newPlayer: {fileID: 1491931498}
   originalHat: {fileID: 1598798868}
   liftSpeed: 1
-  inputUIManager: {fileID: 0}
+  inputUIManager: {fileID: 8678324}
   collidingSfx: {fileID: 8300000, guid: 596daf23cf7c47f409b29cd00e9fedc6, type: 3}
 --- !u!64 &547742539
 MeshCollider:
@@ -1386,7 +1342,7 @@ Transform:
   - {fileID: 1251846487}
   - {fileID: 1444144309}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &711980006
 PrefabInstance:
@@ -1594,7 +1550,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &801029359
 PrefabInstance:
@@ -1759,7 +1715,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &913876207 stripped
 Transform:
@@ -2171,7 +2127,7 @@ RectTransform:
   - {fileID: 937245208}
   - {fileID: 8678322}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2753,7 +2709,7 @@ Transform:
   - {fileID: 670390436}
   - {fileID: 1426900498}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1496110926
 PrefabInstance:
@@ -3020,50 +2976,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8141205175067116413, guid: e862a2795adc9564f92160c9ccf84f8f, type: 3}
   m_PrefabInstance: {fileID: 1496110926}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1987126170
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1987126172}
-  - component: {fileID: 1987126171}
-  m_Layer: 0
-  m_Name: ScoreBoardManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1987126171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987126170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae98d5f1c93759946a62d807971d552c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1987126172
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987126170}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1999236108
 GameObject:
   m_ObjectHideFlags: 0
