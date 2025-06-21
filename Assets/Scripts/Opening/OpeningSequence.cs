@@ -15,19 +15,51 @@ public class OpeningSequence : MonoBehaviour
 
     public IEnumerator PlaySequence()
     {
-        realPlayerObj.GetComponent<HidableComponent>().HideObj();
-        fakePlayerBodyObj.SetActive(true);
+        ReadySequence();
 
         yield return new WaitForSeconds(1f);
 
+        yield return PlayRoomSequence();
+        yield return ReadyOutsideSequence();
+        yield return PlayOutsideSequence();
+
+        FinishSequence();
+
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    private void ReadySequence()
+    {
+        realPlayerObj.GetComponent<HidableComponent>().HideObj();
+        fakePlayerBodyObj.SetActive(true);
+    }
+
+    private void FinishSequence()
+    {
+        realPlayerObj.GetComponent<HidableComponent>().UnHideObj();
+        fakePlayerBodyObj.SetActive(false);
+        fakePlayerBallObj.SetActive(false);
+        stage1Screen.gameObject.SetActive(false);
+        stage2Screen.gameObject.SetActive(false);
+        stage3Screen.gameObject.SetActive(false);
+    }
+
+    private IEnumerator PlayRoomSequence()
+    {
         yield return PrintPlayerLine("합격이다!!!");
         yield return PrintSubtitle("당신은 수년간 고대하고 고대하던\n서울대학교에 합격하였습니다.");
         yield return PrintSubtitle("이제 학업에서 해방인 줄 알았죠.");
         yield return PrintSubtitle("그러나 몰랐습니다. 앞으로 닥칠 미래를...");
+    }
 
+    private IEnumerator ReadyOutsideSequence()
+    {
         yield return GameManager.Instance.InitiateTransition();
         roomObj.SetActive(false);
+    }
 
+    private IEnumerator PlayOutsideSequence()
+    {
         fakePlayerBodyObj.GetComponent<Animator>().SetTrigger("StandupToIdleTrig");
 
         fakePlayerBallObj.SetActive(true);
@@ -47,15 +79,6 @@ public class OpeningSequence : MonoBehaviour
 
         yield return PrintSubtitle("돌아가고 싶어도 늦었습니다.");
         yield return PrintSubtitle("이제 당신은 구를 일만 남았습니다.");
-
-        realPlayerObj.GetComponent<HidableComponent>().UnHideObj();
-        fakePlayerBodyObj.SetActive(false);
-        fakePlayerBallObj.SetActive(false);
-        stage1Screen.gameObject.SetActive(false);
-        stage2Screen.gameObject.SetActive(false);
-        stage3Screen.gameObject.SetActive(false);
-
-        yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator PrintPlayerLine(string content)
