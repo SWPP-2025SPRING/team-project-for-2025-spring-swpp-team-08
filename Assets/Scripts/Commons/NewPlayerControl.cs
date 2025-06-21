@@ -79,6 +79,7 @@ public class NewPlayerControl : MonoBehaviour
     private bool isGrounded;
     private bool wasGrounded;
     private bool tryingToJumpThisFrame;
+    private bool enteredOutOfBoundsTrigger = false;
     private float coyoteTimeCounter;
     private float originalAngularDrag;
     private float originalLinearDrag;
@@ -385,13 +386,25 @@ public class NewPlayerControl : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         transform.position = position;
+        enteredOutOfBoundsTrigger = false;
+
     }
 
-    private bool IsFallen()
+    private void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("OutOfBounds"))
     {
-        float fallUnder = GameManager.Instance.playManager.fallThresholdHeight;
-        return transform.position.y <= fallUnder || IsFallingTooLong();
+        enteredOutOfBoundsTrigger = true;
     }
+}
+
+
+    private bool IsFallen()
+{
+    float fallUnder = GameManager.Instance.playManager.fallThresholdHeight;
+    return transform.position.y <= fallUnder || IsFallingTooLong() || enteredOutOfBoundsTrigger;
+}
+
 
     private bool IsFallingTooLong()
     {
