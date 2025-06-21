@@ -2,33 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Opening
+public class OpeningManager : MonoBehaviour
 {
+    public OpeningSequence openingSequence;
+    public InputName playerNameInput;
 
-    public class OpeningManager : MonoBehaviour
+    public void Start()
     {
-        public OpeningSequence openingSequence;
-        public InputName playerNameInput;
+        StartCoroutine(PlayOpening());
+    }
 
-        public void Start()
-        {
-            StartCoroutine(PlayOpening());
-        }
+    private IEnumerator PlayOpening()
+    {
+        yield return openingSequence.PlaySequence();
+        playerNameInput.Show();
+    }
 
-        private IEnumerator PlayOpening()
-        {
-            yield return openingSequence.PlaySequence();
-            playerNameInput.Show();
-        }
+    public void StartTutorial()
+    {
+        GetPlayManager().StartGame();
+    }
 
-        public void StartTutorial()
-        {
-            GetPlayManager().StartGame();
-        }
-
-        private PlayManager GetPlayManager()
-        {
-            return GameManager.Instance.playManager;
-        }
+    private PlayManager GetPlayManager()
+    {
+        return GameManager.Instance.playManager;
     }
 }
