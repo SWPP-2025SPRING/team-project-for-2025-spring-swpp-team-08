@@ -7,9 +7,9 @@ public class OpeningSequence : MonoBehaviour
     public GameObject realPlayerObj;
     public GameObject fakePlayerBodyObj;
     public GameObject fakePlayerBallObj;
-    public GameObject stage1Screen;
-    public GameObject stage2Screen;
-    public GameObject stage3Screen;
+    public ImageUIFadeInFadeOut stage1Screen;
+    public ImageUIFadeInFadeOut stage2Screen;
+    public ImageUIFadeInFadeOut stage3Screen;
 
     private float _subtitleDuration = 3f;
 
@@ -38,16 +38,13 @@ public class OpeningSequence : MonoBehaviour
 
         yield return PrintSubtitle("앞으로 열심히 구르며 학업을 이어가야 하죠.");
 
-        stage1Screen.gameObject.SetActive(true);
-        stage1Screen.SetActive(false);
+        StartCoroutine(stage1Screen.FadeInOut());
         yield return PrintSubtitle("때로는 학업의 길을 따라 요리조리 움직이기도 하고");
 
-        stage1Screen.gameObject.SetActive(true);
-        stage2Screen.SetActive(false);
+        StartCoroutine(stage2Screen.FadeInOut());
         yield return PrintSubtitle("때로는 문제를 부수고 앞으로 나아가야 하죠.");
 
-        stage1Screen.gameObject.SetActive(true);
-        stage3Screen.SetActive(false);
+        StartCoroutine(stage3Screen.FadeInOut());
         yield return PrintSubtitle("예측하기 어려운 이슈들을 감수하고 도전하는 경험도 하게 될 것입니다.");
 
         yield return PrintSubtitle("돌아가고 싶어도 늦었습니다.");
