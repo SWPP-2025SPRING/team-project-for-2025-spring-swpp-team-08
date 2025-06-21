@@ -13,7 +13,7 @@ public class ShowNearMe : MonoBehaviour
 
     private void Awake()
     {
-        _filePath = ScoreBoardHelper.GetScoreboardFilePath();
+      //
     }
 
     private void Start()
@@ -23,7 +23,7 @@ public class ShowNearMe : MonoBehaviour
 
     private void ShowMySurroundingScores()
     {
-        List<ScoreBoardHelper.ScoreData> scores = ScoreBoardHelper.LoadScores(_filePath);
+        List<ScoreBoardHelper.ScoreData> scores = ScoreBoardHelper.LoadScores(ScoreBoardHelper.GetScoreboardFilePath());
         string currentPlayer = GameManager.Instance.GetCurrentPlayerName();
         float myScore = GameManager.Instance.totalPlayTime;
         //string currentPlayer = "갯";

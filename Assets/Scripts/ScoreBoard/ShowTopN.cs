@@ -10,11 +10,11 @@ public class ShowTopN : MonoBehaviour
     public List<TextMeshProUGUI> timeTexts;
 
     public int topN = 5;
-    private string _filePath;
+    //private string _filePath;
 
     private void Awake()
     {
-        _filePath = ScoreBoardHelper.GetScoreboardFilePath();
+        //_filePath = ScoreBoardHelper.GetScoreboardFilePath();
     }
 
     private void Start()
@@ -24,7 +24,7 @@ public class ShowTopN : MonoBehaviour
 
     private void ShowTopScores(int count)
     {
-        List<ScoreBoardHelper.ScoreData> scores = ScoreBoardHelper.LoadScores(_filePath);
+        List<ScoreBoardHelper.ScoreData> scores = ScoreBoardHelper.LoadScores(ScoreBoardHelper.GetScoreboardFilePath());
         scores.Sort((a, b) => a.score.CompareTo(b.score));
         ScoreBoardHelper.ShowScores(scores.GetRange(0, Mathf.Min(count, scores.Count)), 0, rankTexts, nameTexts, timeTexts, count);
     }
