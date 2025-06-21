@@ -27,6 +27,7 @@ public class OpeningSequence : MonoBehaviour
         yield return PrintSubtitle("이제 학업에서 해방인 줄 알았죠.");
         yield return PrintSubtitle("그러나 몰랐습니다. 앞으로 닥칠 미래를…");
 
+        yield return GameManager.Instance.InitiateTransition();
         roomObj.SetActive(false);
 
         fakePlayerBodyObj.GetComponent<Animator>().SetTrigger("StandupToIdleTrig");
@@ -37,7 +38,6 @@ public class OpeningSequence : MonoBehaviour
 
         yield return PrintSubtitle("앞으로 열심히 구르며 학업을 이어가야 하죠.");
 
-        // fade out처럼 수정해야함
         stage1Screen.gameObject.SetActive(true);
         stage1Screen.SetActive(false);
         yield return PrintSubtitle("때로는 학업의 길을 따라 요리조리 움직이기도 하고");
