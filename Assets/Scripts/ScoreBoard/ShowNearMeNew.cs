@@ -24,10 +24,10 @@ public class ShowNearMeNew : MonoBehaviour
     private void ShowMySurroundingScores()
     {
         List<ScoreBoardHelper.ScoreData> scores = ScoreBoardHelper.LoadScores(_filePath);
-        //string currentPlayer = GameManager.Instance.GetCurrentPlayerName();
-        //float myScore = GameManager.Instance.totalPlayTime;
-        string currentPlayer = "갯";
-        float myScore = 99.9f;
+        string currentPlayer = GameManager.Instance.GetCurrentPlayerName();
+        float myScore = GameManager.Instance.totalPlayTime;
+        //string currentPlayer = "갯";
+        //float myScore = 98.9f;
 
         scores.Sort((a, b) => a.score.CompareTo(b.score));
         int myIndex = scores.FindIndex(s => s.playerName == currentPlayer && Mathf.Abs(s.score - myScore) < 0.01f);
