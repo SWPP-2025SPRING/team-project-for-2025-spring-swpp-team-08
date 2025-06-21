@@ -27,7 +27,7 @@ public static class ScoreBoardHelper
 
     public static List<ScoreData> LoadScores()
     {
-        filePath = GetScoreboardFilePath();
+        string filePath = GetScoreboardFilePath();
         if (!File.Exists(filePath))
             return new List<ScoreData>();
 
