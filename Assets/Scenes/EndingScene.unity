@@ -2738,7 +2738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmClip: {fileID: 8300000, guid: 8445627650f45ad4b9895b94db721a6c, type: 3}
-  repeat: 4
+  repeat: 3
   fadeDuration: 3
 --- !u!4 &724272205
 Transform:

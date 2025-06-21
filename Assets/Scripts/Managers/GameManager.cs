@@ -1,3 +1,5 @@
+using System.Collections;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,13 +7,20 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public PlayManager playManager;
+    [HideInInspector] public PlayManager playManager;
+
+    [Header("Values")]
     public float totalPlayTime = 0;
+
+    [Header("Transition")]
+    [SerializeField] private GameObject transitionCanvas;
+    [SerializeField] private float transitionDurationSeconds;
 
     private AudioSource _bgmSource;
     private AudioSource _sfxSource;
 
     private string _currentPlayerName;
+    private float[] _scores = new float[3];
 
     private void Awake()
     {
@@ -32,8 +41,22 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
         Physics.gravity = new Vector3(0, -30f, 0);
+        Initialize();
+
+        StartCoroutine(InitialTransitionCoroutine());
+        return;
+
+        IEnumerator InitialTransitionCoroutine()
+        {
+            var transition = Instantiate(Instance.transitionCanvas);
+            var transitionBehaviour = transition.GetComponent<TransitionBehaviour>();
+
+            transitionBehaviour.EndTransition(transitionDurationSeconds);
+            yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
+
+            Destroy(transition);
+        }
     }
 
     public void Initialize()
@@ -47,10 +70,30 @@ public class GameManager : MonoBehaviour
     /// If not specified, reload current scene.
     /// </summary>
     /// <param name="sceneName">Scene name string</param>
-    public static void LoadScene(string sceneName = null)
+    public void LoadScene(string sceneName = null)
     {
         sceneName ??= SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(sceneName);
+
+        StartCoroutine(TransitionCoroutine());
+        return;
+
+        IEnumerator TransitionCoroutine()
+        {
+            var transition = Instantiate(Instance.transitionCanvas);
+            var transitionBehaviour = transition.GetComponent<TransitionBehaviour>();
+
+            DontDestroyOnLoad(transition);
+
+            transitionBehaviour.StartTransition(transitionDurationSeconds);
+            yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
+
+            SceneManager.LoadScene(sceneName);
+
+            transitionBehaviour.EndTransition(transitionDurationSeconds);
+            yield return new WaitWhile(() => transitionBehaviour.isTransitioning);
+
+            Destroy(transition);
+        }
     }
 
     /// <summary>
@@ -84,8 +127,19 @@ public class GameManager : MonoBehaviour
         _currentPlayerName = playerName;
     }
 
+    public void SetScore(float score, int x)
+    {
+        if (x <= 0) return;
+        _scores[x] = score;
+    }
+
     public string GetCurrentPlayerName()
     {
         return _currentPlayerName;
+    }
+
+    public float[] GetScores()
+    {
+        return _scores;
     }
 }
