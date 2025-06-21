@@ -23,7 +23,7 @@ public class OpeningSequence : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         yield return PrintPlayerLine("합격이다!!!");
-        yield return PrintSubtitle("당신은 수년간의 고대하고 고대하던 서울대학교에 합격하였습니다.");
+        yield return PrintSubtitle("당신은 수년간 고대하고 고대하던\n서울대학교에 합격하였습니다.");
         yield return PrintSubtitle("이제 학업에서 해방인 줄 알았죠.");
         yield return PrintSubtitle("그러나 몰랐습니다. 앞으로 닥칠 미래를…");
 
@@ -45,7 +45,7 @@ public class OpeningSequence : MonoBehaviour
         yield return PrintSubtitle("때로는 문제를 부수고 앞으로 나아가야 하죠.");
 
         StartCoroutine(stage3Screen.FadeInOut());
-        yield return PrintSubtitle("예측하기 어려운 이슈들을 감수하고 도전하는 경험도 하게 될 것입니다.");
+        yield return PrintSubtitle("예측하기 어려운 이슈들을 감수하고\n도전하는 경험도 하게 될 것입니다.");
 
         yield return PrintSubtitle("돌아가고 싶어도 늦었습니다.");
         yield return PrintSubtitle("이제 당신은 구를 일만 남았습니다.");
