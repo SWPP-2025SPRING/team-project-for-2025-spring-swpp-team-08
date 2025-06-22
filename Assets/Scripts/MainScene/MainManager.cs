@@ -10,6 +10,7 @@ namespace MainScene
         public void StartGame()
         {
             GameManager.Instance.Initialize();
+            GameManager.Instance.LockCursor();
             GameManager.Instance.LoadScene(startSceneName);
         }
 

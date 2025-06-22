@@ -29,11 +29,13 @@ public class OpeningManager : MonoBehaviour
         yield return openingSequence.PlaySequence();
         playerNameInput.gameObject.SetActive(true);
         playerNameInput.Show();
+        GameManager.Instance.UnlockCursor();
         _isInputActive = true;
     }
 
     public void StartTutorial()
     {
+        GameManager.Instance.LockCursor();
         GetPlayManager().StartGame();
     }
 

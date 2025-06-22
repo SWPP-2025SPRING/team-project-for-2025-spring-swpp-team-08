@@ -130,15 +130,13 @@ public class GameManager : MonoBehaviour
         _sfxSource.PlayOneShot(clip);
     }
     public void PlaySfx(AudioClip clip, float volumeScale = 1f)
-{
-    _sfxSource.PlayOneShot(clip, volumeScale);
-}
-public void SetBgmLoop(bool shouldLoop)
-{
-    _bgmSource.loop = shouldLoop;
-}
-
-
+    {
+        _sfxSource.PlayOneShot(clip, volumeScale);
+    }
+    public void SetBgmLoop(bool shouldLoop)
+    {
+        _bgmSource.loop = shouldLoop;
+    }
 
     /// <summary>
     /// Plays a sound effect at custom volume, temporarily pausing the BGM.
@@ -179,5 +177,15 @@ public void SetBgmLoop(bool shouldLoop)
     {
         if (_bgmSource.clip != null)
             _bgmSource.UnPause();
+    }
+
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
     }
 }
