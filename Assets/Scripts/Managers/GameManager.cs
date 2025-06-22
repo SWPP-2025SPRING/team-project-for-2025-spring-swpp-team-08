@@ -71,8 +71,37 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Plays a sound effect.
     /// </summary>
-    public void PlaySfx(AudioClip clip)
+    /// <summary>
+/// Plays a sound effect at default volume.
+/// </summary>
+public void PlaySfx(AudioClip clip)
+{
+    _sfxSource.PlayOneShot(clip);
+}
+
+/// <summary>
+/// Plays a sound effect at custom volume.
+/// </summary>
+
+/// <summary>
+/// Plays a sound effect at custom volume, temporarily pausing the BGM.
+/// </summary>
+public void PlaySfxWithBgmPause(AudioClip clip, float volumeScale = 1f, float resumeDelay = 2f)
+{
+    if (_bgmSource.isPlaying)
     {
-        _sfxSource.PlayOneShot(clip);
+        _bgmSource.Pause(); // Pause the BGM
+        Invoke(nameof(ResumeBgm), resumeDelay);
     }
+
+    _sfxSource.PlayOneShot(clip, volumeScale);
+}
+
+private void ResumeBgm()
+{
+    if (_bgmSource.clip != null)
+        _bgmSource.UnPause();
+}
+
+
 }
