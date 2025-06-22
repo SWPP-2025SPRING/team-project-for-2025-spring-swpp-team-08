@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 
 using UnityEngine;
 
@@ -19,10 +20,11 @@ public class ScoreBoardManager : MonoBehaviour
     {
         List<ScoreData> scores = LoadScores();
         scores.Add(new ScoreData { playerName = name, stage1Score = score1, stage2Score = score2, stage3Score = score3, score = score });
-        scores.Sort((a, b) => a.score.CompareTo(b.score)); 
+        scores.Sort((a, b) => a.score.CompareTo(b.score));
 
         string json = JsonUtility.ToJson(new ScoreList { scores = scores }, true);
         File.WriteAllText(_filePath, json);
+        IndexedDBSync.FlushFileSystem();
         Debug.Log(_filePath);
     }
 
