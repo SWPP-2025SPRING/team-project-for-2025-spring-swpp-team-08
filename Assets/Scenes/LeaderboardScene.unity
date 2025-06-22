@@ -862,7 +862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f348b2289c09f24191bffb7019e872c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: 3a846aa8ecfbea244ac99aa2680325e9, type: 3}
+  bgmClip: {fileID: 8300000, guid: 34d68d80a97d0144f9e3d16afdad34cf, type: 3}
 --- !u!4 &365772434
 Transform:
   m_ObjectHideFlags: 0
