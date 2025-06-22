@@ -96,7 +96,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 932d0c16e6811f44da0b43153a461a4e, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1649,6 +1649,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4394515203195265553, guid: 4d215b81a8bf842f984a477a47d35987, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394515203195265553, guid: 4d215b81a8bf842f984a477a47d35987, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394515203195265553, guid: 4d215b81a8bf842f984a477a47d35987, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 36922829d75be214694426dc6e2b1d39, type: 3}
     - target: {fileID: 5102369382100634283, guid: 4d215b81a8bf842f984a477a47d35987, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1669,6 +1681,18 @@ PrefabInstance:
     - target: {fileID: 247410191748921876, guid: 19dc65fdbc25f4482becc03357bb2be1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 247410192720308088, guid: 19dc65fdbc25f4482becc03357bb2be1, type: 3}
+      propertyPath: bumpVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 247410192720308088, guid: 19dc65fdbc25f4482becc03357bb2be1, type: 3}
+      propertyPath: jumpVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 247410192720308088, guid: 19dc65fdbc25f4482becc03357bb2be1, type: 3}
+      propertyPath: landVolume
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 247410192720308088, guid: 19dc65fdbc25f4482becc03357bb2be1, type: 3}
       propertyPath: New_MainCamera
