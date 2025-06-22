@@ -15,6 +15,7 @@ public class OpeningManager : MonoBehaviour
     private IEnumerator PlayOpening()
     {
         yield return openingSequence.PlaySequence();
+        playerNameInput.gameObject.SetActive(true);
         playerNameInput.Show();
     }
 
