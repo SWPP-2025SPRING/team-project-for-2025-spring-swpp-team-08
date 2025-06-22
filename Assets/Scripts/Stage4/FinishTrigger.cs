@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Stage4
 {
-    public class EnableColliderTrigger : MonoBehaviour
+    public class FinishTrigger : MonoBehaviour
     {
         public Collider targetCollider;
 
@@ -11,6 +11,7 @@ namespace Stage4
             if (!other.CompareTag("Player")) return;
 
             targetCollider.enabled = true;
+            GameManager.Instance.playManager.FinishGame();
         }
     }
 }

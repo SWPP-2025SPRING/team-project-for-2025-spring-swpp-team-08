@@ -17,13 +17,10 @@ namespace Stage4
             _timerText = GetComponent<TMP_Text>();
         }
 
-        private void Start()
-        {
-            _isActive = false;
-        }
-
         private void Update()
         {
+            Debug.Log(_isActive);
+
             if (!_isActive) return;
 
             _remainingTime -= Time.deltaTime;
