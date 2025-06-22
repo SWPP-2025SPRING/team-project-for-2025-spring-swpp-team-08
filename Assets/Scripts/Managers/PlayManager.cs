@@ -13,8 +13,12 @@ public class PlayManager : MonoBehaviour
 {
     private const float DelayBeforeStart = 3f;
 
+    [Header("Debug Settings")]
+    public bool skipCountdown;
+
     [Header("Stage Settings")]
     public int stageNo;
+
     public SceneType sceneType;
     public string nextSceneName;
     public string stageName;
@@ -29,15 +33,9 @@ public class PlayManager : MonoBehaviour
     public AudioClip setCheckpoint;
     public AudioClip fallDown;
     public AudioClip introBgm;         // For "준비"
-public AudioClip countdownSfx;     // For 3, 2, 1
-public AudioClip goSfx;            // For "GO!"
-public AudioClip finishJingleLoop;
-
-
-
-
-                   // one-shot SFX for 3, 2, 1, GO!
-
+    public AudioClip countdownSfx;     // For 3, 2, 1
+    public AudioClip goSfx;            // For "GO!"
+    public AudioClip finishJingleLoop;
 
     [Header("References")]
     public UIManager uiManager;
@@ -56,6 +54,7 @@ public AudioClip finishJingleLoop;
     private void Awake()
     {
         GameManager.Instance.playManager = this;
+
         _playerControl = GameObject.FindWithTag("Player").GetComponentInChildren<NewPlayerControl>();
         _cameraObject = Camera.main?.gameObject;
     }
@@ -143,6 +142,7 @@ public AudioClip finishJingleLoop;
         GameManager.Instance.PlaySfx(setCheckpoint);
     }
 
+    // set player to chosen location
     public void DisplayCheckpointReturn()
     {
         uiManager.UpdateStateSubtitle("Moved to last checkpoint", 3);
@@ -159,6 +159,15 @@ public AudioClip finishJingleLoop;
     DisablePlayerControl();
     uiManager.ShowPlayUI();
     Debug.Log("Ready");
+
+    #if UNITY_EDITOR
+        if (skipCountdown)
+        {
+            uiManager.HideCountdownUI();
+            StartGame();
+            yield break;
+        }
+    #endif
 
     // 1. Play intro BGM at full volume
     if (introBgm != null)
@@ -201,9 +210,6 @@ public AudioClip finishJingleLoop;
     uiManager.HideCountdownUI();
 }
 
-
-
-
     public void DisablePlayerControl()
     {
         _playerControl.canControl = false;
@@ -233,28 +239,27 @@ public AudioClip finishJingleLoop;
         StartCoroutine(FinishGameCoroutine());
     }
 
-   private IEnumerator FinishGameCoroutine()
-{
-    // Play looping jingle
-    if (finishJingleLoop != null)
+    private IEnumerator FinishGameCoroutine()
     {
-        GameManager.Instance.PlayBgm(finishJingleLoop);
-        GameManager.Instance.SetBgmLoop(true); // Set loop ON
-    }
+        // Play looping jingle
+        if (finishJingleLoop != null)
+        {
+            GameManager.Instance.PlayBgm(finishJingleLoop);
+            GameManager.Instance.SetBgmLoop(true); // Set loop ON
+        }
 
-    yield return new WaitForSeconds(2.5f);
-    _canMoveToNextStage = true;
-}
+        yield return new WaitForSeconds(2.5f);
+        _canMoveToNextStage = true;
+    }
 
 
     public void LoadNextStage()
-{
-    GameManager.Instance.SetBgmLoop(false); // Stop jingle from looping into next scene
-    GameManager.Instance.totalPlayTime += _playTimeCurrent;
-    GameManager.Instance.SetScore(_playTimeCurrent, stageNo - 1);
-    GameManager.Instance.LoadScene(nextSceneName);
-}
-
+    {
+        GameManager.Instance.SetBgmLoop(false); // Stop jingle from looping into next scene
+        GameManager.Instance.totalPlayTime += _playTimeCurrent;
+        GameManager.Instance.SetScore(_playTimeCurrent, stageNo - 1);
+        GameManager.Instance.LoadScene(nextSceneName);
+    }
 
     public void UpdateStorySubtitle(string content, float durationSeconds = 2)
     {
