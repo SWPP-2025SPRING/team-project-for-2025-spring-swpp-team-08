@@ -1,15 +1,15 @@
+using System.Collections;
+
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class InputName : MonoBehaviour
 {
     public GameObject nameInputPanel;
     public TMP_InputField nameInputField;
 
-    private void Awake()
+    private void Start()
     {
-        nameInputPanel.SetActive(false);
         nameInputField.text = "";
         nameInputField.DeactivateInputField();
     }
@@ -19,10 +19,18 @@ public class InputName : MonoBehaviour
         nameInputPanel.SetActive(true);
         nameInputField.interactable = true;
         nameInputField.text = "";
-        nameInputField.ActivateInputField();
+        StartCoroutine(ActivateInputFieldCoroutine());
+        return;
+
+        IEnumerator ActivateInputFieldCoroutine()
+        {
+            yield return null;   // Wait one frame to ensure the UI is ready
+            nameInputField.Select();
+            nameInputField.ActivateInputField();
+        }
     }
 
-    public void OnSubmitClicked()
+    public void SubmitPlayerName()
     {
         string playerName = nameInputField.text;
         if (string.IsNullOrEmpty(playerName))

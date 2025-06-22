@@ -19,9 +19,11 @@ public class OpeningSequence : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        #if !UNITY_EDITOR
         yield return PlayRoomSequence();
         yield return ReadyOutsideSequence();
         yield return PlayOutsideSequence();
+        #endif
 
         FinishSequence();
 

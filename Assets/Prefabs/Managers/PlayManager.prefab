@@ -45,11 +45,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageNo: 0
+  sceneType: 0
   nextSceneName: 
-  uiManager: {fileID: 0}
   stageName: 
-  setCheckpoint: {fileID: 8300000, guid: 44bd09602d159264788919e9e1080e52, type: 3}
-  fallDown: {fileID: 0}
-  spawnPoint: {x: 0, y: 0, z: 0}
   fallThresholdHeight: 0
   fallThresholdSecond: 5
+  bgmForOpening: {fileID: 8300000, guid: 43a671e98bf5c4c4e84a1c26ac78c564, type: 3}
+  bgmForEnding: {fileID: 0}
+  bgmsPerStage:
+  - {fileID: 8300000, guid: c0cce202c32674f14b87990a2deb805b, type: 3}
+  - {fileID: 8300000, guid: 25a505cc7d4e24d7d8ee5f82d1d44979, type: 3}
+  - {fileID: 8300000, guid: b37886302eeb149f9a08acee46ccd480, type: 3}
+  setCheckpoint: {fileID: 8300000, guid: 44bd09602d159264788919e9e1080e52, type: 3}
+  fallDown: {fileID: 0}
+  introBgm: {fileID: 8300000, guid: b8f71b86c3f134336a04a11a8b61b2ad, type: 3}
+  countdownSfx: {fileID: 8300000, guid: 7f5386b2abecc4a9d8f788b7aec246d1, type: 3}
+  goSfx: {fileID: 8300000, guid: c5e5093cb36674e089e1d64ed978c621, type: 3}
+  finishJingleLoop: {fileID: 8300000, guid: dae840cadaf44459abd8423b42be08df, type: 3}
+  uiManager: {fileID: 0}
+  spawnPoint: {x: 0, y: 0, z: 0}

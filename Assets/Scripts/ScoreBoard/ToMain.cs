@@ -14,6 +14,7 @@ public class ToMain : MonoBehaviour
             ? SceneManager.GetActiveScene().name
             : sceneName;
 
-        SceneManager.LoadScene(targetScene);
+        GameManager.Instance.LoadScene(targetScene);
+
     }
 }

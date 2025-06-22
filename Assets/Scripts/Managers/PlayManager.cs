@@ -1,5 +1,5 @@
 using System.Collections;
-
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum PlayStates
@@ -25,12 +25,20 @@ public class PlayManager : MonoBehaviour
     public float fallThresholdHeight = 0f;
     public float fallThresholdSecond = 5f;
 
-    [Header("References")]
-    public UIManager uiManager;
+    [Header("Audio Clips")]
+    public AudioClip bgmForOpening;
+    public AudioClip bgmForEnding;
+    public List<AudioClip> bgmsPerStage = new();  // Assign in Inspector by index (Stage 1 = index 0)
+
     public AudioClip setCheckpoint;
     public AudioClip fallDown;
+    public AudioClip introBgm;         // For "준비"
+    public AudioClip countdownSfx;     // For 3, 2, 1
+    public AudioClip goSfx;            // For "GO!"
+    public AudioClip finishJingleLoop;
 
-    [Header("Runtime Values")]
+    [Header("References")]
+    public UIManager uiManager;
     public Vector3 spawnPoint;
 
     public PlayStates State { get; private set; }
@@ -55,11 +63,14 @@ public class PlayManager : MonoBehaviour
     {
         State = PlayStates.Ready;
 
+        PlaySceneBgm(); // Automatically play BGM based on scene type + stageNo
+
         switch (sceneType)
         {
             case SceneType.OPENING:
                 uiManager.HideAllUIs();
                 break;
+
             case SceneType.STAGE:
                 _playTimeCurrent = 0f;
                 _playTimeTotal = GameManager.Instance.totalPlayTime;
@@ -72,9 +83,35 @@ public class PlayManager : MonoBehaviour
 
                 StartCoroutine(ReadyGameCoroutine());
                 break;
+
             case SceneType.ENDING:
                 uiManager.HideAllUIs();
                 StartGame();
+                break;
+        }
+    }
+
+    private void PlaySceneBgm()
+    {
+        switch (sceneType)
+        {
+            case SceneType.OPENING:
+                if (bgmForOpening != null)
+                    GameManager.Instance.PlayBgm(bgmForOpening);
+                break;
+
+            case SceneType.STAGE:
+                if (stageNo > 0 && stageNo <= bgmsPerStage.Count)
+                {
+                    var clip = bgmsPerStage[stageNo - 1];
+                    if (clip != null)
+                        GameManager.Instance.PlayBgm(clip);
+                }
+                break;
+
+            case SceneType.ENDING:
+                if (bgmForEnding != null)
+                    GameManager.Instance.PlayBgm(bgmForEnding);
                 break;
         }
     }
@@ -118,39 +155,60 @@ public class PlayManager : MonoBehaviour
     }
 
     public IEnumerator ReadyGameCoroutine()
-    {
-        DisablePlayerControl();
-        uiManager.ShowPlayUI();
-        Debug.Log("Ready");
+{
+    DisablePlayerControl();
+    uiManager.ShowPlayUI();
+    Debug.Log("Ready");
 
-        #if UNITY_EDITOR
+    #if UNITY_EDITOR
         if (skipCountdown)
         {
             uiManager.HideCountdownUI();
             StartGame();
             yield break;
         }
-        #endif
+    #endif
 
-        uiManager.ShowCountdownText("준비", DelayBeforeStart);
-        yield return new WaitForSeconds(DelayBeforeStart + 0.25f);
+    // 1. Play intro BGM at full volume
+    if (introBgm != null)
+        GameManager.Instance.PlayBgm(introBgm);
 
-        uiManager.ShowCountdownText("3", 0.5f);
+    // 2. Show "준비" and wait for 3.5 seconds
+    uiManager.ShowCountdownText("준비", 3.5f);
+    yield return new WaitForSeconds(3.5f);
+
+    // 3. Stop intro BGM
+    GameManager.Instance.StopBgm();
+
+    // 4. Countdown numbers: "3", "2", "1" — play countdownSfx at 60% volume
+    string[] countdownNumbers = { "3", "2", "1" };
+    foreach (string number in countdownNumbers)
+    {
+        uiManager.ShowCountdownText(number, 0.5f);
+        if (countdownSfx != null)
+            GameManager.Instance.PlaySfx(countdownSfx, 0.12f);
         yield return new WaitForSeconds(1f);
-
-        uiManager.ShowCountdownText("2", 0.5f);
-        yield return new WaitForSeconds(1f);
-
-        uiManager.ShowCountdownText("1", 0.5f);
-        yield return new WaitForSeconds(1f);
-
-        uiManager.ShowCountdownText("GO!", 1f);
-        yield return new WaitForSeconds(0.25f); // Show animation duration = 0.25 seconds
-        StartGame();
-        yield return new WaitForSeconds(1f);
-
-        uiManager.HideCountdownUI();
     }
+
+    // 5. "GO!" and play goSfx at 60% volume
+    uiManager.ShowCountdownText("GO!", 1f);
+    if (goSfx != null)
+        GameManager.Instance.PlaySfx(goSfx, 0.12f);
+
+    yield return new WaitForSeconds(0.25f); // Allow GO! visual to show slightly
+    StartGame();
+
+    // 6. Start actual stage BGM at full volume
+    if (sceneType == SceneType.STAGE && stageNo > 0 && stageNo <= bgmsPerStage.Count)
+    {
+        var clip = bgmsPerStage[stageNo - 1];
+        if (clip != null)
+            GameManager.Instance.PlayBgm(clip);
+    }
+
+    yield return new WaitForSeconds(1f);
+    uiManager.HideCountdownUI();
+}
 
     public void DisablePlayerControl()
     {
@@ -179,19 +237,27 @@ public class PlayManager : MonoBehaviour
         _cameraObject.GetComponent<CameraResultPosition>().MoveCamera();
 
         StartCoroutine(FinishGameCoroutine());
-        return;
-
-        IEnumerator FinishGameCoroutine()
-        {
-            yield return new WaitForSeconds(2.5f);
-            _canMoveToNextStage = true;
-        }
     }
+
+    private IEnumerator FinishGameCoroutine()
+    {
+        // Play looping jingle
+        if (finishJingleLoop != null)
+        {
+            GameManager.Instance.PlayBgm(finishJingleLoop);
+            GameManager.Instance.SetBgmLoop(true); // Set loop ON
+        }
+
+        yield return new WaitForSeconds(2.5f);
+        _canMoveToNextStage = true;
+    }
+
 
     public void LoadNextStage()
     {
+        GameManager.Instance.SetBgmLoop(false); // Stop jingle from looping into next scene
         GameManager.Instance.totalPlayTime += _playTimeCurrent;
-        GameManager.Instance.SetScore(_playTimeCurrent, stageNo-1);
+        GameManager.Instance.SetScore(_playTimeCurrent, stageNo - 1);
         GameManager.Instance.LoadScene(nextSceneName);
     }
 
