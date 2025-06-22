@@ -63,6 +63,10 @@ public class PlayManager : MonoBehaviour
                 _checkpoint = spawnPoint;
                 _canMoveToNextStage = false;
 
+                uiManager.UpdatePlayTime(_playTimeTotal);
+                uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
+                uiManager.UpdateStage(stageName);
+
                 StartCoroutine(ReadyGameCoroutine());
                 break;
             case SceneType.ENDING:
