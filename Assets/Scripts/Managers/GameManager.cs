@@ -123,11 +123,35 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Plays a sound effect.
+    /// Plays a sound effect at default volume.
     /// </summary>
     public void PlaySfx(AudioClip clip)
     {
         _sfxSource.PlayOneShot(clip);
+    }
+    public void PlaySfx(AudioClip clip, float volumeScale = 1f)
+{
+    _sfxSource.PlayOneShot(clip, volumeScale);
+}
+public void SetBgmLoop(bool shouldLoop)
+{
+    _bgmSource.loop = shouldLoop;
+}
+
+
+
+    /// <summary>
+    /// Plays a sound effect at custom volume, temporarily pausing the BGM.
+    /// </summary>
+    public void PlaySfxWithBgmPause(AudioClip clip, float volumeScale = 1f, float resumeDelay = 2f)
+    {
+        if (_bgmSource.isPlaying)
+        {
+            _bgmSource.Pause(); // Pause the BGM
+            Invoke(nameof(ResumeBgm), resumeDelay);
+        }
+
+        _sfxSource.PlayOneShot(clip, volumeScale);
     }
 
     public void SetCurrentPlayerName(string playerName)
@@ -149,5 +173,11 @@ public class GameManager : MonoBehaviour
     public float[] GetScores()
     {
         return _scores;
+    }
+
+    private void ResumeBgm()
+    {
+        if (_bgmSource.clip != null)
+            _bgmSource.UnPause();
     }
 }

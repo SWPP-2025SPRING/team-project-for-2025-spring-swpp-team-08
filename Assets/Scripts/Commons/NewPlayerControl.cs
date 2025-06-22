@@ -28,7 +28,6 @@ public class NewPlayerControl : MonoBehaviour
     public float highSpeedThresholdForSteeringBoost = 5f;
     public float steeringBoostFactor = 1.5f;
 
-    // --- AUDIO ---
     [Header("Audio Clips")]
     public AudioClip jumpAudio;
     public AudioClip landAudio;
@@ -36,10 +35,16 @@ public class NewPlayerControl : MonoBehaviour
     public AudioClip cruiseAudio;
 
     [Header("Audio Volumes")]
-    [Range(0f, 1f)] public float jumpVolume = 0.7f; // CHANGED: Default is now 70%
-    [Range(0f, 1f)] public float landVolume = 0.7f; // CHANGED: Default is now 70% (This is now the MAX land volume)
+    [Tooltip("Below this speed, cruise audio is completely silent.")]
+    public float minSpeedForCruiseSound = 3f;
+    [Range(0f, 1f)] public float jumpVolume = 0.7f;
+    [Range(0f, 1f)] public float landVolume = 0.7f;
     [Range(0f, 1f)] public float bumpVolume = 1.0f;
-    [Range(0f, 1f)] public float cruiseMaxVolume = 1.0f;
+    [Range(0f, 5f)] public float cruiseMaxVolume = 2.0f;
+    [Min(0f)] public float cruiseVolumeMultiplier = 1.0f;
+
+    [Header("Master Volume")]
+    [Min(0f)] public float masterVolume = 1.0f;
 
     [Header("Audio Settings")]
     [Range(0f, 0.5f)] public float pitchRandomness = 0.1f;
@@ -47,16 +52,13 @@ public class NewPlayerControl : MonoBehaviour
     public float minCruisePitch = 0.8f;
     public float maxCruisePitch = 1.5f;
 
-    [Header("Landing Sound Settings")] // NEW: Settings for dynamic landing
-    [Tooltip("The minimum distance the ball must fall to make any landing sound.")]
+    [Header("Landing Sound Settings")]
     public float minFallDistanceForSound = 0.5f;
-    [Tooltip("The fall distance at which the landing sound will be at its maximum volume.")]
     public float maxFallDistanceForSound = 15f;
 
     [Header("Bump Sound Settings")]
     public float minSpeedForBump = 10f;
     public float bumpSoundCooldown = 0.5f;
-    [Tooltip("An angle of 0 means a flat wall, 1 is flat ground. This prevents bumps on gentle slopes.")]
     [Range(0f, 1f)] public float wallAngleThreshold = 0.5f;
 
     [Header("Camera")]
@@ -70,22 +72,23 @@ public class NewPlayerControl : MonoBehaviour
 
     public Vector3 LastPlayerInputDirection { get; private set; }
 
-    // --- Private Variables ---
     private Rigidbody rb;
     private Collider col;
     private MeshRenderer meshRenderer;
     private AudioSource sfxAudioSource;
     private AudioSource cruiseAudioSource;
+    private AudioSource cruiseAudioSource2; // NEW
     private bool isGrounded;
     private bool wasGrounded;
     private bool tryingToJumpThisFrame;
+    private bool enteredOutOfBoundsTrigger = false;
     private float coyoteTimeCounter;
     private float originalAngularDrag;
     private float originalLinearDrag;
     private float _fallTimer = 0f;
     private float originalPitch;
     private float lastBumpTime;
-    private float peakFallHeight; // NEW: To track the highest point during a fall/jump
+    private float peakFallHeight;
 
     void Start()
     {
@@ -95,40 +98,31 @@ public class NewPlayerControl : MonoBehaviour
         col = GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
 
-        if (rb == null) { Debug.LogError("PlayerMovement2: No Rigidbody found!"); enabled = false; return; }
-        if (col == null) { Debug.LogError("PlayerMovement2: No Collider found!"); enabled = false; return; }
-        if (meshRenderer == null) { Debug.LogWarning("PlayerMovement2: No MeshRenderer found for the ball!"); }
-        if (highFrictionMaterial == null) { Debug.LogError("PlayerMovement2: High Friction Physic Material not assigned!"); enabled = false; return; }
+        if (rb == null || col == null || highFrictionMaterial == null)
+        {
+            Debug.LogError("Missing required Rigidbody/Collider/PhysicMaterial!");
+            enabled = false;
+            return;
+        }
+
         if (New_MainCamera == null)
         {
             GameObject cam = GameObject.Find("Main Camera");
-            if (cam != null)
-            {
-                New_MainCamera = cam.transform;
-            }
-            else
-            {
-                Debug.LogError("PlayerMovement2: 'Main Camera' not found in scene, and no camera assigned.", this);
-                enabled = false;
-                return;
-            }
+            if (cam != null) New_MainCamera = cam.transform;
+            else { Debug.LogError("Main Camera not found."); enabled = false; return; }
         }
-
-        if (groundLayer == 0) { Debug.LogWarning("PlayerMovement2: Ground Layer not assigned!"); }
 
         rb.maxAngularVelocity = maxAngularVelocity;
         originalAngularDrag = angularDrag;
         originalLinearDrag = linearDrag;
         rb.angularDrag = originalAngularDrag;
         rb.drag = originalLinearDrag;
+        col.material = highFrictionMaterial;
 
-        if (col != null) { col.material = highFrictionMaterial; }
         LastPlayerInputDirection = GetInitialInputDirection();
-
-        if (hideBallMesh && meshRenderer != null) { meshRenderer.enabled = false; }
+        if (hideBallMesh && meshRenderer != null) meshRenderer.enabled = false;
 
         SetupAudioSources();
-
         lastBumpTime = -bumpSoundCooldown;
     }
 
@@ -139,13 +133,21 @@ public class NewPlayerControl : MonoBehaviour
         originalPitch = sfxAudioSource.pitch;
 
         cruiseAudioSource = gameObject.AddComponent<AudioSource>();
+        cruiseAudioSource2 = gameObject.AddComponent<AudioSource>(); // NEW
+
         if (cruiseAudio != null)
         {
             cruiseAudioSource.clip = cruiseAudio;
             cruiseAudioSource.loop = true;
             cruiseAudioSource.Play();
+
+            cruiseAudioSource2.clip = cruiseAudio; // NEW
+            cruiseAudioSource2.loop = true;
+            cruiseAudioSource2.Play(); // NEW
         }
+
         cruiseAudioSource.volume = 0;
+        cruiseAudioSource2.volume = 0; // NEW
     }
 
     Vector3 GetInitialInputDirection()
@@ -162,15 +164,8 @@ public class NewPlayerControl : MonoBehaviour
             tryingToJumpThisFrame = true;
         }
 
-        if (!isGrounded && rb.velocity.y < 0f)
-        {
-            _fallTimer += Time.deltaTime;
-        }
-        else
-        {
-            _fallTimer = 0f;
-        }
-        // Debug.LogWarning($"{_fallTimer}, {GameManager.Instance.playManager.fallThresholdSecond}");
+        if (!isGrounded && rb.velocity.y < 0f) _fallTimer += Time.deltaTime;
+        else _fallTimer = 0f;
 
         if (IsFallen())
         {
@@ -189,86 +184,47 @@ public class NewPlayerControl : MonoBehaviour
     {
         PerformGroundCheck();
 
-        if (isGrounded)
-        {
-            coyoteTimeCounter = coyoteTime;
-        }
-        else
-        {
-            coyoteTimeCounter -= Time.fixedDeltaTime;
-        }
+        if (isGrounded) coyoteTimeCounter = coyoteTime;
+        else coyoteTimeCounter -= Time.fixedDeltaTime;
 
-        // NEW: Logic to track peak height for dynamic landing sound
-        if (!isGrounded && wasGrounded)
-        {
-            // We just left the ground, record our starting height.
-            peakFallHeight = transform.position.y;
-        }
-        if (!isGrounded)
-        {
-            // While in the air, if we are still going up, update the peak height.
-            if (transform.position.y > peakFallHeight)
-            {
-                peakFallHeight = transform.position.y;
-            }
-        }
+        if (!isGrounded && wasGrounded) peakFallHeight = transform.position.y;
+        if (!isGrounded && transform.position.y > peakFallHeight) peakFallHeight = transform.position.y;
 
-        if (tryingToJumpThisFrame)
-        {
-            Jump(jumpForce);
-        }
+        if (tryingToJumpThisFrame) Jump(jumpForce);
 
-        // --- Movement and Braking Logic (Unchanged) ---
         float h = 0f, v = 0f;
         if (canControl)
         {
             h = Input.GetAxis("Horizontal");
             v = Input.GetAxis("Vertical");
         }
-        Vector3 currentPlayerInputDirection = Vector3.zero;
-        Vector3 camForward = Vector3.zero;
-        Vector3 camRight = Vector3.zero;
 
-        if (New_MainCamera != null)
-        {
-            camForward = Vector3.Scale(New_MainCamera.forward, new Vector3(1, 0, 1)).normalized;
-            camRight = Vector3.Scale(New_MainCamera.right, new Vector3(1, 0, 1)).normalized;
-            currentPlayerInputDirection = (camForward * v + camRight * h);
+        Vector3 camForward = Vector3.Scale(New_MainCamera.forward, new Vector3(1, 0, 1)).normalized;
+        Vector3 camRight = Vector3.Scale(New_MainCamera.right, new Vector3(1, 0, 1)).normalized;
+        Vector3 inputDir = (camForward * v + camRight * h);
 
-            if (currentPlayerInputDirection.magnitude >= 0.01f)
-            {
-                LastPlayerInputDirection = currentPlayerInputDirection.normalized;
-            }
-        }
+        if (inputDir.magnitude >= 0.01f)
+            LastPlayerInputDirection = inputDir.normalized;
 
         bool isBraking = Input.GetKey(brakeKey);
 
-        if (currentPlayerInputDirection.magnitude >= 0.01f)
+        if (inputDir.magnitude >= 0.01f)
         {
-            float currentSidewaysTorquePower = sidewaysTorquePowerBase;
-            float currentSpeedAlongCamForward = Vector3.Dot(rb.velocity, camForward);
+            float currentSidewaysTorque = sidewaysTorquePowerBase;
+            float currentSpeed = Vector3.Dot(rb.velocity, camForward);
 
-            if (!isBraking && Mathf.Abs(currentSpeedAlongCamForward) > highSpeedThresholdForSteeringBoost && Mathf.Abs(h) > 0.1f)
+            if (!isBraking && Mathf.Abs(currentSpeed) > highSpeedThresholdForSteeringBoost && Mathf.Abs(h) > 0.1f)
             {
-                currentSidewaysTorquePower *= steeringBoostFactor;
+                currentSidewaysTorque *= steeringBoostFactor;
             }
 
-            Vector3 torqueFromV = new Vector3(camForward.z * v, 0, -camForward.x * v) * forwardTorquePower;
-            Vector3 torqueFromH = new Vector3(camRight.z * h, 0, -camRight.x * h) * currentSidewaysTorquePower;
-            rb.AddTorque(torqueFromV + torqueFromH);
+            Vector3 torqueV = new Vector3(camForward.z * v, 0, -camForward.x * v) * forwardTorquePower;
+            Vector3 torqueH = new Vector3(camRight.z * h, 0, -camRight.x * h) * currentSidewaysTorque;
+            rb.AddTorque(torqueV + torqueH);
         }
 
-        if (isBraking)
-        {
-            rb.angularDrag = brakingAngularDrag;
-            rb.drag = brakingLinearDrag;
-        }
-        else
-        {
-            rb.angularDrag = originalAngularDrag;
-            rb.drag = originalLinearDrag;
-        }
-        // --- End of Movement Logic ---
+        rb.angularDrag = isBraking ? brakingAngularDrag : originalAngularDrag;
+        rb.drag = isBraking ? brakingLinearDrag : originalLinearDrag;
 
         wasGrounded = isGrounded;
     }
@@ -283,22 +239,13 @@ public class NewPlayerControl : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (Time.time < lastBumpTime + bumpSoundCooldown)
-        {
-            return;
-        }
+        if (Time.time < lastBumpTime + bumpSoundCooldown) return;
 
-        float collisionSpeed = collision.relativeVelocity.magnitude;
-        if (collisionSpeed < minSpeedForBump)
-        {
-            return;
-        }
+        float speed = collision.relativeVelocity.magnitude;
+        if (speed < minSpeedForBump) return;
 
-        float collisionAngle = Vector3.Dot(collision.contacts[0].normal, Vector3.up);
-        if (Mathf.Abs(collisionAngle) > wallAngleThreshold)
-        {
-            return;
-        }
+        float angle = Vector3.Dot(collision.contacts[0].normal, Vector3.up);
+        if (Mathf.Abs(angle) > wallAngleThreshold) return;
 
         PlayBumpSound();
         lastBumpTime = Time.time;
@@ -308,46 +255,33 @@ public class NewPlayerControl : MonoBehaviour
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
 
-        // CHANGED: Landing logic is now much more robust
         if (isGrounded && !wasGrounded)
         {
-            // We just landed. Calculate how far we fell.
             float fallDistance = peakFallHeight - transform.position.y;
-
-            // Only play a sound if we fell more than the minimum distance.
-            // This prevents the "bump-hop-land" issue.
             if (fallDistance > minFallDistanceForSound)
             {
-                // Calculate volume based on fall distance.
-                // A value from 0 (min fall) to 1 (max fall or more).
-                float fallRatio = Mathf.InverseLerp(minFallDistanceForSound, maxFallDistanceForSound, fallDistance);
-
-                // We use a low minimum volume so even small valid falls are audible.
-                float dynamicVolume = Mathf.Lerp(0.1f, landVolume, fallRatio);
-
+                float ratio = Mathf.InverseLerp(minFallDistanceForSound, maxFallDistanceForSound, fallDistance);
+                float dynamicVolume = Mathf.Lerp(0.1f, landVolume, ratio);
                 PlayLandSound(dynamicVolume);
             }
         }
     }
-
-    // --- Audio Handling Methods ---
 
     void PlayJumpSound()
     {
         if (jumpAudio != null && sfxAudioSource != null)
         {
             sfxAudioSource.pitch = originalPitch + Random.Range(-pitchRandomness, pitchRandomness);
-            sfxAudioSource.PlayOneShot(jumpAudio, jumpVolume);
+            sfxAudioSource.PlayOneShot(jumpAudio, jumpVolume * masterVolume);
         }
     }
 
-    // CHANGED: Now accepts a volume parameter for dynamic sound.
     void PlayLandSound(float volume)
     {
         if (landAudio != null && sfxAudioSource != null)
         {
             sfxAudioSource.pitch = originalPitch + Random.Range(-pitchRandomness, pitchRandomness);
-            sfxAudioSource.PlayOneShot(landAudio, volume);
+            sfxAudioSource.PlayOneShot(landAudio, volume * masterVolume);
         }
     }
 
@@ -356,41 +290,53 @@ public class NewPlayerControl : MonoBehaviour
         if (bumpAudio != null && sfxAudioSource != null)
         {
             sfxAudioSource.pitch = originalPitch + Random.Range(-pitchRandomness, pitchRandomness);
-            sfxAudioSource.PlayOneShot(bumpAudio, bumpVolume);
+            sfxAudioSource.PlayOneShot(bumpAudio, bumpVolume * masterVolume);
         }
     }
 
     void HandleCruiseAudio()
     {
-        if (cruiseAudioSource == null) return;
+        if (cruiseAudioSource == null || cruiseAudioSource2 == null) return;
 
-        if (isGrounded)
+        float speed = rb.velocity.magnitude;
+
+        if (isGrounded && speed >= minSpeedForCruiseSound)
         {
-            float speed = rb.velocity.magnitude;
-            float speedRatio = Mathf.Clamp01(speed / maxSpeedForCruiseAudio);
+            float speedRatio = Mathf.InverseLerp(minSpeedForCruiseSound, maxSpeedForCruiseAudio, speed);
+            float volume = Mathf.Clamp01(speedRatio * cruiseMaxVolume * cruiseVolumeMultiplier * masterVolume);
 
-            cruiseAudioSource.volume = speedRatio * cruiseMaxVolume;
+            cruiseAudioSource.volume = volume;
+            cruiseAudioSource2.volume = volume;
             cruiseAudioSource.pitch = Mathf.Lerp(minCruisePitch, maxCruisePitch, speedRatio);
+            cruiseAudioSource2.pitch = cruiseAudioSource.pitch;
         }
         else
         {
             cruiseAudioSource.volume = Mathf.Lerp(cruiseAudioSource.volume, 0f, Time.deltaTime * 10f);
+            cruiseAudioSource2.volume = Mathf.Lerp(cruiseAudioSource2.volume, 0f, Time.deltaTime * 10f);
         }
     }
-
-    // --- Utility Methods ---
 
     public void MoveTo(Vector3 position)
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         transform.position = position;
+        enteredOutOfBoundsTrigger = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("OutOfBounds"))
+        {
+            enteredOutOfBoundsTrigger = true;
+        }
     }
 
     private bool IsFallen()
     {
         float fallUnder = GameManager.Instance.playManager.fallThresholdHeight;
-        return transform.position.y <= fallUnder || IsFallingTooLong();
+        return transform.position.y <= fallUnder || IsFallingTooLong() || enteredOutOfBoundsTrigger;
     }
 
     private bool IsFallingTooLong()

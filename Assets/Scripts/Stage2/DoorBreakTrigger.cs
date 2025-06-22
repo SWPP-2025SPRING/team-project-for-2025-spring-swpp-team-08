@@ -10,6 +10,9 @@ public class DoorBreakTrigger : MonoBehaviour
     public float verticalOffset = 1f;
     public float soundVolume = 0.6f; // 60% volume
 
+    [Header("Optional Linked Objects")]
+    public GameObject textObjectToDestroy; // <- Reference to a 3D Text object
+
     private bool _hasBroken = false;
 
     private void OnTriggerEnter(Collider other)
@@ -32,7 +35,7 @@ public class DoorBreakTrigger : MonoBehaviour
                 Destroy(soundObject, breakSound.length);
             }
 
-            // Calculate dynamic effect position: opposite side of player
+            // Spawn break effect opposite to player direction
             if (breakEffectPrefab != null)
             {
                 Vector3 directionAwayFromPlayer = (transform.position - other.transform.position).normalized;
@@ -42,7 +45,13 @@ public class DoorBreakTrigger : MonoBehaviour
                 Instantiate(breakEffectPrefab, spawnPosition, Quaternion.identity);
             }
 
-            // Optional: destroy door
+            // Optional: Destroy the linked 3D text object
+            if (textObjectToDestroy != null)
+            {
+                Destroy(textObjectToDestroy);
+            }
+
+            // Destroy the door
             Destroy(gameObject, destroyDelay);
         }
     }
