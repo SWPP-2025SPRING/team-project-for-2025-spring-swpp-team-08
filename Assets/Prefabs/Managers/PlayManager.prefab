@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skipCountdown: 0
-  enableSkipStage: 1
+  enableSkipStage: 0
   stageNo: 0
   sceneType: 0
   nextSceneName: 
