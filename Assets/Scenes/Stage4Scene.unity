@@ -20709,9 +20709,33 @@ PrefabInstance:
       value: ssss
       objectReference: {fileID: 0}
     - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].playbackSpeed
+      value: 0.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
       propertyPath: stageSequences.Array.data[0].cameraSequence
       value: 
       objectReference: {fileID: 11400000, guid: 314b119bff3b148c3945a35363678666, type: 2}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].shotsToPlay.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].shotsToPlay.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].shotsToPlay.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].shotsToPlay.Array.data[2]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].shotsToPlay.Array.data[3]
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6658247204110349199, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -24048,7 +24072,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4190704380535626578, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5792159634458106051, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
       propertyPath: cameraPivot
