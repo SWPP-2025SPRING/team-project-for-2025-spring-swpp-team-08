@@ -13,6 +13,9 @@ public class PlayManager : MonoBehaviour
 {
     private const float DelayBeforeStart = 3f;
 
+    [Header("Debug Settings")]
+    public bool skipCountdown;
+
     [Header("Stage Settings")]
     public int stageNo;
 
@@ -119,6 +122,15 @@ public class PlayManager : MonoBehaviour
         DisablePlayerControl();
         uiManager.ShowPlayUI();
         Debug.Log("Ready");
+
+        #if UNITY_EDITOR
+        if (skipCountdown)
+        {
+            uiManager.HideCountdownUI();
+            StartGame();
+            yield break;
+        }
+        #endif
 
         uiManager.ShowCountdownText("준비", DelayBeforeStart);
         yield return new WaitForSeconds(DelayBeforeStart + 0.25f);
