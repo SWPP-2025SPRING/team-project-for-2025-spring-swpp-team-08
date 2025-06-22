@@ -21,7 +21,7 @@ public class BgmTriggerZone : MonoBehaviour
     
     if (sfxClip != null)
 {
-    GameManager.Instance.PlaySfxWithBgmPause(sfxClip, 0.3f, 3.0f); // volume 0.3, resume after 1 second
+    GameManager.Instance.PlaySfxWithBgmPause(sfxClip, 0.6f, 3.0f); // volume 0.3, resume after 1 second
 
 }
 
