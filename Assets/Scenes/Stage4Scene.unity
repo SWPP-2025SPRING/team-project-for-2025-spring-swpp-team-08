@@ -24084,6 +24084,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
+--- !u!1 &1625627205 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5792159634458106063, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
+  m_PrefabInstance: {fileID: 1625627204}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1625627206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625627205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d29c22eb73c34365854988207a50307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRecording: 0
+  currentShotName: Shot_01
+  shotCounter: 1
+  recordingInterval: 0.1
+  playbackSpeed: 1
+  allShots: []
+  sequenceToSave: {fileID: 11400000, guid: 314b119bff3b148c3945a35363678666, type: 2}
+  newSequenceName: Stage_01_Intro
+  showDebugInfo: 1
+  showGizmos: 1
+  freeLookEnabled: 0
+  moveSpeed: 100
+  fastMoveSpeed: 200
+  mouseSensitivity: 2
 --- !u!1001 &1630940231
 PrefabInstance:
   m_ObjectHideFlags: 0
