@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d91f1b81dec04ef2ad80f933e219067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skipCountdown: 0
+  enableSkipStage: 1
   stageNo: 0
   sceneType: 0
   nextSceneName: 
