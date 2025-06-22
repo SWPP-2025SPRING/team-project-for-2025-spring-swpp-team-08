@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5792159634458106061}
   - component: {fileID: -1723334414005357527}
   - component: {fileID: 6520968264445372998}
+  - component: {fileID: 4190704380535626578}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -98,7 +99,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ball: {fileID: 0}
-  offset: {x: 0, y: 1.5, z: -5}
+  offset: {x: 0, y: 1.5, z: -7}
   mouseSensitivity: 3
   minPitch: -30
   maxPitch: 60
+--- !u!114 &4190704380535626578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5792159634458106063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24d8c9b2b75948008d86c9a8cd508316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalOffset: {x: 3, y: 2, z: 5}
+  rotationOffsetAngle: 25
+  delayBeforeMove: 1
+  duration: 1

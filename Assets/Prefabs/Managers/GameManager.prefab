@@ -48,6 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playManager: {fileID: 0}
   totalPlayTime: 0
+  transitionCanvas: {fileID: 5136167188738696905, guid: 03f768485a4f14800aedd75fdf6c0765, type: 3}
+  transitionDurationSeconds: 1
 --- !u!82 &4394515203195265553
 AudioSource:
   m_ObjectHideFlags: 0

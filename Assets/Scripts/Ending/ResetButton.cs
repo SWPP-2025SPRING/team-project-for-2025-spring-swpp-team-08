@@ -19,6 +19,6 @@ public class ResetButton : MonoBehaviour
             ? SceneManager.GetActiveScene().name
             : sceneName;
 
-        GameManager.LoadScene(targetScene);
+        GameManager.Instance.LoadScene(targetScene);
     }
 }

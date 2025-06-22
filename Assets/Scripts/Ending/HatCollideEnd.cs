@@ -7,7 +7,7 @@ public class HatCollideEnd : MonoBehaviour
     public GameObject newPlayer;
     public GameObject originalHat;
     public float liftSpeed = 1.0f;
-    public InputName inputUIManager;
+    public UIAfterHatHit inputUIManager;
     public AudioClip collidingSfx;
 
     private Transform newPlayerTransform;

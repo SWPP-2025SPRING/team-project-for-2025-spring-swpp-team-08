@@ -11,80 +11,101 @@ public enum PlayStates
 
 public class PlayManager : MonoBehaviour
 {
-    private const float DelayBeforeStart = 1f;
-    private const float DelayAfterFinish = 5f;
+    private const float DelayBeforeStart = 3f;
 
-    /// <summary>
-    /// Stage number of current scene.
-    /// Must be assigned in Unity Inspector.
-    /// </summary>
+    [Header("Stage Settings")]
     public int stageNo;
 
-    /// <summary>
-    /// Scene name of next stage.
-    /// Must be assigned in Unity Inspector.
-    /// </summary>
+    public SceneType sceneType;
     public string nextSceneName;
-
-    // TODO: Add UIManager reference
-    public UIManager uiManager;
     public string stageName;
-    public AudioClip setCheckpoint;
-    public AudioClip fallDown;
-    public Vector3 spawnPoint;
     public float fallThresholdHeight = 0f;
     public float fallThresholdSecond = 5f;
+
+    [Header("References")]
+    public UIManager uiManager;
+    public AudioClip setCheckpoint;
+    public AudioClip fallDown;
+
+    [Header("Runtime Values")]
+    public Vector3 spawnPoint;
 
     public PlayStates State { get; private set; }
 
     private float _playTimeCurrent;
     private float _playTimeTotal;
+    private int _retryCount;
+    private bool _canMoveToNextStage;
     private Vector3 _checkpoint;
     private NewPlayerControl _playerControl;
+    private GameObject _cameraObject;
 
     private void Awake()
     {
         GameManager.Instance.playManager = this;
 
         _playerControl = GameObject.FindWithTag("Player").GetComponentInChildren<NewPlayerControl>();
+        _cameraObject = Camera.main?.gameObject;
     }
 
     private void Start()
     {
         State = PlayStates.Ready;
-        _playTimeCurrent = 0f;
-        _playTimeTotal = GameManager.Instance.totalPlayTime;
-        _checkpoint = spawnPoint;
 
-        uiManager.UpdatePlayTime(_playTimeTotal);
-        uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
-        uiManager.UpdateStage(stageName);
+        switch (sceneType)
+        {
+            case SceneType.OPENING:
+                uiManager.HideAllUIs();
+                break;
+            case SceneType.STAGE:
+                _playTimeCurrent = 0f;
+                _playTimeTotal = GameManager.Instance.totalPlayTime;
+                _checkpoint = spawnPoint;
+                _canMoveToNextStage = false;
 
-        StartCoroutine(ReadyGame());
+                uiManager.UpdatePlayTime(_playTimeTotal);
+                uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
+                uiManager.UpdateStage(stageName);
+
+                StartCoroutine(ReadyGameCoroutine());
+                break;
+            case SceneType.ENDING:
+                uiManager.HideAllUIs();
+                StartGame();
+                break;
+        }
     }
 
     private void Update()
     {
-        if (State == PlayStates.Playing)
+        if (State == PlayStates.Playing && sceneType == SceneType.STAGE)
         {
             _playTimeCurrent += Time.deltaTime;
             _playTimeTotal += Time.deltaTime;
             uiManager.UpdatePlayTime(_playTimeTotal);
             uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
         }
+
+        if (State == PlayStates.Finished && _canMoveToNextStage)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                LoadNextStage();
+            }
+        }
     }
 
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
-        uiManager.UpdateSubtitle("Checkpoint set...", 3);
+        uiManager.UpdateStateSubtitle("Checkpoint set...", 3);
         _checkpoint = newCheckpoint;
         GameManager.Instance.PlaySfx(setCheckpoint);
     }
 
-    //set player to chosen location
+    // set player to chosen location
     public void DisplayCheckpointReturn()
     {
-        uiManager.UpdateSubtitle("Moved to last checkpoint", 3);
+        uiManager.UpdateStateSubtitle("Moved to last checkpoint", 3);
         GameManager.Instance.PlaySfx(fallDown);
     }
 
@@ -93,14 +114,35 @@ public class PlayManager : MonoBehaviour
         return _checkpoint;
     }
 
-    public IEnumerator ReadyGame()
+    public IEnumerator ReadyGameCoroutine()
     {
-        _playerControl.canControl = false;
+        DisablePlayerControl();
+        uiManager.ShowPlayUI();
         Debug.Log("Ready");
 
-        yield return new WaitForSeconds(DelayBeforeStart);
+        uiManager.ShowCountdownText("준비", DelayBeforeStart);
+        yield return new WaitForSeconds(DelayBeforeStart + 0.25f);
 
+        uiManager.ShowCountdownText("3", 0.5f);
+        yield return new WaitForSeconds(1f);
+
+        uiManager.ShowCountdownText("2", 0.5f);
+        yield return new WaitForSeconds(1f);
+
+        uiManager.ShowCountdownText("1", 0.5f);
+        yield return new WaitForSeconds(1f);
+
+        uiManager.ShowCountdownText("GO!", 1f);
+        yield return new WaitForSeconds(0.25f); // Show animation duration = 0.25 seconds
         StartGame();
+        yield return new WaitForSeconds(1f);
+
+        uiManager.HideCountdownUI();
+    }
+
+    public void DisablePlayerControl()
+    {
+        _playerControl.canControl = false;
     }
 
     public void StartGame()
@@ -110,7 +152,6 @@ public class PlayManager : MonoBehaviour
         State = PlayStates.Playing;
         _playerControl.canControl = true;
         Debug.Log("Playing");
-        // TODO: Implement start logic
     }
 
     public void FinishGame()
@@ -120,25 +161,35 @@ public class PlayManager : MonoBehaviour
         State = PlayStates.Finished;
         _playerControl.canControl = false;
         Debug.Log("Finished");
-        // TODO: Implement finish logic
 
-        StartCoroutine(LoadNextStageCoroutine());
+        uiManager.HidePlayUI();
+        uiManager.ShowResultUI(_playTimeCurrent, _playTimeTotal, _retryCount);
+        _cameraObject.GetComponent<CameraResultPosition>().MoveCamera();
+
+        StartCoroutine(FinishGameCoroutine());
         return;
 
-        IEnumerator LoadNextStageCoroutine()
+        IEnumerator FinishGameCoroutine()
         {
-            yield return new WaitForSeconds(DelayAfterFinish);
-
-            LoadNextStage();
+            yield return new WaitForSeconds(2.5f);
+            _canMoveToNextStage = true;
         }
     }
 
     public void LoadNextStage()
     {
         GameManager.Instance.totalPlayTime += _playTimeCurrent;
-        GameManager.LoadScene(nextSceneName);
-
+        GameManager.Instance.SetScore(_playTimeCurrent, stageNo-1);
+        GameManager.Instance.LoadScene(nextSceneName);
     }
 
-    // TODO: Add UI related functions
+    public void UpdateStorySubtitle(string content, float durationSeconds = 2)
+    {
+        uiManager.UpdateStorySubtitle(content, durationSeconds);
+    }
+
+    public void UpdatePlayerLineSubtitle(string content, float durationSeconds = 2)
+    {
+        uiManager.UpdatePlayerLineSubtitle(content, durationSeconds);
+    }
 }

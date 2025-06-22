@@ -31,14 +31,14 @@ public class UIUnit
     public void UpdatePlayTime_SetsTextCorrectly()
     {
         _uiManager.UpdatePlayTime(65.4321f);
-        Assert.AreEqual("Playtime...01:05.43", _uiManager.playTimeText.text);
+        Assert.AreEqual("1:05.432", _uiManager.playTimeText.text);
     }
 
     [Test]
     public void UpdateCurrentPlayTime_SetsTextCorrectly()
     {
         _uiManager.UpdateCurrentPlayTime(123.456f);
-        Assert.AreEqual("On current stage...02:03.46", _uiManager.currentPlayTimeText.text);
+        Assert.AreEqual("2:03.456", _uiManager.currentPlayTimeText.text);
     }
 
     [Test]
@@ -65,7 +65,7 @@ public class UIUnit
     [Test]
     public void UpdateSubtitle_SetsSubtitleTextAndActivatesObject()
     {
-        _uiManager.UpdateSubtitle("Hello", 2f);
+        _uiManager.UpdateStateSubtitle("Hello", 2f);
 
         Assert.AreEqual("Hello", _uiManager.subtitleText.text);
         Assert.IsTrue(_uiManager.subtitleText.gameObject.activeSelf);
