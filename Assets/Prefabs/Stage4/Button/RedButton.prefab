@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7903828674317886084}
   - component: {fileID: 7903828674317886083}
   - component: {fileID: 7903828674317886082}
+  - component: {fileID: 5700994963101285922}
   m_Layer: 0
   m_Name: RedButton
   m_TagString: Untagged
@@ -42,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7903828674317886081}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 3534572665725405838, guid: fc50abca995834aaf83c988ef778db6b, type: 3}
 --- !u!23 &7903828674317886084
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: da354db9e075a6f4fbc0b797ea46efc4, type: 2}
+  - {fileID: 7798538389515441788, guid: fc50abca995834aaf83c988ef778db6b, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,3 +113,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   behaviours: []
   isActivated: 0
+  reactivationDelay: 0
+  buttonClickSound: {fileID: 0}
+  volume: 1
+  soundDelay: 0
+--- !u!114 &5700994963101285922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7903828674317886081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d678f806ba566451a85c1b9cb6d16d43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  bounceHeight: 0.5
+  bounceSpeed: 2

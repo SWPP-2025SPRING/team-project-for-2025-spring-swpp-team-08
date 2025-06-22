@@ -160,14 +160,26 @@ public class PlayManager : MonoBehaviour
     uiManager.ShowPlayUI();
     Debug.Log("Ready");
 
-    #if UNITY_EDITOR
-        if (skipCountdown)
+#if UNITY_EDITOR
+    if (skipCountdown)
+    {
+        uiManager.HideCountdownUI();
+        yield return null; // WAIT FOR ONE FRAME. This is the crucial fix for the race condition.
+
+        // Now that a frame has passed, it's safe to start the game.
+        StartGame();
+
+        // We must also start the BGM here, since 'yield break' will skip the logic later on.
+        if (sceneType == SceneType.STAGE && stageNo > 0 && stageNo <= bgmsPerStage.Count)
         {
-            uiManager.HideCountdownUI();
-            StartGame();
-            yield break;
+            var clip = bgmsPerStage[stageNo - 1];
+            if (clip != null)
+                GameManager.Instance.PlayBgm(clip);
         }
-    #endif
+
+        yield break; // Exit the coroutine.
+    }
+#endif
 
     // 1. Play intro BGM at full volume
     if (introBgm != null)
@@ -180,7 +192,7 @@ public class PlayManager : MonoBehaviour
     // 3. Stop intro BGM
     GameManager.Instance.StopBgm();
 
-    // 4. Countdown numbers: "3", "2", "1" — play countdownSfx at 60% volume
+    // 4. Countdown numbers: "3", "2", "1"
     string[] countdownNumbers = { "3", "2", "1" };
     foreach (string number in countdownNumbers)
     {
@@ -190,15 +202,15 @@ public class PlayManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
     }
 
-    // 5. "GO!" and play goSfx at 60% volume
+    // 5. "GO!"
     uiManager.ShowCountdownText("GO!", 1f);
     if (goSfx != null)
         GameManager.Instance.PlaySfx(goSfx, 0.12f);
 
-    yield return new WaitForSeconds(0.25f); // Allow GO! visual to show slightly
+    yield return new WaitForSeconds(0.25f);
     StartGame();
 
-    // 6. Start actual stage BGM at full volume
+    // 6. Start actual stage BGM
     if (sceneType == SceneType.STAGE && stageNo > 0 && stageNo <= bgmsPerStage.Count)
     {
         var clip = bgmsPerStage[stageNo - 1];

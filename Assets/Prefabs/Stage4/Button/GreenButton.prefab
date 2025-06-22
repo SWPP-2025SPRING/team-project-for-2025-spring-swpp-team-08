@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7903828674317886084}
   - component: {fileID: 7903828674317886083}
   - component: {fileID: 7903828674317886082}
+  - component: {fileID: 7195427540740682775}
   m_Layer: 0
   m_Name: GreenButton
   m_TagString: Untagged
@@ -42,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7903828674317886081}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 2682300972423596748, guid: f18551e1d8b764b6a8cbf10162db7e14, type: 3}
 --- !u!23 &7903828674317886084
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5a86c3d1ddd9287428d44974489e7bfc, type: 2}
+  - {fileID: 7798538389515441788, guid: f18551e1d8b764b6a8cbf10162db7e14, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,3 +114,21 @@ MonoBehaviour:
   behaviours: []
   isActivated: 0
   reactivationDelay: 0
+  buttonClickSound: {fileID: 8300000, guid: 5ece576290afc4be3adcfc591ff6741c, type: 3}
+  volume: 1
+  soundDelay: 0
+--- !u!114 &7195427540740682775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7903828674317886081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d678f806ba566451a85c1b9cb6d16d43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  bounceHeight: 0.5
+  bounceSpeed: 2
