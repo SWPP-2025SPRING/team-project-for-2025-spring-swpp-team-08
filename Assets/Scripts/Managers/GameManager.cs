@@ -5,12 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private const float BgmVolumeMultiplier = 0.2f;
+    private const float MouseSensitivityMultiplier = 6f;
+
     public static GameManager Instance { get; private set; }
 
     [HideInInspector] public PlayManager playManager;
 
     [Header("Values")]
-    public float totalPlayTime = 0;
+    public float totalPlayTime;
+
+    [Header("Settings")]
+    public float bgmVolume;
+    public float mouseSensitivity;
 
     [Header("Transition")]
     [SerializeField] private GameObject transitionCanvas;
@@ -187,5 +194,17 @@ public class GameManager : MonoBehaviour
     public void UnlockCursor()
     {
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void SetBgmVolume(float volume)
+    {
+        bgmVolume = volume;
+        _bgmSource.volume = bgmVolume * BgmVolumeMultiplier;
+    }
+
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        mouseSensitivity = sensitivity;
+        // TODO: Apply mouse sensitivity
     }
 }
