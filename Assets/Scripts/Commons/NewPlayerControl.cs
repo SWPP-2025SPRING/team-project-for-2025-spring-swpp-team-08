@@ -100,7 +100,7 @@ public class NewPlayerControl : MonoBehaviour
 
         if (rb == null || col == null || highFrictionMaterial == null)
         {
-            Debug.LogError("Missing required Rigidbody/Collider/PhysicMaterial!");
+            
             enabled = false;
             return;
         }
@@ -159,6 +159,7 @@ public class NewPlayerControl : MonoBehaviour
 
     protected void Update()
     {
+
         if (canControl && Input.GetKeyDown(jumpKey) && coyoteTimeCounter > 0f)
         {
             tryingToJumpThisFrame = true;

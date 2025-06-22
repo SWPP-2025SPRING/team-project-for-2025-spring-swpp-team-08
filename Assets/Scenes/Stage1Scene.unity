@@ -4099,6 +4099,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1820637856}
     m_Modifications:
+    - target: {fileID: 4190704380535626578, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5792159634458106051, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
       propertyPath: cameraPivot
       value: 
@@ -4109,15 +4113,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5792159634458106060, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 182.08618
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5792159634458106060, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 266.83475
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 5792159634458106060, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -726.3054
+      value: -269
       objectReference: {fileID: 0}
     - target: {fileID: 5792159634458106060, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4159,8 +4163,17 @@ PrefabInstance:
       propertyPath: offset.z
       value: -7
       objectReference: {fileID: 0}
+    - target: {fileID: 6520968264445372998, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
+--- !u!1 &1391486655 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5792159634458106063, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
+  m_PrefabInstance: {fileID: 1391486654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1395462836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4942,6 +4955,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5792159634458106060, guid: 12d0675e0378f4eb09637a77f4c2622a, type: 3}
   m_PrefabInstance: {fileID: 1391486654}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1593333521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391486655}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d29c22eb73c34365854988207a50307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRecording: 0
+  currentShotName: Shot_01
+  shotCounter: 1
+  recordingInterval: 0.1
+  playbackSpeed: 1
+  allShots: []
+  sequenceToSave: {fileID: 11400000, guid: f6679b92aac074d68a4b097de7946539, type: 2}
+  newSequenceName: Stage_01_Intro
+  showDebugInfo: 1
+  showGizmos: 1
+  freeLookEnabled: 0
+  moveSpeed: 5
+  fastMoveSpeed: 15
+  mouseSensitivity: 2
 --- !u!1001 &1630700646
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6525,6 +6564,14 @@ PrefabInstance:
       value: Stage2
       objectReference: {fileID: 0}
     - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: skipCountdown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: skipCameraIntro
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
       propertyPath: fallThresholdHeight
       value: -50
       objectReference: {fileID: 0}
@@ -6532,6 +6579,30 @@ PrefabInstance:
       propertyPath: fallThresholdSecond
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].bgmVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].sequenceBgm
+      value: 
+      objectReference: {fileID: 8300000, guid: d9c1a11e8d6de463f8bbec7d73843183, type: 3}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].sequenceName
+      value: stage1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].playbackSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5328223955971652267, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
+      propertyPath: stageSequences.Array.data[0].cameraSequence
+      value: 
+      objectReference: {fileID: 11400000, guid: f6679b92aac074d68a4b097de7946539, type: 2}
     - target: {fileID: 6658247204110349199, guid: c85000922232e42fe89abfe33ea8e1c6, type: 3}
       propertyPath: m_RootOrder
       value: 5
