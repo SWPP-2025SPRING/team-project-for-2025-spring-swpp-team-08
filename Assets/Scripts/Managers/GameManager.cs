@@ -5,12 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private const float BgmVolumeMultiplier = 0.2f;
+    private const float MouseSensitivityMultiplier = 6f;
+
     public static GameManager Instance { get; private set; }
 
     [HideInInspector] public PlayManager playManager;
 
     [Header("Values")]
-    public float totalPlayTime = 0;
+    public float totalPlayTime;
+
+    [Header("Settings")]
+    public float bgmVolume;
+    public float mouseSensitivity;
 
     [Header("Transition")]
     [SerializeField] private GameObject transitionCanvas;
@@ -130,15 +137,13 @@ public class GameManager : MonoBehaviour
         _sfxSource.PlayOneShot(clip);
     }
     public void PlaySfx(AudioClip clip, float volumeScale = 1f)
-{
-    _sfxSource.PlayOneShot(clip, volumeScale);
-}
-public void SetBgmLoop(bool shouldLoop)
-{
-    _bgmSource.loop = shouldLoop;
-}
-
-
+    {
+        _sfxSource.PlayOneShot(clip, volumeScale);
+    }
+    public void SetBgmLoop(bool shouldLoop)
+    {
+        _bgmSource.loop = shouldLoop;
+    }
 
     /// <summary>
     /// Plays a sound effect at custom volume, temporarily pausing the BGM.
@@ -179,5 +184,27 @@ public void SetBgmLoop(bool shouldLoop)
     {
         if (_bgmSource.clip != null)
             _bgmSource.UnPause();
+    }
+
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void SetBgmVolume(float volume)
+    {
+        bgmVolume = volume;
+        _bgmSource.volume = bgmVolume * BgmVolumeMultiplier;
+    }
+
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        mouseSensitivity = sensitivity;
+        // TODO: Apply mouse sensitivity
     }
 }

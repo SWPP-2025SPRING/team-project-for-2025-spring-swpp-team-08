@@ -19,11 +19,9 @@ public class OpeningSequence : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        #if !UNITY_EDITOR
         yield return PlayRoomSequence();
         yield return ReadyOutsideSequence();
         yield return PlayOutsideSequence();
-        #endif
 
         FinishSequence();
 
@@ -36,9 +34,10 @@ public class OpeningSequence : MonoBehaviour
         fakePlayerBodyObj.SetActive(true);
     }
 
-    private void FinishSequence()
+    public void FinishSequence()
     {
         realPlayerObj.GetComponent<HidableComponent>().UnHideObj();
+        roomObj.SetActive(false);
         fakePlayerBodyObj.SetActive(false);
         fakePlayerBallObj.SetActive(false);
         stage1Screen.gameObject.SetActive(false);
