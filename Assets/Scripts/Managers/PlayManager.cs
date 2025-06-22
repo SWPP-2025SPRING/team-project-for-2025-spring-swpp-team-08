@@ -272,7 +272,6 @@ public class PlayManager : MonoBehaviour
         if (finishJingleLoop != null)
         {
             GameManager.Instance.PlayBgm(finishJingleLoop);
-            GameManager.Instance.SetBgmLoop(true); // Set loop ON
         }
 
         yield return new WaitForSeconds(2.5f);
@@ -282,7 +281,6 @@ public class PlayManager : MonoBehaviour
 
     public void LoadNextStage()
     {
-        GameManager.Instance.SetBgmLoop(false); // Stop jingle from looping into next scene
         GameManager.Instance.totalPlayTime += _playTimeCurrent;
         GameManager.Instance.SetScore(_playTimeCurrent, stageNo - 1);
         GameManager.Instance.LoadScene(nextSceneName);
