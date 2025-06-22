@@ -1,7 +1,8 @@
 ﻿mergeInto(LibraryManager.library, {
   SyncFileSystem: function() {
-    FS.syncfs(false, function(err) {
-      // Optionally handle error
+    console.log('SyncFileSystem called');
+    FS.syncfs(false, function (err) {
+        console.log('Error: syncfs failed!');
     });
   }
 });

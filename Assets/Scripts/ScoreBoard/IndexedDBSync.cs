@@ -11,6 +11,7 @@ public class IndexedDBSync : MonoBehaviour
     public static void FlushFileSystem()
     {
         #if UNITY_WEBGL && !UNITY_EDITOR
+        Debug.Log("Calling SyncFileSystem from IndexedDBSync");
         SyncFileSystem();
         #endif
     }
