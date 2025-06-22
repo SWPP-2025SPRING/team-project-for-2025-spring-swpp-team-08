@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Jet
+  m_Name: Jet 2
   m_Shader: {fileID: 4800000, guid: 80979ccfe64a90c49b9fd932c1acb075, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -88,7 +88,7 @@ Material:
     - _BaseColor: {r: 0.54, g: 0.95, b: 0.99, a: 0.5}
     - _BumpDirection: {r: 1, g: 1, b: -1, a: 1}
     - _BumpTiling: {r: 1, g: 1, b: -2, a: 3}
-    - _Color: {r: 0.4426043, g: 1, b: 0, a: 0.7254902}
+    - _Color: {r: 0, g: 0.2004807, b: 1, a: 0.7254902}
     - _DiffuseColor: {r: 1, g: 0, b: 0, a: 1}
     - _DistortParams: {r: 1, g: 1, b: 2, a: 1.15}
     - _EmisColor: {r: 0.2, g: 0.2, b: 0.2, a: 0}
