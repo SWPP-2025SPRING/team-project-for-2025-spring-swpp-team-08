@@ -7,10 +7,18 @@ namespace MainScene
         public string startSceneName;
         public string leaderboardSceneName;
 
+        public SettingsManager settingsManager;
+
         public void StartGame()
         {
             GameManager.Instance.Initialize();
+            GameManager.Instance.LockCursor();
             GameManager.Instance.LoadScene(startSceneName);
+        }
+
+        public void ShowSettings()
+        {
+            settingsManager.OpenSettingsPanel();
         }
 
         public void LoadLeaderboardScene()

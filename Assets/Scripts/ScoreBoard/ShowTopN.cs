@@ -12,13 +12,9 @@ public class ShowTopN : MonoBehaviour
     public int topN = 5;
     //private string _filePath;
 
-    private void Awake()
-    {
-        //_filePath = ScoreBoardHelper.GetScoreboardFilePath();
-    }
-
     private void Start()
     {
+        GameManager.Instance.UnlockCursor();
         ShowTopScores(topN);
     }
 

@@ -11,13 +11,9 @@ public class ShowNearMe : MonoBehaviour
 
     private string _filePath;
 
-    private void Awake()
-    {
-      //
-    }
-
     private void Start()
     {
+        GameManager.Instance.UnlockCursor();
         ShowMySurroundingScores();
     }
 
