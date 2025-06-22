@@ -15,6 +15,7 @@ public class PlayManager : MonoBehaviour
 
     [Header("Debug Settings")]
     public bool skipCountdown;
+    public bool enableSkipStage;
 
     [Header("Stage Settings")]
     public int stageNo;
@@ -132,6 +133,11 @@ public class PlayManager : MonoBehaviour
             _playTimeTotal += Time.deltaTime;
             uiManager.UpdatePlayTime(_playTimeTotal);
             uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
+
+            if (enableSkipStage && Input.GetKeyDown(KeyCode.Backslash))
+            {
+                FinishGame();
+            }
         }
 
         if (State == PlayStates.Finished && _canMoveToNextStage)
@@ -145,7 +151,7 @@ public class PlayManager : MonoBehaviour
 
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
-        uiManager.UpdateStateSubtitle("Checkpoint set...", 3);
+        uiManager.UpdateStateSubtitle("체크포인트 설정됨", 3);
         _checkpoint = newCheckpoint;
         GameManager.Instance.PlaySfx(setCheckpoint);
     }

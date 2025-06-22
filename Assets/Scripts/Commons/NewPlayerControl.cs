@@ -159,7 +159,6 @@ public class NewPlayerControl : MonoBehaviour
 
     protected void Update()
     {
-        Debug.Log("TEST");
         if (canControl && Input.GetKeyDown(jumpKey) && coyoteTimeCounter > 0f)
         {
             tryingToJumpThisFrame = true;

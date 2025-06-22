@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI resultStageText;
     public TextMeshProUGUI resultTimeCurrentText;
     public TextMeshProUGUI resultTimeTotalText;
-    public TextMeshProUGUI resultRetryCountText;
+    public TextMeshProUGUI resultRankingText;
 
     private Coroutine _subtitleCoroutine;
 
@@ -127,11 +127,11 @@ public class UIManager : MonoBehaviour
         playUIAnimator.SetBool("IsShown", false);
     }
 
-    public void ShowResultUI(float playTimeCurrent, float playTimeTotal, int retryCount)
+    public void ShowResultUI(float playTimeCurrent, float playTimeTotal, int resultRanking)
     {
         resultTimeCurrentText.text = FormatPlayTime(playTimeCurrent);
         resultTimeTotalText.text = FormatPlayTime(playTimeTotal);
-        resultRetryCountText.text = retryCount.ToString();
+        // TODO: Show result ranking
 
         resultUI.SetActive(true);
     }
