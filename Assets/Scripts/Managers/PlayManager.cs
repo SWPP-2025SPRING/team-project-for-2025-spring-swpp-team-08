@@ -91,6 +91,14 @@ public class PlayManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (GameManager.Instance.playManager == this)
+        {
+            GameManager.Instance.playManager = null;
+        }
+    }
+
     private void PlaySceneBgm()
     {
         switch (sceneType)

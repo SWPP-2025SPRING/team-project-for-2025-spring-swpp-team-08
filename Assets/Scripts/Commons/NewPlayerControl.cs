@@ -72,7 +72,7 @@ public class NewPlayerControl : MonoBehaviour
 
     public Vector3 LastPlayerInputDirection { get; private set; }
 
-    private Rigidbody rb;
+    protected Rigidbody rb;
     private Collider col;
     private MeshRenderer meshRenderer;
     private AudioSource sfxAudioSource;
@@ -90,7 +90,7 @@ public class NewPlayerControl : MonoBehaviour
     private float lastBumpTime;
     private float peakFallHeight;
 
-    void Start()
+    protected void Start()
     {
         canControl = false;
 
@@ -157,8 +157,9 @@ public class NewPlayerControl : MonoBehaviour
         return (initialDir == Vector3.zero) ? Vector3.forward : initialDir;
     }
 
-    void Update()
+    protected void Update()
     {
+        Debug.Log("TEST");
         if (canControl && Input.GetKeyDown(jumpKey) && coyoteTimeCounter > 0f)
         {
             tryingToJumpThisFrame = true;
@@ -180,7 +181,7 @@ public class NewPlayerControl : MonoBehaviour
         HandleCruiseAudio();
     }
 
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
         PerformGroundCheck();
 
@@ -333,7 +334,7 @@ public class NewPlayerControl : MonoBehaviour
         }
     }
 
-    private bool IsFallen()
+    protected bool IsFallen()
     {
         float fallUnder = GameManager.Instance.playManager.fallThresholdHeight;
         return transform.position.y <= fallUnder || IsFallingTooLong() || enteredOutOfBoundsTrigger;
