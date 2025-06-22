@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OpeningManager : MonoBehaviour
@@ -25,7 +24,7 @@ public class OpeningManager : MonoBehaviour
             StartTutorial();
         }
 
-        if (_openingSequenceCoroutine != null && Input.GetKeyDown(KeyCode.Escape))
+        if (_openingSequenceCoroutine != null && Input.GetKeyDown(KeyCode.P))
         {
             StartCoroutine(EscapeOpening());
         }

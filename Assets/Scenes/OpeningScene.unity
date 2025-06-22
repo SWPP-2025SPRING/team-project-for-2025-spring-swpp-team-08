@@ -2009,7 +2009,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press Esc to skip
+  m_text: Press [P] to skip
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5484776a7f58f42e8934c3a00edd1efa, type: 2}
   m_sharedMaterial: {fileID: -3298660355301050857, guid: 5484776a7f58f42e8934c3a00edd1efa, type: 2}
