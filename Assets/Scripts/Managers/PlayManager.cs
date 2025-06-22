@@ -144,6 +144,7 @@ public class PlayManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                _canMoveToNextStage = false;
                 LoadNextStage();
             }
         }
