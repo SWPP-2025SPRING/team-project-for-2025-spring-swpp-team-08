@@ -114,7 +114,7 @@ MonoBehaviour:
   behaviours: []
   isActivated: 0
   reactivationDelay: 0
-  buttonClickSound: {fileID: 0}
+  buttonClickSound: {fileID: 8300000, guid: 5ece576290afc4be3adcfc591ff6741c, type: 3}
   volume: 1
   soundDelay: 0
 --- !u!114 &5700994963101285922
