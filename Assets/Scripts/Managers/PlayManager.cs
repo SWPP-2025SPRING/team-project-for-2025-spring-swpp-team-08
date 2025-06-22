@@ -1,5 +1,5 @@
 using System.Collections;
-
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum PlayStates
@@ -15,19 +15,22 @@ public class PlayManager : MonoBehaviour
 
     [Header("Stage Settings")]
     public int stageNo;
-
     public SceneType sceneType;
     public string nextSceneName;
     public string stageName;
     public float fallThresholdHeight = 0f;
     public float fallThresholdSecond = 5f;
 
-    [Header("References")]
-    public UIManager uiManager;
+    [Header("Audio Clips")]
+    public AudioClip bgmForOpening;
+    public AudioClip bgmForEnding;
+    public List<AudioClip> bgmsPerStage = new();  // Assign in Inspector by index (Stage 1 = index 0)
+
     public AudioClip setCheckpoint;
     public AudioClip fallDown;
 
-    [Header("Runtime Values")]
+    [Header("References")]
+    public UIManager uiManager;
     public Vector3 spawnPoint;
 
     public PlayStates State { get; private set; }
@@ -43,7 +46,6 @@ public class PlayManager : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.playManager = this;
-
         _playerControl = GameObject.FindWithTag("Player").GetComponentInChildren<NewPlayerControl>();
         _cameraObject = Camera.main?.gameObject;
     }
@@ -52,11 +54,14 @@ public class PlayManager : MonoBehaviour
     {
         State = PlayStates.Ready;
 
+        PlaySceneBgm(); // Automatically play BGM based on scene type + stageNo
+
         switch (sceneType)
         {
             case SceneType.OPENING:
                 uiManager.HideAllUIs();
                 break;
+
             case SceneType.STAGE:
                 _playTimeCurrent = 0f;
                 _playTimeTotal = GameManager.Instance.totalPlayTime;
@@ -69,9 +74,35 @@ public class PlayManager : MonoBehaviour
 
                 StartCoroutine(ReadyGameCoroutine());
                 break;
+
             case SceneType.ENDING:
                 uiManager.HideAllUIs();
                 StartGame();
+                break;
+        }
+    }
+
+    private void PlaySceneBgm()
+    {
+        switch (sceneType)
+        {
+            case SceneType.OPENING:
+                if (bgmForOpening != null)
+                    GameManager.Instance.PlayBgm(bgmForOpening);
+                break;
+
+            case SceneType.STAGE:
+                if (stageNo > 0 && stageNo <= bgmsPerStage.Count)
+                {
+                    var clip = bgmsPerStage[stageNo - 1];
+                    if (clip != null)
+                        GameManager.Instance.PlayBgm(clip);
+                }
+                break;
+
+            case SceneType.ENDING:
+                if (bgmForEnding != null)
+                    GameManager.Instance.PlayBgm(bgmForEnding);
                 break;
         }
     }
@@ -102,7 +133,6 @@ public class PlayManager : MonoBehaviour
         GameManager.Instance.PlaySfx(setCheckpoint);
     }
 
-    // set player to chosen location
     public void DisplayCheckpointReturn()
     {
         uiManager.UpdateStateSubtitle("Moved to last checkpoint", 3);
@@ -133,7 +163,7 @@ public class PlayManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         uiManager.ShowCountdownText("GO!", 1f);
-        yield return new WaitForSeconds(0.25f); // Show animation duration = 0.25 seconds
+        yield return new WaitForSeconds(0.25f);
         StartGame();
         yield return new WaitForSeconds(1f);
 
@@ -167,19 +197,18 @@ public class PlayManager : MonoBehaviour
         _cameraObject.GetComponent<CameraResultPosition>().MoveCamera();
 
         StartCoroutine(FinishGameCoroutine());
-        return;
+    }
 
-        IEnumerator FinishGameCoroutine()
-        {
-            yield return new WaitForSeconds(2.5f);
-            _canMoveToNextStage = true;
-        }
+    private IEnumerator FinishGameCoroutine()
+    {
+        yield return new WaitForSeconds(2.5f);
+        _canMoveToNextStage = true;
     }
 
     public void LoadNextStage()
     {
         GameManager.Instance.totalPlayTime += _playTimeCurrent;
-        GameManager.Instance.SetScore(_playTimeCurrent, stageNo-1);
+        GameManager.Instance.SetScore(_playTimeCurrent, stageNo - 1);
         GameManager.Instance.LoadScene(nextSceneName);
     }
 
