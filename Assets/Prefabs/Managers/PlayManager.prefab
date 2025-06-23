@@ -45,13 +45,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skipCountdown: 0
-  enableSkipStage: 0
+  skipCameraIntro: 0
   stageNo: 0
   sceneType: 0
   nextSceneName: 
+  mainSceneName: MainScene
   stageName: 
   fallThresholdHeight: 0
   fallThresholdSecond: 5
+  stageSequences: []
+  selectedSequenceIndex: 0
   bgmForOpening: {fileID: 8300000, guid: 43a671e98bf5c4c4e84a1c26ac78c564, type: 3}
   bgmForEnding: {fileID: 0}
   bgmsPerStage:

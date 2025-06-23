@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Values")]
     public float totalPlayTime;
+    public bool isStoryMode;
 
     [Header("Settings")]
     public float bgmVolume;

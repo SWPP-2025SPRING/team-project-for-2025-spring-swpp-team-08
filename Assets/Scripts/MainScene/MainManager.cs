@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 namespace MainScene
@@ -6,19 +8,35 @@ namespace MainScene
     {
         public string startSceneName;
         public string leaderboardSceneName;
+        public string[] freeModeSceneNames;
 
         public SettingsManager settingsManager;
 
         private void Start()
         {
             Time.timeScale = 1f;
+            GameManager.Instance.UnlockCursor();
         }
 
-        public void StartGame()
+        public void StartGameStoryMode()
         {
             GameManager.Instance.Initialize();
             GameManager.Instance.LockCursor();
+            GameManager.Instance.isStoryMode = true;
             GameManager.Instance.LoadScene(startSceneName);
+        }
+
+        public void StartGameFreeMode(int sceneIndex)
+        {
+            if (sceneIndex < 0 || sceneIndex >= freeModeSceneNames.Length)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            GameManager.Instance.Initialize();
+            GameManager.Instance.LockCursor();
+            GameManager.Instance.isStoryMode = false;
+            GameManager.Instance.LoadScene(freeModeSceneNames[sceneIndex]);
         }
 
         public void ShowSettings()

@@ -51,9 +51,9 @@ public class PlayManager : MonoBehaviour
 
     [Header("Stage Settings")]
     public int stageNo;
-
     public SceneType sceneType;
     public string nextSceneName;
+    public string mainSceneName;
     public string stageName;
     public float fallThresholdHeight = 0f;
     public float fallThresholdSecond = 5f;
@@ -588,9 +588,16 @@ public class PlayManager : MonoBehaviour
 
     public void LoadNextStage()
     {
-        GameManager.Instance.totalPlayTime += _playTimeCurrent;
-        GameManager.Instance.SetScore(_playTimeCurrent, stageNo - 1);
-        GameManager.Instance.LoadScene(nextSceneName);
+        if (GameManager.Instance.isStoryMode)
+        {
+            GameManager.Instance.totalPlayTime += _playTimeCurrent;
+            GameManager.Instance.SetScore(_playTimeCurrent, stageNo - 1);
+            GameManager.Instance.LoadScene(nextSceneName);
+        }
+        else
+        {
+            GameManager.Instance.LoadScene(mainSceneName);
+        }
     }
 
     public void UpdateStorySubtitle(string content, float durationSeconds = 2)

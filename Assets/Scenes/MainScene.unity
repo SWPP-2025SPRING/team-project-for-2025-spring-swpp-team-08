@@ -3372,7 +3372,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2003767029}
         m_TargetAssemblyTypeName: MainScene.MainManager, Commons
-        m_MethodName: StartGame
+        m_MethodName: StartGameStoryMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
