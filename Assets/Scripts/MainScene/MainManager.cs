@@ -9,6 +9,11 @@ namespace MainScene
 
         public SettingsManager settingsManager;
 
+        private void Start()
+        {
+            Time.timeScale = 1f;
+        }
+
         public void StartGame()
         {
             GameManager.Instance.Initialize();

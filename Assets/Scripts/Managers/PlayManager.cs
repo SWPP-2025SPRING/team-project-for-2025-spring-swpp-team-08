@@ -115,6 +115,7 @@ public class PlayManager : MonoBehaviour
     private void Start()
     {
         State = PlayStates.Ready;
+        GameManager.Instance.LockCursor();
 
         switch (sceneType)
         {
@@ -600,5 +601,10 @@ public class PlayManager : MonoBehaviour
     public void UpdatePlayerLineSubtitle(string content, float durationSeconds = 2)
     {
         uiManager.UpdatePlayerLineSubtitle(content, durationSeconds);
+    }
+
+    public void SetMouseSensitivity(float value)
+    {
+        _cameraObject.GetComponent<SimpleOrbitCamera>().mouseSensitivity = value;
     }
 }

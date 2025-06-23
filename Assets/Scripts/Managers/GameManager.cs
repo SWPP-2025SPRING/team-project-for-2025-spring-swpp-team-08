@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Physics.gravity = new Vector3(0, -30f, 0);
+        SetBgmVolume(bgmVolume);
+        SetMouseSensitivity(mouseSensitivity);
         Initialize();
 
         StartCoroutine(InitialTransitionCoroutine());
@@ -70,7 +72,6 @@ public class GameManager : MonoBehaviour
     {
         totalPlayTime = 0;
         SetCurrentPlayerName(null);
-        SetBgmVolume(bgmVolume);
     }
 
     /// <summary>
@@ -206,6 +207,6 @@ public class GameManager : MonoBehaviour
     public void SetMouseSensitivity(float sensitivity)
     {
         mouseSensitivity = sensitivity;
-        // TODO: Apply mouse sensitivity
+        playManager?.SetMouseSensitivity(sensitivity * MouseSensitivityMultiplier);
     }
 }
