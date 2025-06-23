@@ -15,6 +15,11 @@ public class SettingsManager : MonoBehaviour
         mouseSensitivitySlider.value = Mathf.Round(GameManager.Instance.mouseSensitivity * SliderMaxValue);
     }
 
+    private void OnEnable()
+    {
+        LoadSettings();
+    }
+
     public void OpenSettingsPanel()
     {
         GameManager.Instance.UnlockCursor();

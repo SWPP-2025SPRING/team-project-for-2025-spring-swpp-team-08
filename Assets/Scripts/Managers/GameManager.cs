@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private const float BgmVolumeMultiplier = 0.2f;
+    private const float BgmVolumeMultiplier = 0.4f;
     private const float MouseSensitivityMultiplier = 6f;
 
     public static GameManager Instance { get; private set; }
@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Values")]
     public float totalPlayTime;
+    public bool isStoryMode;
 
     [Header("Settings")]
     public float bgmVolume;
@@ -49,6 +50,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Physics.gravity = new Vector3(0, -30f, 0);
+        SetBgmVolume(bgmVolume);
+        SetMouseSensitivity(mouseSensitivity);
         Initialize();
 
         StartCoroutine(InitialTransitionCoroutine());
@@ -205,6 +208,11 @@ public class GameManager : MonoBehaviour
     public void SetMouseSensitivity(float sensitivity)
     {
         mouseSensitivity = sensitivity;
-        // TODO: Apply mouse sensitivity
+        ApplyMouseSensitivity();
+    }
+
+    public void ApplyMouseSensitivity()
+    {
+        playManager?.SetMouseSensitivity(mouseSensitivity * MouseSensitivityMultiplier);
     }
 }

@@ -35,6 +35,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI resultTimeTotalText;
     public TextMeshProUGUI resultRankingText;
 
+    [Header("Pause UI")]
+    public GameObject pauseUI;
+
+    [Header("Intro UI")]
+    public TextMeshProUGUI introStageText;
+
     private Coroutine _subtitleCoroutine;
 
     private void Start()
@@ -60,6 +66,7 @@ public class UIManager : MonoBehaviour
     public void UpdateStage(string stageName)
     {
         currentStageText.text = stageName;
+        introStageText.text = stageName;
         resultStageText.text = stageName;
     }
 
@@ -153,6 +160,16 @@ public class UIManager : MonoBehaviour
     public void HideCountdownUI()
     {
         countdownUI.SetActive(false);
+    }
+
+    public void ShowPauseUI()
+    {
+        pauseUI.SetActive(true);
+    }
+
+    public void HidePauseUI()
+    {
+        pauseUI.SetActive(false);
     }
 
     //set stage text at each scene UI
