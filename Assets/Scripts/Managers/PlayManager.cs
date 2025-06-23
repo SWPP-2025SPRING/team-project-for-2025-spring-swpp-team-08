@@ -207,7 +207,7 @@ public class PlayManager : MonoBehaviour
 
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
-        uiManager.UpdateStateSubtitle("체크포인트 설정", 3);
+        uiManager.UpdateStateSubtitle("체크포인트 설정됨", 3);
         _checkpoint = newCheckpoint;
         GameManager.Instance.PlaySfx(setCheckpoint);
     }
@@ -246,7 +246,7 @@ public class PlayManager : MonoBehaviour
             yield return StartCoroutine(PlayCameraIntroSequence());
             hadCameraSequence = true;
         }
-        
+
         uiManager.ShowPlayUI();
 
         // 1. Play intro BGM at full volume (this will override any sequence BGM)
