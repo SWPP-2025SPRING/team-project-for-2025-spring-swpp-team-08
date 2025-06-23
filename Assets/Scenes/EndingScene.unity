@@ -1955,7 +1955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ball: {fileID: 1151535332}
-  offset: {x: 0, y: 1.5, z: -5}
+  offset: {x: 0, y: 1.5, z: -7}
   mouseSensitivity: 3
   minPitch: -30
   maxPitch: 60
