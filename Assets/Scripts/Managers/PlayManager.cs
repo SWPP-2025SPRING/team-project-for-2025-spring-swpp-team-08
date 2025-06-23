@@ -207,7 +207,7 @@ public class PlayManager : MonoBehaviour
 
     public void UpdateCheckpoint(Vector3 newCheckpoint)
     {
-        uiManager.UpdateStateSubtitle("Checkpoint set...", 3);
+        uiManager.UpdateStateSubtitle("체크포인트 설정", 3);
         _checkpoint = newCheckpoint;
         GameManager.Instance.PlaySfx(setCheckpoint);
     }
