@@ -256,7 +256,7 @@ public class PlayManager : MonoBehaviour
         }
 
         // 2. Show "준비" and wait for 3.5 seconds
-        uiManager.ShowCountdownText("준비", 3.5f);
+        uiManager.ShowCountdownText("준비", 3f);
         yield return new WaitForSeconds(3.5f);
 
         // 3. Stop intro BGM
@@ -278,7 +278,6 @@ public class PlayManager : MonoBehaviour
         if (goSfx != null)
             GameManager.Instance.PlaySfx(goSfx, 0.12f);
 
-        yield return new WaitForSeconds(0.25f); // Allow GO! visual to show slightly
         StartGame();
 
         // 6. Start actual stage BGM at full volume
