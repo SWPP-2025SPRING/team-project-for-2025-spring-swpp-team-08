@@ -450,7 +450,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB098\uAC00\uAE30"
+  m_text: "\uD06C\uB808\uB527"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 858ecc4bda751c948b779df7dcc0e7f0, type: 2}
   m_sharedMaterial: {fileID: 4794103194347753936, guid: 858ecc4bda751c948b779df7dcc0e7f0, type: 2}
@@ -1454,7 +1454,7 @@ GameObject:
   - component: {fileID: 784761009}
   - component: {fileID: 784761008}
   m_Layer: 5
-  m_Name: QuitButton
+  m_Name: CreditButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
