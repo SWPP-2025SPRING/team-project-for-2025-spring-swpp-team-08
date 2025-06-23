@@ -226,7 +226,6 @@ public class PlayManager : MonoBehaviour
     public IEnumerator ReadyGameCoroutine()
     {
         DisablePlayerControl();
-        uiManager.ShowPlayUI();
         Debug.Log("Ready");
 
         #if UNITY_EDITOR
@@ -247,6 +246,8 @@ public class PlayManager : MonoBehaviour
             yield return StartCoroutine(PlayCameraIntroSequence());
             hadCameraSequence = true;
         }
+
+        uiManager.ShowPlayUI();
 
         // 1. Play intro BGM at full volume (this will override any sequence BGM)
         if (introBgm != null)
