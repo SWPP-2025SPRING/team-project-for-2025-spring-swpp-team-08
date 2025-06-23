@@ -246,7 +246,7 @@ public class PlayManager : MonoBehaviour
             yield return StartCoroutine(PlayCameraIntroSequence());
             hadCameraSequence = true;
         }
-
+        
         uiManager.ShowPlayUI();
 
         // 1. Play intro BGM at full volume (this will override any sequence BGM)

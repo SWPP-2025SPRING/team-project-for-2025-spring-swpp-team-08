@@ -38,6 +38,9 @@ public class UIManager : MonoBehaviour
     [Header("Pause UI")]
     public GameObject pauseUI;
 
+    [Header("Intro UI")]
+    public TextMeshProUGUI introStageText;
+
     private Coroutine _subtitleCoroutine;
 
     private void Start()
@@ -63,6 +66,7 @@ public class UIManager : MonoBehaviour
     public void UpdateStage(string stageName)
     {
         currentStageText.text = stageName;
+        introStageText.text = stageName;
         resultStageText.text = stageName;
     }
 
