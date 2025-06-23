@@ -6,6 +6,7 @@ public enum PlayStates
 {
     Ready,
     Playing,
+    Paused,
     Finished
 }
 
@@ -15,11 +16,11 @@ public class StageIntroSequence
     [Header("Sequence Settings")]
     public string sequenceName;
     public CameraSequenceAsset cameraSequence;
-    
+
     [Header("Shot Selection")]
     [Tooltip("Which shots to play (leave empty to play all)")]
     public List<string> shotsToPlay = new List<string>();
-    
+
     [Header("Timing")]
     [Range(0.5f, 3f)]
     public float playbackSpeed = 1f;
@@ -27,13 +28,13 @@ public class StageIntroSequence
     public float pauseBetweenShots = 0.5f;
     [Range(0f, 3f)]
     public float pauseAfterSequence = 1f;
-    
+
     [Header("Audio")]
     [Tooltip("Optional BGM to play during this sequence")]
     public AudioClip sequenceBgm;
     [Range(0f, 1f)]
     public float bgmVolume = 0.7f;
-    
+
     public bool IsValid()
     {
         return cameraSequence != null && cameraSequence.shots.Count > 0;
@@ -60,11 +61,11 @@ public class PlayManager : MonoBehaviour
     [Header("Camera Intro Sequences")] // NEW SECTION
     [Tooltip("Drag your 3 stage sequence assets here")]
     public List<StageIntroSequence> stageSequences = new List<StageIntroSequence>();
-    
+
     [Header("Sequence Selection")]
     [Tooltip("Which sequence to use for this stage (0 = first, 1 = second, 2 = third, -1 = none)")]
     public int selectedSequenceIndex = 0;
-    
+
     [Header("Audio Clips")]
     public AudioClip bgmForOpening;
     public AudioClip bgmForEnding;
@@ -95,10 +96,11 @@ public class PlayManager : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.playManager = this;
+        Time.timeScale = 1f;
 
         _playerControl = GameObject.FindWithTag("Player").GetComponentInChildren<NewPlayerControl>();
         _cameraObject = Camera.main?.gameObject;
-        
+
         // Setup camera player
         if (_cameraObject != null)
         {
@@ -184,6 +186,11 @@ public class PlayManager : MonoBehaviour
             _playTimeTotal += Time.deltaTime;
             uiManager.UpdatePlayTime(_playTimeTotal);
             uiManager.UpdateCurrentPlayTime(_playTimeCurrent);
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                PauseGame();
+            }
         }
 
         if (State == PlayStates.Finished && _canMoveToNextStage)
@@ -326,20 +333,20 @@ public class PlayManager : MonoBehaviour
         Vector3 originalPosition = _cameraObject.transform.position;
         Quaternion originalRotation = _cameraObject.transform.rotation;
         float originalFOV = Camera.main.fieldOfView;
-        
+
         // Disable orbit camera and other camera controllers during sequence
         var orbitCamera = _cameraObject.GetComponent<SimpleOrbitCamera>();
         var resultPosition = _cameraObject.GetComponent<CameraResultPosition>();
         bool orbitWasEnabled = false;
         bool resultWasEnabled = false;
-        
+
         if (orbitCamera != null)
         {
             orbitWasEnabled = orbitCamera.enabled;
             orbitCamera.enabled = false;
             Debug.Log("🎮 Disabled SimpleOrbitCamera for sequence");
         }
-        
+
         if (resultPosition != null)
         {
             resultWasEnabled = resultPosition.enabled;
@@ -396,11 +403,11 @@ public class PlayManager : MonoBehaviour
                 _cameraObject.transform.position = behindPlayer;
                 _cameraObject.transform.LookAt(playerTransform.position + Vector3.up);
             }
-            
+
             orbitCamera.enabled = orbitWasEnabled;
             Debug.Log("🎮 Re-enabled SimpleOrbitCamera");
         }
-        
+
         if (resultPosition != null)
         {
             resultPosition.enabled = resultWasEnabled;
@@ -443,7 +450,7 @@ public class PlayManager : MonoBehaviour
             var shot = sequence.cameraSequence.shots[i];
             Debug.Log($"▶️ Playing shot: {shot.shotName}");
             yield return StartCoroutine(PlaySingleShot(shot, sequence));
-            
+
             // Don't pause after last shot
             if (i < sequence.cameraSequence.shots.Count - 1)
             {
@@ -458,7 +465,7 @@ public class PlayManager : MonoBehaviour
 
         float duration = shot.duration / sequence.playbackSpeed;
         float startTime = Time.time;
-        
+
         Camera cam = Camera.main;
 
         while (Time.time - startTime < duration)
@@ -544,6 +551,38 @@ public class PlayManager : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
         _canMoveToNextStage = true;
+    }
+
+    public void PauseGame()
+    {
+        State = PlayStates.Paused;
+        _playerControl.canControl = false;
+        _cameraObject.GetComponent<SimpleOrbitCamera>().enabled = false;
+        uiManager.ShowPauseUI();
+        Time.timeScale = 0f;
+        GameManager.Instance.UnlockCursor();
+        Debug.Log("Paused");
+    }
+
+    public void ResumeGame()
+    {
+        State = PlayStates.Playing;
+        _playerControl.canControl = true;
+        _cameraObject.GetComponent<SimpleOrbitCamera>().enabled = true;
+        uiManager.HidePauseUI();
+        Time.timeScale = 1f;
+        GameManager.Instance.LockCursor();
+        Debug.Log("Resume");
+    }
+
+    public void RetryStage()
+    {
+        GameManager.Instance.LoadScene();   // Reload current scene
+    }
+
+    public void QuitToMain()
+    {
+        GameManager.Instance.LoadScene("MainScene");
     }
 
     public void LoadNextStage()

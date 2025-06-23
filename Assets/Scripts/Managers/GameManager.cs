@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private const float BgmVolumeMultiplier = 0.2f;
+    private const float BgmVolumeMultiplier = 0.4f;
     private const float MouseSensitivityMultiplier = 6f;
 
     public static GameManager Instance { get; private set; }
@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
     {
         totalPlayTime = 0;
         SetCurrentPlayerName(null);
+        SetBgmVolume(bgmVolume);
     }
 
     /// <summary>

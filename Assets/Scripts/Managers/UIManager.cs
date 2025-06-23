@@ -35,6 +35,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI resultTimeTotalText;
     public TextMeshProUGUI resultRankingText;
 
+    [Header("Pause UI")]
+    public GameObject pauseUI;
+
     private Coroutine _subtitleCoroutine;
 
     private void Start()
@@ -153,6 +156,16 @@ public class UIManager : MonoBehaviour
     public void HideCountdownUI()
     {
         countdownUI.SetActive(false);
+    }
+
+    public void ShowPauseUI()
+    {
+        pauseUI.SetActive(true);
+    }
+
+    public void HidePauseUI()
+    {
+        pauseUI.SetActive(false);
     }
 
     //set stage text at each scene UI

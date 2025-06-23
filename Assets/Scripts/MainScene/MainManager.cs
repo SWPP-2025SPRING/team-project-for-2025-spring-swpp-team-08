@@ -34,5 +34,10 @@ namespace MainScene
             Application.Quit();
 #endif
         }
+
+        public void ShowCredits()
+        {
+
+        }
     }
 }
