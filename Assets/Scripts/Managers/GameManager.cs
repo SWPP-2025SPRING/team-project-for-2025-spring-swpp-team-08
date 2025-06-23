@@ -208,6 +208,11 @@ public class GameManager : MonoBehaviour
     public void SetMouseSensitivity(float sensitivity)
     {
         mouseSensitivity = sensitivity;
-        playManager?.SetMouseSensitivity(sensitivity * MouseSensitivityMultiplier);
+        ApplyMouseSensitivity();
+    }
+
+    public void ApplyMouseSensitivity()
+    {
+        playManager?.SetMouseSensitivity(mouseSensitivity * MouseSensitivityMultiplier);
     }
 }

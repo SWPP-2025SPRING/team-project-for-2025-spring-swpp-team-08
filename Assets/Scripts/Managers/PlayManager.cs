@@ -116,6 +116,7 @@ public class PlayManager : MonoBehaviour
     {
         State = PlayStates.Ready;
         GameManager.Instance.LockCursor();
+        GameManager.Instance.ApplyMouseSensitivity();
 
         switch (sceneType)
         {
